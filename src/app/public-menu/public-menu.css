@@ -379,6 +379,7 @@ body.nav-drawer-open {
     box-shadow: none;
     transform: none !important;
     visibility: visible !important;
+    pointer-events: auto !important;
   }
 
   .custom-navbar .nav-drawer .navbar-nav {

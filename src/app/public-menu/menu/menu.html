@@ -1,0 +1,89 @@
+<section class="menu-section">
+  <div class="pm-container">
+    <header class="menu-header">
+      <h2 class="section-label desktop-title">{{ 'menu.title' | translate }}</h2>
+      <h2 class="section-label mobile-title">{{ 'menu.mobileTitle' | translate }}</h2>
+      <p>{{ 'menu.subtitle' | translate }}</p>
+    </header>
+
+    <div class="menu-tabs" role="tablist">
+      @for (tab of tabs; track tab.id) {
+        <button
+          type="button"
+          role="tab"
+          [class.active]="activeTab() === tab.id"
+          [attr.aria-selected]="activeTab() === tab.id"
+          (click)="selectTab(tab.id)">
+          <span class="d-none d-lg-inline">{{ tab.labelKey | translate }}</span>
+          <span class="d-inline d-lg-none">{{ tab.mobileLabelKey | translate }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="menu-grid">
+      @for (item of visibleItems(); track item.id) {
+        <article class="menu-card">
+          <div class="menu-card-image">
+            <img [src]="item.image" [alt]="item.nameKey | translate" width="400" height="256" />
+            @if (item.badgeKey) {
+              <span class="menu-badge">{{ item.badgeKey | translate }}</span>
+            }
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-top">
+              <h3>{{ item.nameKey | translate }}</h3>
+              <span>{{ item.priceKey | translate }}</span>
+            </div>
+            <p>{{ item.descKey | translate }}</p>
+            <div class="menu-tags">
+              @for (tag of item.tags; track tag.key) {
+                <span class="menu-tag" [class.muted]="tag.muted">{{ tag.key | translate }}</span>
+              }
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+
+    <div class="menu-download">
+      <button type="button" class="rounded-btn-outline">{{ 'menu.download' | translate }}</button>
+    </div>
+  </div>
+</section>
+
+<section class="signatures-section">
+  <div class="signatures-header">
+    <div>
+      <p class="eyebrow mobile-eyebrow">{{ 'signatures.mobileEyebrow' | translate }}</p>
+      <h2 class="section-label desktop-title">{{ 'signatures.title' | translate }}</h2>
+      <h2 class="section-label mobile-title">{{ 'signatures.mobileTitle' | translate }}</h2>
+      <p class="desktop-sub">{{ 'signatures.subtitle' | translate }}</p>
+    </div>
+    <div class="signatures-nav">
+      <button type="button" (click)="scrollSignatures(-1)" aria-label="Previous">
+        <img src="/images/icons/arrow-left.svg" alt="" width="16" height="16" />
+      </button>
+      <button type="button" (click)="scrollSignatures(1)" aria-label="Next">
+        <img src="/images/icons/arrow-right.svg" alt="" width="16" height="16" />
+      </button>
+    </div>
+  </div>
+
+  <div class="signatures-track" #signaturesTrack>
+    @for (sig of signatures; track sig.id; let i = $index) {
+      <article class="signature-card">
+        <img [src]="sig.image" [alt]="sig.titleKey | translate" width="716" height="400" />
+        <div class="signature-card-overlay">
+          <h3>{{ sig.titleKey | translate }}</h3>
+          <p>{{ sig.descKey | translate }}</p>
+        </div>
+      </article>
+    }
+  </div>
+
+  <div class="signatures-dots">
+    @for (sig of signatures; track sig.id; let i = $index) {
+      <span [class.active]="i === 0"></span>
+    }
+  </div>
+</section>

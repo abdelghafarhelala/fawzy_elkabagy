@@ -1,0 +1,218 @@
+:root {
+  --primary-color: #e8842a;
+  --secondary-color: #ffb781;
+  --bg-dark: #231a13;
+  --bg-deeper: #1a120c;
+  --bg-deepest: #140c07;
+  --bg-card: #271e17;
+  --bg-panel: #3d332b;
+  --text-cream: #f1dfd4;
+  --text-muted: #dbc2b1;
+  --text-dark: #552900;
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-warm: #554337;
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-muted);
+  background-color: var(--bg-dark);
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom elements default to inline; force block so layouts use full width */
+app-root,
+app-home,
+app-story,
+app-menu,
+app-contact-us,
+app-footer {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+.default-text {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.primary-color {
+  color: var(--primary-color);
+}
+
+.dark-text {
+  color: var(--text-dark);
+}
+
+.bg-dark-text {
+  background-color: var(--text-dark);
+}
+
+.bg-primary-color {
+  background-color: var(--primary-color);
+}
+
+.white-color {
+  color: var(--text-cream);
+}
+
+.secondary-color {
+  color: var(--secondary-color);
+}
+
+.bg-secondary-color {
+  background-color: var(--secondary-color);
+}
+
+.rounded-btn {
+  padding: 12px 32px;
+  border: none;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  text-align: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.rounded-btn:hover {
+  opacity: 0.92;
+}
+
+.rounded-btn-outline {
+  background: transparent;
+  border: 1px solid var(--border-warm);
+  color: var(--text-cream);
+  padding: 12px 32px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.rounded-btn-outline:hover {
+  border-color: var(--secondary-color);
+  color: var(--secondary-color);
+}
+
+.section-label {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 40px;
+  color: var(--secondary-color);
+  margin: 0;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(28px, 4vw, 32px);
+  line-height: 1.25;
+  color: var(--text-cream);
+  margin: 0;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+  margin: 0;
+}
+
+.field-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.form-control-dark {
+  width: 100%;
+  background: var(--bg-deeper);
+  border: 1px solid var(--border-warm);
+  border-radius: 8px;
+  color: var(--text-cream);
+  padding: 16px;
+  font-size: 16px;
+  line-height: 24px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-control-dark:focus {
+  border-color: var(--secondary-color);
+}
+
+.form-control-dark::placeholder {
+  color: #6b7280;
+}
+
+textarea.form-control-dark {
+  min-height: 154px;
+  resize: vertical;
+}

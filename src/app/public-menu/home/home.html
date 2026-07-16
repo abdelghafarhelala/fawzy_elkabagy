@@ -1,0 +1,167 @@
+<nav class="navbar navbar-expand-lg custom-navbar fixed-top">
+  <div class="pm-container">
+    <a class="navbar-brand navbar-logo" href="#home" (click)="scrollToSection('home', $event)">
+      <img
+        class="navbar-logo-img"
+        src="/images/Logo.png"
+        alt="Fawzy Elkababgy"
+        width="280"
+        height="64" />
+    </a>
+
+    <div class="d-flex align-items-center gap-2">
+      <button
+        type="button"
+        class="lang-toggle d-lg-none"
+        (click)="toggleLanguage()"
+        [attr.aria-label]="'Switch language to ' + nextLanguageLabel()">
+        <svg class="lang-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+        <span>{{ nextLanguageLabel() }}</span>
+      </button>
+
+      <button
+        class="navbar-toggler border-0 shadow-none d-lg-none"
+        type="button"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="navbarMenu"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" [class.is-open]="menuOpen()"></span>
+      </button>
+    </div>
+
+    <div
+      class="nav-drawer-backdrop d-lg-none"
+      [class.is-open]="menuOpen()"
+      (click)="closeMobileMenu()"
+      aria-hidden="true"></div>
+
+    <div
+      class="navbar-collapse nav-drawer text-start"
+      id="navbarMenu"
+      [class.is-open]="menuOpen()"
+      [attr.aria-hidden]="!menuOpen()">
+      <div class="nav-drawer-header">
+        <div class="nav-drawer-brand">
+          <img
+            class="nav-drawer-logo"
+            src="/images/Logo.png"
+            alt="Fawzy Elkababgy"
+            width="260"
+            height="48" />
+        </div>
+        <button type="button" class="nav-drawer-close" (click)="closeMobileMenu()" aria-label="Close menu">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <ul class="navbar-nav mx-auto align-items-lg-center">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="#home"
+            [class.active]="isActive('home')"
+            (click)="scrollToSection('home', $event)">
+            {{ 'navbar.home' | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="#our-story"
+            [class.active]="isActive('our-story')"
+            (click)="scrollToSection('our-story', $event)">
+            {{ 'navbar.ourStory' | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="#menu"
+            [class.active]="isActive('menu')"
+            (click)="scrollToSection('menu', $event)">
+            {{ 'navbar.ourMenu' | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="#contact"
+            [class.active]="isActive('contact')"
+            (click)="scrollToSection('contact', $event)">
+            {{ 'navbar.contactUs' | translate }}
+          </a>
+        </li>
+      </ul>
+
+      <div class="navbar-actions">
+        <button
+          type="button"
+          class="lang-toggle d-none d-lg-inline-flex"
+          (click)="toggleLanguage()"
+          [attr.aria-label]="'Switch language to ' + nextLanguageLabel()">
+          <svg class="lang-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+          </svg>
+          <span>{{ nextLanguageLabel() }}</span>
+        </button>
+
+        <button
+          type="button"
+          class="rounded-btn bg-primary-color dark-text"
+          (click)="scrollToSection('menu', $event)">
+          {{ 'navbar.viewMenu' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section id="home" class="pm-section banner">
+  <div class="pm-container banner-content">
+    <h1 class="banner-title-desktop">
+      {{ 'hero.line1' | translate }}
+      <br />
+      <span class="accent">{{ 'hero.line2' | translate }}</span>
+    </h1>
+    <p class="banner-subtitle">{{ 'hero.subtitle' | translate }}</p>
+
+    <h1 class="banner-title-mobile">
+      {{ 'hero.mobileLine1' | translate }}
+      <span class="accent">{{ 'hero.mobileAccent' | translate }}</span>
+      <br />
+      {{ 'hero.mobileLine2' | translate }}
+    </h1>
+
+    <div class="banner-actions">
+      <button type="button" class="rounded-btn bg-primary-color dark-text" (click)="scrollToSection('menu', $event)">
+        {{ 'hero.viewMenu' | translate }}
+      </button>
+      <button type="button" class="rounded-btn-outline" (click)="scrollToSection('contact', $event)">
+        {{ 'hero.contactUs' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <a class="banner-scroll" href="#our-story" (click)="scrollToSection('our-story', $event)" aria-label="Scroll to story">
+    <img src="/images/icons/scroll.svg" alt="" width="18" height="20" />
+  </a>
+</section>
+
+<section id="our-story" class="pm-section">
+  <app-story />
+</section>
+
+<section id="menu" class="pm-section">
+  <app-menu />
+</section>
+
+<section id="contact" class="pm-section">
+  <app-contact-us />
+</section>
+
+<app-footer (navigate)="scrollToSection($event.sectionId, $event.event)" />
+
+

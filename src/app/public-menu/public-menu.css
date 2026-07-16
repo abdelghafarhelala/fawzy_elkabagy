@@ -1594,8 +1594,8 @@ body.nav-drawer-open {
   width: 100%;
   border: none;
   border-radius: 8px;
-  background: var(--secondary-color);
-  color: #4e2600;
+  background: var(--primary-color);
+  color: var(--text-dark);
   padding: 16px;
   font-size: 12px;
   font-weight: 600;
@@ -1606,8 +1606,6 @@ body.nav-drawer-open {
 
 @media (min-width: 992px) {
   .contact-submit {
-    background: var(--primary-color);
-    color: var(--text-dark);
     padding: 12px 16px;
   }
 }

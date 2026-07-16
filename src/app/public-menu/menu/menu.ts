@@ -37,7 +37,7 @@ export class Menu {
     {
       id: 'kofta',
       tab: 'kebab',
-      image: '/images/menu-kofta.jpg',
+      image: 'images/menu-kofta.jpg',
       nameKey: 'menu.items.kofta.name',
       priceKey: 'menu.items.kofta.price',
       descKey: 'menu.items.kofta.desc',
@@ -47,7 +47,7 @@ export class Menu {
     {
       id: 'lamb',
       tab: 'kebab',
-      image: '/images/menu-lamb.jpg',
+      image: 'images/menu-lamb.jpg',
       nameKey: 'menu.items.lamb.name',
       priceKey: 'menu.items.lamb.price',
       descKey: 'menu.items.lamb.desc',
@@ -56,7 +56,7 @@ export class Menu {
     {
       id: 'mix',
       tab: 'kebab',
-      image: '/images/menu-mix.jpg',
+      image: 'images/menu-mix.jpg',
       nameKey: 'menu.items.mix.name',
       priceKey: 'menu.items.mix.price',
       descKey: 'menu.items.mix.desc',
@@ -66,7 +66,7 @@ export class Menu {
     {
       id: 'royal',
       tab: 'mixed',
-      image: '/images/menu-mix.jpg',
+      image: 'images/menu-mix.jpg',
       nameKey: 'menu.items.royal.name',
       priceKey: 'menu.items.royal.price',
       descKey: 'menu.items.royal.desc',
@@ -75,7 +75,7 @@ export class Menu {
     {
       id: 'steak-1',
       tab: 'steaks',
-      image: '/images/sig-steaks.jpg',
+      image: 'images/sig-steaks.jpg',
       nameKey: 'signatures.steaks.title',
       priceKey: 'menu.items.lamb.price',
       descKey: 'signatures.steaks.desc',
@@ -84,7 +84,7 @@ export class Menu {
     {
       id: 'side-1',
       tab: 'sides',
-      image: '/images/sig-garden.jpg',
+      image: 'images/sig-garden.jpg',
       nameKey: 'signatures.garden.title',
       priceKey: 'menu.items.kofta.price',
       descKey: 'signatures.garden.desc',
@@ -93,7 +93,7 @@ export class Menu {
     {
       id: 'dessert-1',
       tab: 'desserts',
-      image: '/images/sig-royal.jpg',
+      image: 'images/sig-royal.jpg',
       nameKey: 'menu.items.mix.name',
       priceKey: 'menu.items.mix.price',
       descKey: 'menu.items.mix.desc',
@@ -104,19 +104,19 @@ export class Menu {
   readonly signatures = [
     {
       id: 'royal',
-      image: '/images/sig-royal.jpg',
+      image: 'images/sig-royal.jpg',
       titleKey: 'signatures.royal.title',
       descKey: 'signatures.royal.desc',
     },
     {
       id: 'steaks',
-      image: '/images/sig-steaks.jpg',
+      image: 'images/sig-steaks.jpg',
       titleKey: 'signatures.steaks.title',
       descKey: 'signatures.steaks.desc',
     },
     {
       id: 'garden',
-      image: '/images/sig-garden.jpg',
+      image: 'images/sig-garden.jpg',
       titleKey: 'signatures.garden.title',
       descKey: 'signatures.garden.desc',
     },

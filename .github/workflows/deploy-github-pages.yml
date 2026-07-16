@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -30,9 +30,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        # Repo name must match: https://USERNAME.github.io/REPO_NAME/
+      - name: Build Angular app
         run: npm run build -- --base-href=/fawzy_elkabagy/
+
+      - name: Add .nojekyll (disable Jekyll README fallback)
+        run: touch dist/restro-menu/browser/.nojekyll
+
+      - name: Verify build output
+        run: |
+          test -f dist/restro-menu/browser/index.html
+          grep -q 'app-root' dist/restro-menu/browser/index.html
+          grep -q 'base href="/fawzy_elkabagy/"' dist/restro-menu/browser/index.html
+          ls -la dist/restro-menu/browser
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

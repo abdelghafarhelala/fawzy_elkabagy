@@ -10,20 +10,13 @@ export const menuTranslations = {
     line1: 'AUTHENTIC',
     line2: 'EGYPTIAN GRILL',
     subtitle: 'FIRED TO PERFECTION',
-    mobileLine1: 'The Art of',
-    mobileAccent: 'Ancient',
-    mobileLine2: 'Charcoal.',
     viewMenu: 'VIEW MENU',
     contactUs: 'CONTACT US',
   },
   story: {
     label: 'OUR STORY',
     title: 'A Legacy Carved in Fire and Tradition',
-    mobileEyebrow: 'HERITAGE SINCE 1978',
-    mobileTitle: 'A Legacy of Flame & Smoke',
     body: "Fawzy Elkababgy has been more than just a restaurant; it's a celebration of the Egyptian spirit. We believe that the best flavors are born from simplicity—high-quality meat, artisanal charcoal, and time-honored recipes passed down through families.",
-    mobileBody:
-      "Started in the heart of Old Cairo, Fawzy Elkababgy represents three generations of secret spice blends and the mastery of the slow-burn charcoal technique. We don't just grill; we honor an ancient Egyptian craft.",
     heritageTitle: 'Heritage',
     heritageBody: 'Three generations of secret marinades and traditional Egyptian grilling techniques.',
     yearsValue: '5+',
@@ -32,16 +25,11 @@ export const menuTranslations = {
     dishesLabel: 'DISHES',
     customersValue: '10k+',
     customersLabel: 'CUSTOMERS',
-    mobileStat1Value: '45+',
-    mobileStat1Label: 'Years of Craft',
-    mobileStat2Value: '100%',
-    mobileStat2Label: 'Local Sourcing',
     chefLabel: "CHEF'S HAT SELECTION",
     chefQuote: '"The secret is in the breath of the charcoal."',
   },
   menu: {
     title: 'THE MENU',
-    mobileTitle: 'Our Menu',
     subtitle:
       'Discover our curated selection of hand-picked prime cuts, grilled slowly over natural lemonwood charcoal for that unmistakable aroma.',
     tabs: {
@@ -50,9 +38,6 @@ export const menuTranslations = {
       steaks: 'STEAKS',
       sides: 'SIDE DISHES',
       desserts: 'DESSERTS',
-      signatures: 'SIGNATURES',
-      platters: 'PLATTERS',
-      sidesShort: 'SIDES',
     },
     download: 'DOWNLOAD FULL MENU (PDF)',
     items: {
@@ -88,8 +73,6 @@ export const menuTranslations = {
   },
   signatures: {
     title: 'SIGNATURE SELECTIONS',
-    mobileEyebrow: 'EXCLUSIVE',
-    mobileTitle: 'The Fire Pit Specials',
     subtitle: 'The masterpieces of our charcoal hearth.',
     royal: {
       title: 'The Royal Platter',
@@ -107,7 +90,6 @@ export const menuTranslations = {
   contact: {
     label: 'REACH OUT',
     title: "We'd Love to Host You or Hear Your Feedback",
-    mobileTitle: 'Get in Touch',
     locationLabel: 'LOCATION',
     location: '5th Settlement, New Cairo, Egypt',
     phoneLabel: 'PHONE',

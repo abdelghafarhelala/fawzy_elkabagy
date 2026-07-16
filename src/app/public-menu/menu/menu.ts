@@ -26,11 +26,11 @@ export class Menu {
   activeTab = signal<MenuTabId>('kebab');
 
   readonly tabs = [
-    { id: 'kebab' as const, labelKey: 'menu.tabs.kebab', mobileLabelKey: 'menu.tabs.signatures' },
-    { id: 'mixed' as const, labelKey: 'menu.tabs.mixed', mobileLabelKey: 'menu.tabs.platters' },
-    { id: 'steaks' as const, labelKey: 'menu.tabs.steaks', mobileLabelKey: 'menu.tabs.steaks' },
-    { id: 'sides' as const, labelKey: 'menu.tabs.sides', mobileLabelKey: 'menu.tabs.sidesShort' },
-    { id: 'desserts' as const, labelKey: 'menu.tabs.desserts', mobileLabelKey: 'menu.tabs.desserts' },
+    { id: 'kebab' as const, labelKey: 'menu.tabs.kebab' },
+    { id: 'mixed' as const, labelKey: 'menu.tabs.mixed' },
+    { id: 'steaks' as const, labelKey: 'menu.tabs.steaks' },
+    { id: 'sides' as const, labelKey: 'menu.tabs.sides' },
+    { id: 'desserts' as const, labelKey: 'menu.tabs.desserts' },
   ];
 
   readonly items: MenuItem[] = [

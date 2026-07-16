@@ -10,38 +10,26 @@ export const menuTranslations = {
     line1: 'أصل الصنعة',
     line2: 'مشاوي مصرية',
     subtitle: 'مشوي على الآخر',
-    mobileLine1: 'أصل',
-    mobileAccent: 'الصنعة',
-    mobileLine2: 'على الفحم.',
     viewMenu: 'عرض القائمة',
     contactUs: 'تواصل معنا',
   },
   story: {
     label: 'قصتنا',
     title: 'أكتر من مجرد مطعم',
-    // mobileEyebrow: 'تراث من زمان',
-    mobileTitle: 'حكايتنا من الفحم والدخان',
-    body: '   فوزي الكبابجي أكثر من مجرد مطعم؛ إنه احتفال بالروح المصرية. نؤمن أن أفضل النكهات تولد من البساطة—لحوم عالية الجودة، فحم حرفي، وصفات متوارثة عبر العائلات.',
-    mobileBody:
-      'بدينا من قلب القاهرة القديمة، وفوزي الكبابجي تلات أجيال من خلطات التوابل السرية وإتقان الشوي على الفحم. إحنا مش بنشوي وبس؛ بنحافظ على صنعة مصرية عريقة.',
+    body: 'فوزي الكبابجي أكتر من مجرد مطعم؛ ده احتفال بالروح المصرية. بنؤمن إن أحلى النكهات بتطلع من البساطة—لحمة كويسة، فحم حرفي، ووصفات متوارثة في العيلة.',
     heritageTitle: 'التراث',
-    heritageBody: 'ثلاثة أجيال من التتبيلات السرية وتقنيات المشاوي المصرية التقليدية.',
+    heritageBody: 'تلات أجيال من التتبيلات السرية وتقنيات المشاوي المصرية التقليدية.',
     yearsValue: '+25',
     yearsLabel: 'سنوات خبرة',
     dishesValue: '+50',
     dishesLabel: 'أطباق',
     customersValue: '+10 آلاف',
     customersLabel: 'عملاء',
-    mobileStat1Value: '+45',
-    mobileStat1Label: 'سنة صنعة',
-    mobileStat2Value: '100٪',
-    mobileStat2Label: 'من عندنا',
     chefLabel: 'اختيار الشيف',
     chefQuote: '"السر في نفس الفحم."',
   },
   menu: {
     title: 'القائمة',
-    mobileTitle: 'قائمتنا',
     subtitle:
       'اكتشف مجموعتنا المختارة من أجود القطع، مشوية ببطء على فحم خشب الليمون لأجل تلك الرائحة المميزة.',
     tabs: {
@@ -50,9 +38,6 @@ export const menuTranslations = {
       steaks: 'ستيك',
       sides: 'أطباق جانبية',
       desserts: 'حلويات',
-      signatures: 'المميزة',
-      platters: 'مشكل',
-      sidesShort: 'جانبية',
     },
     download: 'تحميل القائمة كاملة (PDF)',
     items: {
@@ -66,7 +51,7 @@ export const menuTranslations = {
       },
       lamb: {
         name: 'ريش ضأن',
-        price: ' 620 ج.م',
+        price: '620 ج.م',
         desc: 'ريش ضأن طرية متبلة ٢٤ ساعة في ماء البصل وأعشاب المتوسط.',
         tag1: 'قطعة فاخرة',
       },
@@ -88,8 +73,6 @@ export const menuTranslations = {
   },
   signatures: {
     title: 'تشكيلتنا المميزة',
-    mobileEyebrow: 'مخصوص',
-    mobileTitle: 'أحلى حاجات من على الفحم',
     subtitle: 'أحلى حاجات من على الفحم عندنا.',
     royal: {
       title: 'الطبق الملكي',
@@ -107,7 +90,6 @@ export const menuTranslations = {
   contact: {
     label: 'تواصل معنا',
     title: 'يسعدنا استقبالكم أو سماع ملاحظاتكم',
-    mobileTitle: 'كلمنا',
     locationLabel: 'الموقع',
     location: 'التجمع الخامس، القاهرة الجديدة، مصر',
     phoneLabel: 'الهاتف',

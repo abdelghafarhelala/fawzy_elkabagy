@@ -1,8 +1,7 @@
 <section class="menu-section">
   <div class="pm-container">
     <header class="menu-header">
-      <h2 class="section-label desktop-title">{{ 'menu.title' | translate }}</h2>
-      <h2 class="section-label mobile-title">{{ 'menu.mobileTitle' | translate }}</h2>
+      <h2 class="section-label">{{ 'menu.title' | translate }}</h2>
       <p>{{ 'menu.subtitle' | translate }}</p>
     </header>
 
@@ -14,8 +13,7 @@
           [class.active]="activeTab() === tab.id"
           [attr.aria-selected]="activeTab() === tab.id"
           (click)="selectTab(tab.id)">
-          <span class="d-none d-lg-inline">{{ tab.labelKey | translate }}</span>
-          <span class="d-inline d-lg-none">{{ tab.mobileLabelKey | translate }}</span>
+          {{ tab.labelKey | translate }}
         </button>
       }
     </div>
@@ -54,10 +52,8 @@
 <section class="signatures-section">
   <div class="signatures-header">
     <div>
-      <p class="eyebrow mobile-eyebrow">{{ 'signatures.mobileEyebrow' | translate }}</p>
-      <h2 class="section-label desktop-title">{{ 'signatures.title' | translate }}</h2>
-      <h2 class="section-label mobile-title">{{ 'signatures.mobileTitle' | translate }}</h2>
-      <p class="desktop-sub">{{ 'signatures.subtitle' | translate }}</p>
+      <h2 class="section-label">{{ 'signatures.title' | translate }}</h2>
+      <p class="signatures-subtitle">{{ 'signatures.subtitle' | translate }}</p>
     </div>
     <div class="signatures-nav">
       <button type="button" (click)="scrollSignatures(-1)" aria-label="Previous">

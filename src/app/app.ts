@@ -13,5 +13,10 @@ export class App {
 
   constructor() {
     this.languageService.initLanguage();
+    // Resolve public assets against <base href> (needed for GitHub Pages)
+    document.documentElement.style.setProperty(
+      '--pm-hero-image',
+      `url('${document.baseURI}images/hero.jpg')`,
+    );
   }
 }

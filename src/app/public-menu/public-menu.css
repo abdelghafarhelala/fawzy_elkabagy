@@ -416,7 +416,7 @@ body.nav-drawer-open {
   justify-content: center;
   padding: 96px 0 80px;
   background-image: linear-gradient(to top, #1a120c 0%, rgba(26, 18, 12, 0.4) 50%, transparent 100%),
-    url('images/hero.jpg');
+    var(--pm-hero-image);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -432,7 +432,7 @@ body.nav-drawer-open {
     min-height: 100svh;
     padding: 0;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url('images/hero.jpg');
+      var(--pm-hero-image);
   }
 }
 

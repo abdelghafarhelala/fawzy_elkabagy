@@ -8,7 +8,7 @@ export const menuTranslations = {
   },
   hero: {
     line1: 'AUTHENTIC',
-    line2: 'EGYPTIAN GRILL',
+    line2: 'KING OF GRILLS IN EGYPT',
     subtitle: 'FIRED TO PERFECTION',
     viewMenu: 'VIEW MENU',
     contactUs: 'CONTACT US',
@@ -93,7 +93,7 @@ export const menuTranslations = {
     locationLabel: 'LOCATION',
     location: '5th Settlement, New Cairo, Egypt',
     phoneLabel: 'PHONE',
-    phone: '+20 123 456 7890',
+    phone: '15517',
     hoursLabel: 'WORKING HOURS',
     hours: 'Daily: 12:00 PM – 02:00 AM',
     formTitle: 'Send Us a Message',

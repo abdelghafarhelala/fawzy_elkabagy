@@ -2,15 +2,15 @@ export const menuTranslations = {
   navbar: {
     home: 'الرئيسية',
     ourStory: 'قصتنا',
-    ourMenu: 'قائمة الطعام',
+    ourMenu: 'المنيو',
     contactUs: 'تواصل معنا',
-    viewMenu: 'عرض القائمة',
+    viewMenu: 'عرض المنيو',
   },
   hero: {
     line1: 'أصل الصنعة',
-    line2: 'مشاوي مصرية',
-    subtitle: 'مشوي على الآخر',
-    viewMenu: 'عرض القائمة',
+    line2: 'ملك المشويات في مصر',
+    subtitle: 'مشوي من الاخر',
+    viewMenu: 'عرض المنيو',
     contactUs: 'تواصل معنا',
   },
   story: {
@@ -26,10 +26,10 @@ export const menuTranslations = {
     customersValue: '+10 آلاف',
     customersLabel: 'عملاء',
     chefLabel: 'اختيار الشيف',
-    chefQuote: '"السر في نفس الفحم."',
+    chefQuote: '"السر في النفس"',
   },
   menu: {
-    title: 'القائمة',
+    title: 'المنيو',
     subtitle:
       'اكتشف مجموعتنا المختارة من أجود القطع، مشوية ببطء على فحم خشب الليمون لأجل تلك الرائحة المميزة.',
     tabs: {
@@ -39,7 +39,7 @@ export const menuTranslations = {
       sides: 'أطباق جانبية',
       desserts: 'حلويات',
     },
-    download: 'تحميل القائمة كاملة (PDF)',
+    download: 'تحميل المنيو كاملة (PDF)',
     items: {
       kofta: {
         name: 'كفتة التوقيع',
@@ -93,7 +93,7 @@ export const menuTranslations = {
     locationLabel: 'الموقع',
     location: 'التجمع الخامس، القاهرة الجديدة، مصر',
     phoneLabel: 'الهاتف',
-    phone: '+20 123 456 7890',
+    phone: '15517',
     hoursLabel: 'ساعات العمل',
     hours: 'يومياً: 12:00 ظهراً – 2:00 صباحاً',
     formTitle: 'أرسل لنا رسالة',

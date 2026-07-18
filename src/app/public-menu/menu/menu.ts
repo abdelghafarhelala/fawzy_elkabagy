@@ -31,28 +31,8 @@ export class Menu implements OnInit {
   errorMessage = signal<string | null>(null);
   categories = signal<Category[]>([]);
   products = signal<Product[]>([]);
+  signatures = signal<Product[]>([]);
   activeCategoryId = signal<string | null>(null);
-
-  readonly signatures = [
-    {
-      id: 'royal',
-      image: 'images/sig-royal.jpg',
-      titleKey: 'signatures.royal.title',
-      descKey: 'signatures.royal.desc',
-    },
-    {
-      id: 'steaks',
-      image: 'images/sig-steaks.jpg',
-      titleKey: 'signatures.steaks.title',
-      descKey: 'signatures.steaks.desc',
-    },
-    {
-      id: 'garden',
-      image: 'images/sig-garden.jpg',
-      titleKey: 'signatures.garden.title',
-      descKey: 'signatures.garden.desc',
-    },
-  ];
 
   visibleProducts = computed(() => {
     const categoryId = this.activeCategoryId();
@@ -73,13 +53,15 @@ export class Menu implements OnInit {
     this.errorMessage.set(null);
 
     try {
-      const [categories, products] = await Promise.all([
+      const [categories, products, signatures] = await Promise.all([
         this.menuService.getCategories(),
         this.menuService.getProducts(),
+        this.menuService.getSignatures(),
       ]);
 
       this.categories.set(categories);
       this.products.set(products);
+      this.signatures.set(signatures);
       this.activeCategoryId.set(categories[0]?.id ?? null);
     } catch {
       this.errorMessage.set(
@@ -87,6 +69,7 @@ export class Menu implements OnInit {
       );
       this.categories.set([]);
       this.products.set([]);
+      this.signatures.set([]);
       this.activeCategoryId.set(null);
     } finally {
       this.isLoading.set(false);

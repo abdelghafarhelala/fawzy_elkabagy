@@ -36,8 +36,9 @@ Created in the app repo:
 3. **`storage_and_rls`** — buckets `menu-pdfs` / `product-images` + table & storage RLS policies
 4. **`fix_set_updated_at_search_path`** — harden `set_updated_at` (`search_path = public`)
 5. **`seed_products`** — 7 products from the previous hard-coded menu (EN/AR, images, tags)
+6. **`add_product_signature_flags`** — `is_signature` + `signature_sort_order`; marked Royal Mixed Grill, Prime Charcoal Steaks, Garden Appetizers
 
-Verified: categories = 5; products = 7 (kebab 3, mixed 1, steaks 1, sides 1, desserts 1); reach_out = 1.
+Verified: categories = 5; products = 7 (3 signatures); reach_out = 1.
 
 ## 5. Admin Auth user
 

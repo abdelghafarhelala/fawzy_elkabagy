@@ -28,6 +28,8 @@ export interface Product {
   badge_ar: string | null;
   tags: ProductTag[];
   sort_order: number;
+  is_signature: boolean;
+  signature_sort_order: number;
   is_active: boolean;
   is_deleted: boolean;
 }

@@ -29,6 +29,8 @@ create table public.products (
   badge_ar text,
   tags jsonb not null default '[]'::jsonb,
   sort_order integer not null default 0,
+  is_signature boolean not null default false,
+  signature_sort_order integer not null default 0,
   is_active boolean not null default true,
   is_deleted boolean not null default false,
   created_at timestamptz not null default now(),
@@ -37,6 +39,9 @@ create table public.products (
 
 create index products_category_id_idx on public.products (category_id);
 create index products_sort_order_idx on public.products (sort_order);
+create index products_signature_idx
+  on public.products (signature_sort_order)
+  where is_signature = true and is_deleted = false and is_active = true;
 
 create table public.menu_pdf (
   id uuid primary key default gen_random_uuid(),

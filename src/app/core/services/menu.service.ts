@@ -31,7 +31,7 @@ export class MenuService {
       .select(
         'id, category_id, name_en, name_ar, description_en, description_ar, ' +
           'price_en, price_ar, image_url, badge_en, badge_ar, tags, ' +
-          'sort_order, is_active, is_deleted',
+          'sort_order, is_signature, signature_sort_order, is_active, is_deleted',
       )
       .eq('is_active', true)
       .eq('is_deleted', false)
@@ -42,6 +42,30 @@ export class MenuService {
     }
 
     const { data, error } = await query;
+
+    if (error) {
+      throw error;
+    }
+
+    const rows = (data ?? []) as unknown as Product[];
+    return rows.map((product) => ({
+      ...product,
+      tags: this.normalizeTags(product.tags),
+    }));
+  }
+
+  async getSignatures(): Promise<Product[]> {
+    const { data, error } = await this.supabase.client
+      .from('products')
+      .select(
+        'id, category_id, name_en, name_ar, description_en, description_ar, ' +
+          'price_en, price_ar, image_url, badge_en, badge_ar, tags, ' +
+          'sort_order, is_signature, signature_sort_order, is_active, is_deleted',
+      )
+      .eq('is_signature', true)
+      .eq('is_active', true)
+      .eq('is_deleted', false)
+      .order('signature_sort_order', { ascending: true });
 
     if (error) {
       throw error;

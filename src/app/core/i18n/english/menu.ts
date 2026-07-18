@@ -80,6 +80,7 @@ export const menuTranslations = {
   signatures: {
     title: 'SIGNATURE SELECTIONS',
     subtitle: 'The masterpieces of our charcoal hearth.',
+    empty: 'Signature dishes will appear here soon.',
     royal: {
       title: 'The Royal Platter',
       desc: 'Our most prestigious selection, designed for large gatherings and special celebrations.',

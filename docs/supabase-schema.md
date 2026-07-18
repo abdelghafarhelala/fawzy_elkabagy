@@ -33,6 +33,8 @@ Items under a category.
 | badge_en / badge_ar | text nullable | e.g. Popular |
 | tags | jsonb | `[{ "en", "ar", "muted" }]` |
 | sort_order | int | |
+| is_signature | boolean | default false — featured in SIGNATURE SELECTIONS |
+| signature_sort_order | int | carousel order when `is_signature` |
 | is_active / is_deleted | boolean | |
 | created_at / updated_at | timestamptz | |
 

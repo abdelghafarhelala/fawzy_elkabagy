@@ -16,6 +16,7 @@ How the live website reads Supabase (admin dashboard is a later phase).
 |----|----------|
 | Home menu tabs | `categories` (active, not deleted) |
 | Home menu cards | `products` (active, not deleted) |
+| SIGNATURE SELECTIONS | `products` where `is_signature = true` (ordered by `signature_sort_order`) |
 | `/menu` page | Latest row in `menu_pdf` (`file_url`) |
 
 ## App code
@@ -27,6 +28,10 @@ How the live website reads Supabase (admin dashboard is a later phase).
 
 ## Empty data
 
-Categories and sample **products** were seeded from the old hard-coded menu (7 dishes). PDF (`menu_pdf`) is still empty until an admin uploads one.
+Categories and sample **products** were seeded from the old hard-coded menu (7 dishes). Three are marked `is_signature` for the carousel (Royal Mixed Grill, Prime Charcoal Steaks, Garden Appetizers). PDF (`menu_pdf`) is still empty until an admin uploads one.
 
-See migration: `supabase/migrations/20260718140000_seed_products.sql`.
+Future dashboard: checkbox **Signature** + `signature_sort_order` when editing a product.
+
+See migrations:
+- `supabase/migrations/20260718140000_seed_products.sql`
+- `supabase/migrations/20260718150000_add_product_signature_flags.sql`

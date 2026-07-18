@@ -37,6 +37,7 @@ Created in the app repo:
 4. **`fix_set_updated_at_search_path`** — harden `set_updated_at` (`search_path = public`)
 5. **`seed_products`** — 7 products from the previous hard-coded menu (EN/AR, images, tags)
 6. **`add_product_signature_flags`** — `is_signature` + `signature_sort_order`; marked Royal Mixed Grill, Prime Charcoal Steaks, Garden Appetizers
+7. **`admin_select_policies`** — authenticated can SELECT all categories/products (for admin lists)
 
 Verified: categories = 5; products = 7 (3 signatures); reach_out = 1.
 

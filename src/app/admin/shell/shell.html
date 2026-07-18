@@ -1,0 +1,25 @@
+<div class="admin-page admin-shell">
+  <aside class="admin-sidebar">
+    <a class="admin-brand" routerLink="/admin/dashboard">Fawzy Admin</a>
+    <nav class="admin-nav">
+      <a routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/admin/categories" routerLinkActive="active">Categories</a>
+      <a routerLink="/admin/products" routerLinkActive="active">Products</a>
+      <a routerLink="/admin/menu-pdf" routerLinkActive="active">Menu PDF</a>
+      <a routerLink="/admin/reach-out" routerLinkActive="active">Reach Out</a>
+      <a routerLink="/admin/messages" routerLinkActive="active">Messages</a>
+      <a routerLink="/" target="_blank">View site</a>
+    </nav>
+    <div>
+      <p class="admin-muted" style="margin: 0 0 0.5rem; font-size: 0.8rem">
+        {{ userEmail() }}
+      </p>
+      <button type="button" class="admin-btn secondary" (click)="logout()">
+        Log out
+      </button>
+    </div>
+  </aside>
+  <main class="admin-main">
+    <router-outlet />
+  </main>
+</div>

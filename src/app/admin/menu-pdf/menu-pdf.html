@@ -1,0 +1,42 @@
+<div class="admin-header">
+  <h1>Menu PDF</h1>
+</div>
+
+@if (errorMessage()) {
+  <p class="admin-error">{{ errorMessage() }}</p>
+}
+@if (successMessage()) {
+  <p class="admin-success">{{ successMessage() }}</p>
+}
+
+<div class="admin-card">
+  @if (isLoading()) {
+    <p class="admin-muted">Loading…</p>
+  } @else if (current(); as pdf) {
+    <p class="admin-muted">Current file updated: {{ pdf.updated_at }}</p>
+    <p>
+      <a [href]="pdf.file_url" target="_blank" rel="noopener noreferrer">
+        Open current PDF
+      </a>
+    </p>
+  } @else {
+    <p class="admin-muted">No PDF uploaded yet.</p>
+  }
+
+  <div class="admin-field" style="margin-top: 1rem">
+    <label>
+      Upload PDF
+      <input type="file" accept="application/pdf" (change)="onFileChange($event)" />
+    </label>
+  </div>
+
+  <div class="admin-actions">
+    <button
+      type="button"
+      class="admin-btn"
+      (click)="upload()"
+      [disabled]="isUploading()">
+      {{ isUploading() ? 'Uploading…' : 'Upload' }}
+    </button>
+  </div>
+</div>

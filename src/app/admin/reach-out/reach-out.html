@@ -1,0 +1,44 @@
+<div class="admin-header">
+  <h1>Reach Out</h1>
+</div>
+
+@if (errorMessage()) {
+  <p class="admin-error">{{ errorMessage() }}</p>
+}
+@if (successMessage()) {
+  <p class="admin-success">{{ successMessage() }}</p>
+}
+
+<div class="admin-card">
+  @if (isLoading()) {
+    <p class="admin-muted">Loading…</p>
+  } @else {
+    <form class="admin-form-grid" (ngSubmit)="save()">
+      <label>
+        Location (EN)
+        <input name="location_en" [(ngModel)]="form.location_en" required />
+      </label>
+      <label>
+        Location (AR)
+        <input name="location_ar" [(ngModel)]="form.location_ar" required dir="rtl" />
+      </label>
+      <label>
+        Phone
+        <input name="phone" [(ngModel)]="form.phone" required />
+      </label>
+      <label>
+        Hours (EN)
+        <input name="hours_en" [(ngModel)]="form.hours_en" required />
+      </label>
+      <label>
+        Hours (AR)
+        <input name="hours_ar" [(ngModel)]="form.hours_ar" required dir="rtl" />
+      </label>
+      <div class="admin-actions">
+        <button class="admin-btn" type="submit" [disabled]="isSaving()">
+          {{ isSaving() ? 'Saving…' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

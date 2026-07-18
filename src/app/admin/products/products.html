@@ -1,0 +1,171 @@
+<div class="admin-header">
+  <h1>Products</h1>
+  <button type="button" class="admin-btn secondary" (click)="resetForm()">New</button>
+</div>
+
+@if (errorMessage()) {
+  <p class="admin-error">{{ errorMessage() }}</p>
+}
+@if (successMessage()) {
+  <p class="admin-success">{{ successMessage() }}</p>
+}
+
+<div class="admin-card">
+  <h2 style="margin-top:0;font-size:1.1rem">
+    {{ form.id ? 'Edit product' : 'Create product' }}
+  </h2>
+  <form class="admin-form-grid" (ngSubmit)="save()">
+    <label>
+      Category
+      <select name="category_id" [(ngModel)]="form.category_id" required>
+        <option value="">Select…</option>
+        @for (cat of categories(); track cat.id) {
+          <option [value]="cat.id">{{ cat.name_en }}</option>
+        }
+      </select>
+    </label>
+    <label>
+      Name (EN)
+      <input name="name_en" [(ngModel)]="form.name_en" required />
+    </label>
+    <label>
+      Name (AR)
+      <input name="name_ar" [(ngModel)]="form.name_ar" required dir="rtl" />
+    </label>
+    <label>
+      Price (EN)
+      <input name="price_en" [(ngModel)]="form.price_en" />
+    </label>
+    <label>
+      Price (AR)
+      <input name="price_ar" [(ngModel)]="form.price_ar" dir="rtl" />
+    </label>
+    <label>
+      Badge (EN)
+      <input name="badge_en" [(ngModel)]="form.badge_en" />
+    </label>
+    <label>
+      Badge (AR)
+      <input name="badge_ar" [(ngModel)]="form.badge_ar" dir="rtl" />
+    </label>
+    <label>
+      Sort order
+      <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
+    </label>
+    <label>
+      Description (EN)
+      <textarea name="description_en" [(ngModel)]="form.description_en"></textarea>
+    </label>
+    <label>
+      Description (AR)
+      <textarea name="description_ar" [(ngModel)]="form.description_ar" dir="rtl"></textarea>
+    </label>
+    <label>
+      Image URL
+      <input name="image_url" [(ngModel)]="form.image_url" />
+    </label>
+    <label>
+      Or upload image
+      <input type="file" accept="image/*" (change)="onFileChange($event)" />
+    </label>
+    <label class="admin-check">
+      <input type="checkbox" name="is_active" [(ngModel)]="form.is_active" />
+      Active
+    </label>
+    <label class="admin-check">
+      <input type="checkbox" name="is_signature" [(ngModel)]="form.is_signature" />
+      Signature / featured
+    </label>
+    <label>
+      Signature sort order
+      <input
+        type="number"
+        name="signature_sort_order"
+        [(ngModel)]="form.signature_sort_order" />
+    </label>
+
+    <div class="admin-field" style="grid-column: 1 / -1">
+      <span>Tags</span>
+      <div class="admin-form-grid">
+        <input placeholder="Tag EN" [(ngModel)]="tagEn" name="tagEn" />
+        <input placeholder="Tag AR" [(ngModel)]="tagAr" name="tagAr" dir="rtl" />
+        <button type="button" class="admin-btn secondary" (click)="addTag()">
+          Add tag
+        </button>
+      </div>
+      <ul>
+        @for (tag of form.tags; track $index) {
+          <li>
+            {{ tag.en }} / {{ tag.ar }}
+            <button type="button" class="admin-btn danger" (click)="removeTag($index)">
+              ×
+            </button>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="admin-actions">
+      <button class="admin-btn" type="submit" [disabled]="isSaving()">
+        {{ isSaving() ? 'Saving…' : 'Save' }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="admin-card">
+  <div class="admin-form-grid" style="margin-bottom: 1rem">
+    <label>
+      Filter by category
+      <select
+        name="filterCategoryId"
+        [(ngModel)]="filterCategoryId"
+        (ngModelChange)="reload()">
+        <option value="">All</option>
+        @for (cat of categories(); track cat.id) {
+          <option [value]="cat.id">{{ cat.name_en }}</option>
+        }
+      </select>
+    </label>
+  </div>
+
+  @if (isLoading()) {
+    <p class="admin-muted">Loading…</p>
+  } @else {
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Signature</th>
+          <th>Active</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of products(); track item.id) {
+          <tr>
+            <td>{{ item.name_en }}</td>
+            <td>{{ categoryLabel(item.category_id) }}</td>
+            <td>{{ item.price_en }}</td>
+            <td>
+              {{ item.is_signature ? 'Yes (' + item.signature_sort_order + ')' : 'No' }}
+            </td>
+            <td>{{ item.is_active ? 'Yes' : 'No' }}</td>
+            <td>
+              <div class="admin-actions" style="margin:0">
+                <button type="button" class="admin-btn secondary" (click)="edit(item)">
+                  Edit
+                </button>
+                <button type="button" class="admin-btn danger" (click)="remove(item)">
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

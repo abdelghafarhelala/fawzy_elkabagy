@@ -51,7 +51,9 @@ app-story,
 app-menu,
 app-menu-pdf,
 app-contact-us,
-app-footer {
+app-footer,
+app-admin-shell,
+app-admin-login {
   display: block;
   width: 100%;
   max-width: 100%;

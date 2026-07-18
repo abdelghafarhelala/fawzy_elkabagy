@@ -29,6 +29,7 @@ All schema and migration SQL lives in [`supabase/`](../supabase/):
 - [supabase-schema.md](./supabase-schema.md) — tables, RLS, storage
 - [supabase-setup.md](./supabase-setup.md) — chronological setup log
 - [public-menu-data.md](./public-menu-data.md) — how the website reads categories, products, PDF
+- [admin.md](./admin.md) — `/admin` dashboard login and CRUD
 - [domain.md](./domain.md) — single domain + `/admin` paths
 
 ## Environment

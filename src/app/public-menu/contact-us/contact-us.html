@@ -63,7 +63,21 @@
           <textarea class="form-control-dark" name="message" rows="3"></textarea>
         </label>
 
-        <button type="submit" class="contact-submit">{{ 'contact.send' | translate }}</button>
+        <button
+          type="submit"
+          class="contact-submit"
+          [disabled]="isSubmitting()">
+          {{ 'contact.send' | translate }}
+        </button>
+
+        @if (errorMessage()) {
+          <p class="menu-error" role="alert">{{ errorMessage() }}</p>
+        }
+        @if (successMessage()) {
+          <p class="admin-success" style="margin-top:0.75rem">
+            {{ successMessage() }}
+          </p>
+        }
       </form>
     </div>
   </div>

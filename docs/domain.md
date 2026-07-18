@@ -84,6 +84,6 @@ You can also use `admin.fawzyelkababgy.com` with **one** domain (a subdomain, no
 
 ---
 
-## Bottom line
+## Related
 
-Buy one domain, one hosting project, path `/admin/...` for the dashboard + Supabase Auth + RLS. That is the standard, cheap setup for what you want.
+See [admin.md](./admin.md) for the live Angular admin implementation under `/admin`.

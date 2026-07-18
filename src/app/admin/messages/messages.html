@@ -1,0 +1,52 @@
+<div class="admin-header">
+  <h1>Messages</h1>
+  <button type="button" class="admin-btn secondary" (click)="reload()">Refresh</button>
+</div>
+
+@if (errorMessage()) {
+  <p class="admin-error">{{ errorMessage() }}</p>
+}
+
+<div class="admin-card">
+  @if (isLoading()) {
+    <p class="admin-muted">Loading…</p>
+  } @else if (messages().length === 0) {
+    <p class="admin-muted">No messages yet.</p>
+  } @else {
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>When</th>
+          <th>From</th>
+          <th>Subject</th>
+          <th>Message</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (msg of messages(); track msg.id) {
+          <tr [class.admin-unread]="!msg.is_read">
+            <td>{{ msg.created_at | date: 'short' }}</td>
+            <td>
+              {{ msg.full_name }}
+              <br />
+              <a [href]="'mailto:' + msg.email">{{ msg.email }}</a>
+            </td>
+            <td>{{ msg.subject || '—' }}</td>
+            <td style="max-width: 280px; white-space: pre-wrap">{{ msg.message }}</td>
+            <td>
+              <div class="admin-actions" style="margin:0">
+                <button type="button" class="admin-btn secondary" (click)="toggleRead(msg)">
+                  {{ msg.is_read ? 'Mark unread' : 'Mark read' }}
+                </button>
+                <button type="button" class="admin-btn danger" (click)="remove(msg)">
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

@@ -66,8 +66,15 @@
         <button
           type="submit"
           class="contact-submit"
-          [disabled]="isSubmitting()">
-          {{ 'contact.send' | translate }}
+          [class.is-loading]="isSubmitting()"
+          [disabled]="isSubmitting()"
+          [attr.aria-busy]="isSubmitting()">
+          @if (isSubmitting()) {
+            <span class="contact-submit-spinner" aria-hidden="true"></span>
+            {{ 'contact.sending' | translate }}
+          } @else {
+            {{ 'contact.send' | translate }}
+          }
         </button>
 
         @if (errorMessage()) {

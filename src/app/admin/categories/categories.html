@@ -1,17 +1,22 @@
 <div class="admin-header">
-  <h1>Categories</h1>
-  <button type="button" class="admin-btn secondary" (click)="resetForm()">New</button>
+  <div>
+    <p class="admin-eyebrow">Catalog</p>
+    <h1>Categories</h1>
+  </div>
+  <button type="button" class="admin-btn secondary" (click)="resetForm()">
+    New category
+  </button>
 </div>
 
 @if (errorMessage()) {
-  <p class="admin-error">{{ errorMessage() }}</p>
+  <p class="admin-error" role="alert">{{ errorMessage() }}</p>
 }
 @if (successMessage()) {
   <p class="admin-success">{{ successMessage() }}</p>
 }
 
 <div class="admin-card">
-  <h2 style="margin-top:0;font-size:1.1rem">
+  <h2 class="admin-card-title">
     {{ form.id ? 'Edit category' : 'Create category' }}
   </h2>
   <form class="admin-form-grid" (ngSubmit)="save()">
@@ -30,6 +35,7 @@
     <label>
       Sort order
       <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
+      <span class="admin-field-note">Defaults to last position for new items.</span>
     </label>
     <label class="admin-check">
       <input type="checkbox" name="is_active" [(ngModel)]="form.is_active" />
@@ -44,41 +50,50 @@
 </div>
 
 <div class="admin-card">
+  <h2 class="admin-card-title">All categories</h2>
   @if (isLoading()) {
     <p class="admin-muted">Loading…</p>
   } @else {
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>Order</th>
-          <th>Slug</th>
-          <th>EN</th>
-          <th>AR</th>
-          <th>Active</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (cat of categories(); track cat.id) {
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
           <tr>
-            <td>{{ cat.sort_order }}</td>
-            <td>{{ cat.slug }}</td>
-            <td>{{ cat.name_en }}</td>
-            <td dir="rtl">{{ cat.name_ar }}</td>
-            <td>{{ cat.is_active ? 'Yes' : 'No' }}</td>
-            <td>
-              <div class="admin-actions" style="margin:0">
-                <button type="button" class="admin-btn secondary" (click)="edit(cat)">
-                  Edit
-                </button>
-                <button type="button" class="admin-btn danger" (click)="remove(cat)">
-                  Delete
-                </button>
-              </div>
-            </td>
+            <th>Order</th>
+            <th>Slug</th>
+            <th>EN</th>
+            <th>AR</th>
+            <th>Active</th>
+            <th></th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (cat of categories(); track cat.id) {
+            <tr>
+              <td>{{ cat.sort_order }}</td>
+              <td>{{ cat.slug }}</td>
+              <td>{{ cat.name_en }}</td>
+              <td dir="rtl">{{ cat.name_ar }}</td>
+              <td>{{ cat.is_active ? 'Yes' : 'No' }}</td>
+              <td>
+                <div class="admin-actions" style="margin:0">
+                  <button
+                    type="button"
+                    class="admin-btn secondary admin-btn-sm"
+                    (click)="edit(cat)">
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="admin-btn danger admin-btn-sm"
+                    (click)="remove(cat)">
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   }
 </div>

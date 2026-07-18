@@ -110,6 +110,7 @@ export const menuTranslations = {
     subjectOption: 'Reservation Inquiry',
     message: 'MESSAGE',
     send: 'SEND MESSAGE',
+    sending: 'SENDING…',
   },
   footer: {
     tagline: "Bringing the soul of Cairo's grills to your table with every perfectly charred cut.",

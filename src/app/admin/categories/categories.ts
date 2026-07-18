@@ -22,6 +22,7 @@ export class AdminCategories implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.reload();
+    this.form = this.emptyForm();
   }
 
   emptyForm() {
@@ -30,9 +31,17 @@ export class AdminCategories implements OnInit {
       slug: '',
       name_en: '',
       name_ar: '',
-      sort_order: 0,
+      sort_order: this.nextSortOrder(),
       is_active: true,
     };
+  }
+
+  nextSortOrder(): number {
+    const list = this.categories();
+    if (!list.length) {
+      return 0;
+    }
+    return Math.max(...list.map((c) => c.sort_order)) + 1;
   }
 
   edit(category: Category): void {
@@ -77,8 +86,8 @@ export class AdminCategories implements OnInit {
         is_active: this.form.is_active,
       });
       this.successMessage.set('Category saved.');
-      this.resetForm();
       await this.reload();
+      this.resetForm();
     } catch (err: unknown) {
       this.errorMessage.set(this.errMsg(err, 'Failed to save category'));
     } finally {

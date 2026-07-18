@@ -17,6 +17,10 @@ export class ContactUs {
 
   async onSubmit(event: Event): Promise<void> {
     event.preventDefault();
+    if (this.isSubmitting()) {
+      return;
+    }
+
     const form = event.target as HTMLFormElement;
     const data = new FormData(form);
 

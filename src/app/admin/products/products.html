@@ -1,17 +1,22 @@
 <div class="admin-header">
-  <h1>Products</h1>
-  <button type="button" class="admin-btn secondary" (click)="resetForm()">New</button>
+  <div>
+    <p class="admin-eyebrow">Catalog</p>
+    <h1>Products</h1>
+  </div>
+  <button type="button" class="admin-btn secondary" (click)="resetForm()">
+    New product
+  </button>
 </div>
 
 @if (errorMessage()) {
-  <p class="admin-error">{{ errorMessage() }}</p>
+  <p class="admin-error" role="alert">{{ errorMessage() }}</p>
 }
 @if (successMessage()) {
   <p class="admin-success">{{ successMessage() }}</p>
 }
 
 <div class="admin-card">
-  <h2 style="margin-top:0;font-size:1.1rem">
+  <h2 class="admin-card-title">
     {{ form.id ? 'Edit product' : 'Create product' }}
   </h2>
   <form class="admin-form-grid" (ngSubmit)="save()">
@@ -33,24 +38,80 @@
       <input name="name_ar" [(ngModel)]="form.name_ar" required dir="rtl" />
     </label>
     <label>
-      Price (EN)
-      <input name="price_en" [(ngModel)]="form.price_en" />
+      <span class="admin-label-row">
+        Price
+        <span class="admin-hint-wrap">
+          <button
+            type="button"
+            class="admin-info"
+            aria-label="Price currency hint"
+            title="Enter one amount only. The site shows EGP in English and ج.م in Arabic.">
+            i
+          </button>
+          <span class="admin-hint" role="tooltip">
+            One amount only. Website shows
+            <strong>EGP</strong> (EN) and <strong>ج.م</strong> (AR).
+          </span>
+        </span>
+      </span>
+      <div class="admin-price-input">
+        <input
+          type="number"
+          name="price"
+          [(ngModel)]="form.price"
+          min="0"
+          step="any"
+          required
+          placeholder="e.g. 480" />
+        <span class="admin-price-suffix">EGP / ج.م</span>
+      </div>
     </label>
     <label>
-      Price (AR)
-      <input name="price_ar" [(ngModel)]="form.price_ar" dir="rtl" />
+      <span class="admin-label-row">
+        Badge (EN)
+        <span class="admin-optional">Optional</span>
+        <span class="admin-hint-wrap">
+          <button
+            type="button"
+            class="admin-info"
+            aria-label="Badge help"
+            title="Short label on the dish card, e.g. POPULAR or CHEF'S CHOICE. Leave empty if not needed.">
+            i
+          </button>
+          <span class="admin-hint" role="tooltip">
+            Short label on the dish card (e.g. POPULAR). Leave empty if unused.
+          </span>
+        </span>
+      </span>
+      <input name="badge_en" [(ngModel)]="form.badge_en" placeholder="POPULAR" />
     </label>
     <label>
-      Badge (EN)
-      <input name="badge_en" [(ngModel)]="form.badge_en" />
-    </label>
-    <label>
-      Badge (AR)
-      <input name="badge_ar" [(ngModel)]="form.badge_ar" dir="rtl" />
+      <span class="admin-label-row">
+        Badge (AR)
+        <span class="admin-optional">Optional</span>
+        <span class="admin-hint-wrap">
+          <button
+            type="button"
+            class="admin-info"
+            aria-label="Badge Arabic help"
+            title="Arabic version of the badge, e.g. الأكثر طلباً.">
+            i
+          </button>
+          <span class="admin-hint" role="tooltip">
+            Arabic badge text shown when the site language is Arabic.
+          </span>
+        </span>
+      </span>
+      <input
+        name="badge_ar"
+        [(ngModel)]="form.badge_ar"
+        dir="rtl"
+        placeholder="الأكثر طلباً" />
     </label>
     <label>
       Sort order
       <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
+      <span class="admin-field-note">Defaults to last position for new items.</span>
     </label>
     <label>
       Description (EN)
@@ -85,7 +146,23 @@
     </label>
 
     <div class="admin-field" style="grid-column: 1 / -1">
-      <span>Tags</span>
+      <span class="admin-label-row">
+        Tags
+        <span class="admin-optional">Optional</span>
+        <span class="admin-hint-wrap">
+          <button
+            type="button"
+            class="admin-info"
+            aria-label="Tags help"
+            title="Small chips under the dish (e.g. CHARCOAL GRILLED). Add EN + AR for each tag.">
+            i
+          </button>
+          <span class="admin-hint" role="tooltip">
+            Small chips under the dish (e.g. CHARCOAL GRILLED). Add both EN and AR
+            for each tag. Skip if not needed.
+          </span>
+        </span>
+      </span>
       <div class="admin-form-grid">
         <input placeholder="Tag EN" [(ngModel)]="tagEn" name="tagEn" />
         <input placeholder="Tag AR" [(ngModel)]="tagAr" name="tagAr" dir="rtl" />
@@ -93,16 +170,21 @@
           Add tag
         </button>
       </div>
-      <ul>
-        @for (tag of form.tags; track $index) {
-          <li>
-            {{ tag.en }} / {{ tag.ar }}
-            <button type="button" class="admin-btn danger" (click)="removeTag($index)">
-              ×
-            </button>
-          </li>
-        }
-      </ul>
+      @if (form.tags.length) {
+        <ul class="admin-tag-list">
+          @for (tag of form.tags; track $index) {
+            <li>
+              <span>{{ tag.en }} / {{ tag.ar }}</span>
+              <button
+                type="button"
+                class="admin-btn danger admin-btn-sm"
+                (click)="removeTag($index)">
+                Remove
+              </button>
+            </li>
+          }
+        </ul>
+      }
     </div>
 
     <div class="admin-actions">
@@ -114,6 +196,7 @@
 </div>
 
 <div class="admin-card">
+  <h2 class="admin-card-title">All products</h2>
   <div class="admin-form-grid" style="margin-bottom: 1rem">
     <label>
       Filter by category
@@ -132,40 +215,52 @@
   @if (isLoading()) {
     <p class="admin-muted">Loading…</p>
   } @else {
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Price</th>
-          <th>Signature</th>
-          <th>Active</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of products(); track item.id) {
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
           <tr>
-            <td>{{ item.name_en }}</td>
-            <td>{{ categoryLabel(item.category_id) }}</td>
-            <td>{{ item.price_en }}</td>
-            <td>
-              {{ item.is_signature ? 'Yes (' + item.signature_sort_order + ')' : 'No' }}
-            </td>
-            <td>{{ item.is_active ? 'Yes' : 'No' }}</td>
-            <td>
-              <div class="admin-actions" style="margin:0">
-                <button type="button" class="admin-btn secondary" (click)="edit(item)">
-                  Edit
-                </button>
-                <button type="button" class="admin-btn danger" (click)="remove(item)">
-                  Delete
-                </button>
-              </div>
-            </td>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Signature</th>
+            <th>Active</th>
+            <th></th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (item of products(); track item.id) {
+            <tr>
+              <td>{{ item.name_en }}</td>
+              <td>{{ categoryLabel(item.category_id) }}</td>
+              <td>{{ displayPrice(item) }}</td>
+              <td>
+                {{
+                  item.is_signature
+                    ? 'Yes (' + item.signature_sort_order + ')'
+                    : 'No'
+                }}
+              </td>
+              <td>{{ item.is_active ? 'Yes' : 'No' }}</td>
+              <td>
+                <div class="admin-actions" style="margin:0">
+                  <button
+                    type="button"
+                    class="admin-btn secondary admin-btn-sm"
+                    (click)="edit(item)">
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="admin-btn danger admin-btn-sm"
+                    (click)="remove(item)">
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   }
 </div>

@@ -110,6 +110,7 @@ export const menuTranslations = {
     subjectOption: 'استفسار حجز',
     message: 'الرسالة',
     send: 'إرسال الرسالة',
+    sending: 'جاري الإرسال…',
   },
   footer: {
     tagline: 'نحمل روح مشاوي القاهرة إلى مائدتك مع كل قطعة مشوية بإتقان.',

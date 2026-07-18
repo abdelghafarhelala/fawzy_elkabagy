@@ -12,6 +12,7 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { Category, Product } from '../../core/models/menu.models';
 import { LanguageService } from '../../core/services/language.service';
 import { MenuService } from '../../core/services/menu.service';
+import { formatProductPrice } from '../../core/utils/price';
 
 @Component({
   selector: 'app-menu',
@@ -93,9 +94,7 @@ export class Menu implements OnInit {
   }
 
   productPrice(product: Product): string {
-    return this.currentLanguage() === 'ar'
-      ? product.price_ar
-      : product.price_en;
+    return formatProductPrice(product, this.currentLanguage());
   }
 
   productDescription(product: Product): string {

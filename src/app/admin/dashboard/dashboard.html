@@ -1,28 +1,66 @@
 <div class="admin-header">
-  <h1>Dashboard</h1>
+  <div>
+    <p class="admin-eyebrow">Overview</p>
+    <h1>Dashboard</h1>
+  </div>
 </div>
 
-<p class="admin-muted">Manage menu content, PDF, contact info, and messages.</p>
+<p class="admin-lead">
+  Manage menu content, the full-menu PDF, contact details, and inbox messages.
+</p>
 
-<div class="admin-dash-grid" style="margin-top: 1.25rem">
+<div class="admin-dash-grid">
   <a class="admin-dash-card" routerLink="/admin/categories">
+    <span class="admin-dash-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75">
+        <path d="M4 6h16M4 12h16M4 18h10" stroke-linecap="round" />
+      </svg>
+    </span>
     <h2>Categories</h2>
     <p class="admin-muted">Menu tabs (kebab, steaks, …)</p>
+    <span class="admin-dash-go">Open →</span>
   </a>
   <a class="admin-dash-card" routerLink="/admin/products">
+    <span class="admin-dash-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75">
+        <path d="M4 7h16v12H4V7zM8 7V5a4 4 0 0 1 8 0v2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
     <h2>Products</h2>
     <p class="admin-muted">Dishes, prices, signatures</p>
+    <span class="admin-dash-go">Open →</span>
   </a>
   <a class="admin-dash-card" routerLink="/admin/menu-pdf">
+    <span class="admin-dash-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75">
+        <path d="M7 3h7l5 5v13H7V3zM14 3v5h5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M9 13h6M9 17h4" stroke-linecap="round" />
+      </svg>
+    </span>
     <h2>Menu PDF</h2>
     <p class="admin-muted">Full menu download file</p>
+    <span class="admin-dash-go">Open →</span>
   </a>
   <a class="admin-dash-card" routerLink="/admin/reach-out">
+    <span class="admin-dash-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75">
+        <path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z" stroke-linejoin="round" />
+        <circle cx="12" cy="10" r="2.5" />
+      </svg>
+    </span>
     <h2>Reach Out</h2>
     <p class="admin-muted">Location, phone, hours</p>
+    <span class="admin-dash-go">Open →</span>
   </a>
   <a class="admin-dash-card" routerLink="/admin/messages">
+    <span class="admin-dash-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75">
+        <path d="M4 6h16v12H4V6z" stroke-linejoin="round" />
+        <path d="m4 7 8 6 8-6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
     <h2>Messages</h2>
     <p class="admin-muted">Contact form inbox</p>
+    <span class="admin-dash-go">Open →</span>
   </a>
 </div>

@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { LanguageService } from '../../core/services/language.service';
 import { Story } from '../story/story';
@@ -8,7 +9,7 @@ import { Footer } from '../footer/footer';
 
 @Component({
   selector: 'app-home',
-  imports: [TranslatePipe, Story, Menu, ContactUs, Footer],
+  imports: [TranslatePipe, RouterLink, Story, Menu, ContactUs, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

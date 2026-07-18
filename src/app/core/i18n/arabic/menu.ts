@@ -40,6 +40,12 @@ export const menuTranslations = {
       desserts: 'حلويات',
     },
     download: 'تحميل المنيو كاملة (PDF)',
+    emptyCategories: 'أقسام المنيو ستظهر هنا قريباً.',
+    emptyProducts: 'لا توجد أطباق في هذا القسم بعد.',
+    pdfTitle: 'المنيو كاملة',
+    pdfMissing: 'ملف المنيو غير متاح حالياً. يرجى المحاولة لاحقاً.',
+    pdfOpen: 'فتح ملف PDF في تبويب جديد',
+    pdfBackHome: 'العودة للرئيسية',
     items: {
       kofta: {
         name: 'كفتة التوقيع',

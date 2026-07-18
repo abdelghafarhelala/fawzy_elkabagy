@@ -108,12 +108,12 @@
           <span>{{ nextLanguageLabel() }}</span>
         </button>
 
-        <button
-          type="button"
+        <a
+          routerLink="/menu"
           class="rounded-btn bg-primary-color dark-text"
-          (click)="scrollToSection('menu', $event)">
+          (click)="closeMobileMenu()">
           {{ 'navbar.viewMenu' | translate }}
-        </button>
+        </a>
       </div>
     </div>
   </div>
@@ -129,9 +129,9 @@
     <p class="banner-subtitle">{{ 'hero.subtitle' | translate }}</p>
 
     <div class="banner-actions">
-      <button type="button" class="rounded-btn bg-primary-color dark-text" (click)="scrollToSection('menu', $event)">
+      <a routerLink="/menu" class="rounded-btn bg-primary-color dark-text">
         {{ 'hero.viewMenu' | translate }}
-      </button>
+      </a>
       <button type="button" class="rounded-btn-outline" (click)="scrollToSection('contact', $event)">
         {{ 'hero.contactUs' | translate }}
       </button>

@@ -1,105 +1,37 @@
-import { Component, ElementRef, computed, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  computed,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
-
-type MenuTabId = 'kebab' | 'mixed' | 'steaks' | 'sides' | 'desserts';
-
-interface MenuItem {
-  id: string;
-  tab: MenuTabId;
-  image: string;
-  nameKey: string;
-  priceKey: string;
-  descKey: string;
-  badgeKey?: string;
-  tags: { key: string; muted?: boolean }[];
-}
+import { Category, Product } from '../../core/models/menu.models';
+import { LanguageService } from '../../core/services/language.service';
+import { MenuService } from '../../core/services/menu.service';
 
 @Component({
   selector: 'app-menu',
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, RouterLink],
   templateUrl: './menu.html',
   styleUrl: './menu.css',
 })
-export class Menu {
-  private readonly signaturesTrack = viewChild<ElementRef<HTMLElement>>('signaturesTrack');
+export class Menu implements OnInit {
+  private readonly menuService = inject(MenuService);
+  private readonly languageService = inject(LanguageService);
+  private readonly signaturesTrack =
+    viewChild<ElementRef<HTMLElement>>('signaturesTrack');
 
-  activeTab = signal<MenuTabId>('kebab');
+  readonly currentLanguage = this.languageService.currentLanguage;
 
-  readonly tabs = [
-    { id: 'kebab' as const, labelKey: 'menu.tabs.kebab' },
-    { id: 'mixed' as const, labelKey: 'menu.tabs.mixed' },
-    { id: 'steaks' as const, labelKey: 'menu.tabs.steaks' },
-    { id: 'sides' as const, labelKey: 'menu.tabs.sides' },
-    { id: 'desserts' as const, labelKey: 'menu.tabs.desserts' },
-  ];
-
-  readonly items: MenuItem[] = [
-    {
-      id: 'kofta',
-      tab: 'kebab',
-      image: 'images/menu-kofta.jpg',
-      nameKey: 'menu.items.kofta.name',
-      priceKey: 'menu.items.kofta.price',
-      descKey: 'menu.items.kofta.desc',
-      badgeKey: 'menu.items.kofta.badge',
-      tags: [{ key: 'menu.items.kofta.tag1' }, { key: 'menu.items.kofta.tag2' }],
-    },
-    {
-      id: 'lamb',
-      tab: 'kebab',
-      image: 'images/menu-lamb.jpg',
-      nameKey: 'menu.items.lamb.name',
-      priceKey: 'menu.items.lamb.price',
-      descKey: 'menu.items.lamb.desc',
-      tags: [{ key: 'menu.items.lamb.tag1' }],
-    },
-    {
-      id: 'mix',
-      tab: 'kebab',
-      image: 'images/menu-mix.jpg',
-      nameKey: 'menu.items.mix.name',
-      priceKey: 'menu.items.mix.price',
-      descKey: 'menu.items.mix.desc',
-      badgeKey: 'menu.items.mix.badge',
-      tags: [{ key: 'menu.items.mix.tag1' }],
-    },
-    {
-      id: 'royal',
-      tab: 'mixed',
-      image: 'images/menu-mix.jpg',
-      nameKey: 'menu.items.royal.name',
-      priceKey: 'menu.items.royal.price',
-      descKey: 'menu.items.royal.desc',
-      tags: [{ key: 'menu.items.royal.tag1' }, { key: 'menu.items.royal.tag2', muted: true }],
-    },
-    {
-      id: 'steak-1',
-      tab: 'steaks',
-      image: 'images/sig-steaks.jpg',
-      nameKey: 'signatures.steaks.title',
-      priceKey: 'menu.items.lamb.price',
-      descKey: 'signatures.steaks.desc',
-      tags: [{ key: 'menu.items.lamb.tag1' }],
-    },
-    {
-      id: 'side-1',
-      tab: 'sides',
-      image: 'images/sig-garden.jpg',
-      nameKey: 'signatures.garden.title',
-      priceKey: 'menu.items.kofta.price',
-      descKey: 'signatures.garden.desc',
-      tags: [{ key: 'menu.items.kofta.tag1', muted: true }],
-    },
-    {
-      id: 'dessert-1',
-      tab: 'desserts',
-      image: 'images/sig-royal.jpg',
-      nameKey: 'menu.items.mix.name',
-      priceKey: 'menu.items.mix.price',
-      descKey: 'menu.items.mix.desc',
-      tags: [{ key: 'menu.items.mix.tag1' }],
-    },
-  ];
+  isLoading = signal(true);
+  errorMessage = signal<string | null>(null);
+  categories = signal<Category[]>([]);
+  products = signal<Product[]>([]);
+  activeCategoryId = signal<string | null>(null);
 
   readonly signatures = [
     {
@@ -122,14 +54,81 @@ export class Menu {
     },
   ];
 
-  visibleItems = computed(() => {
-    const tab = this.activeTab();
-    const filtered = this.items.filter((item) => item.tab === tab);
-    return filtered.length ? filtered : this.items.filter((item) => item.tab === 'kebab');
+  visibleProducts = computed(() => {
+    const categoryId = this.activeCategoryId();
+    if (!categoryId) {
+      return [];
+    }
+    return this.products().filter(
+      (product) => product.category_id === categoryId,
+    );
   });
 
-  selectTab(tabId: MenuTabId): void {
-    this.activeTab.set(tabId);
+  async ngOnInit(): Promise<void> {
+    await this.loadMenu();
+  }
+
+  async loadMenu(): Promise<void> {
+    this.isLoading.set(true);
+    this.errorMessage.set(null);
+
+    try {
+      const [categories, products] = await Promise.all([
+        this.menuService.getCategories(),
+        this.menuService.getProducts(),
+      ]);
+
+      this.categories.set(categories);
+      this.products.set(products);
+      this.activeCategoryId.set(categories[0]?.id ?? null);
+    } catch {
+      this.errorMessage.set(
+        'Unable to load the menu. Please try again later.',
+      );
+      this.categories.set([]);
+      this.products.set([]);
+      this.activeCategoryId.set(null);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  selectCategory(categoryId: string): void {
+    this.activeCategoryId.set(categoryId);
+  }
+
+  categoryName(category: Category): string {
+    return this.currentLanguage() === 'ar'
+      ? category.name_ar
+      : category.name_en;
+  }
+
+  productName(product: Product): string {
+    return this.currentLanguage() === 'ar'
+      ? product.name_ar
+      : product.name_en;
+  }
+
+  productPrice(product: Product): string {
+    return this.currentLanguage() === 'ar'
+      ? product.price_ar
+      : product.price_en;
+  }
+
+  productDescription(product: Product): string {
+    return this.currentLanguage() === 'ar'
+      ? product.description_ar
+      : product.description_en;
+  }
+
+  productBadge(product: Product): string | null {
+    const badge =
+      this.currentLanguage() === 'ar' ? product.badge_ar : product.badge_en;
+    return badge?.trim() ? badge : null;
+  }
+
+  productTagLabel(tag: { en: string; ar: string }): string {
+    return this.currentLanguage() === 'ar' ? tag.ar : tag.en;
   }
 
   scrollSignatures(direction: -1 | 1): void {

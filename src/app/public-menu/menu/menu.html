@@ -5,46 +5,77 @@
       <p>{{ 'menu.subtitle' | translate }}</p>
     </header>
 
-    <div class="menu-tabs" role="tablist">
-      @for (tab of tabs; track tab.id) {
-        <button
-          type="button"
-          role="tab"
-          [class.active]="activeTab() === tab.id"
-          [attr.aria-selected]="activeTab() === tab.id"
-          (click)="selectTab(tab.id)">
-          {{ tab.labelKey | translate }}
-        </button>
-      }
-    </div>
+    @if (isLoading()) {
+      <div class="menu-loading" role="status" aria-live="polite">
+        <img
+          src="images/loading_logo.gif"
+          alt="Loading menu"
+          width="120"
+          height="120" />
+      </div>
+    } @else if (errorMessage()) {
+      <p class="menu-error" role="alert">{{ errorMessage() }}</p>
+    } @else if (categories().length === 0) {
+      <p class="menu-empty">{{ 'menu.emptyCategories' | translate }}</p>
+    } @else {
+      <div class="menu-tabs" role="tablist">
+        @for (category of categories(); track category.id) {
+          <button
+            type="button"
+            role="tab"
+            [class.active]="activeCategoryId() === category.id"
+            [attr.aria-selected]="activeCategoryId() === category.id"
+            (click)="selectCategory(category.id)">
+            {{ categoryName(category) }}
+          </button>
+        }
+      </div>
 
-    <div class="menu-grid">
-      @for (item of visibleItems(); track item.id) {
-        <article class="menu-card">
-          <div class="menu-card-image">
-            <img [src]="item.image" [alt]="item.nameKey | translate" width="400" height="256" />
-            @if (item.badgeKey) {
-              <span class="menu-badge">{{ item.badgeKey | translate }}</span>
-            }
-          </div>
-          <div class="menu-card-body">
-            <div class="menu-card-top">
-              <h3>{{ item.nameKey | translate }}</h3>
-              <span>{{ item.priceKey | translate }}</span>
-            </div>
-            <p>{{ item.descKey | translate }}</p>
-            <div class="menu-tags">
-              @for (tag of item.tags; track tag.key) {
-                <span class="menu-tag" [class.muted]="tag.muted">{{ tag.key | translate }}</span>
-              }
-            </div>
-          </div>
-        </article>
+      @if (visibleProducts().length === 0) {
+        <p class="menu-empty">{{ 'menu.emptyProducts' | translate }}</p>
+      } @else {
+        <div class="menu-grid">
+          @for (item of visibleProducts(); track item.id) {
+            <article class="menu-card">
+              <div class="menu-card-image">
+                <img
+                  [src]="item.image_url || 'images/menu-kofta.jpg'"
+                  [alt]="productName(item)"
+                  width="400"
+                  height="256"
+                  (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
+                @if (productBadge(item); as badge) {
+                  <span class="menu-badge">{{ badge }}</span>
+                }
+              </div>
+              <div class="menu-card-body">
+                <div class="menu-card-top">
+                  <h3>{{ productName(item) }}</h3>
+                  <span>{{ productPrice(item) }}</span>
+                </div>
+                <p>{{ productDescription(item) }}</p>
+                @if (item.tags.length) {
+                  <div class="menu-tags">
+                    @for (tag of item.tags; track tag.en + tag.ar) {
+                      <span
+                        class="menu-tag"
+                        [class.muted]="tag.muted">
+                        {{ productTagLabel(tag) }}
+                      </span>
+                    }
+                  </div>
+                }
+              </div>
+            </article>
+          }
+        </div>
       }
-    </div>
+    }
 
     <div class="menu-download">
-      <button type="button" class="rounded-btn-outline">{{ 'menu.download' | translate }}</button>
+      <a routerLink="/menu" class="rounded-btn-outline">
+        {{ 'menu.download' | translate }}
+      </a>
     </div>
   </div>
 </section>

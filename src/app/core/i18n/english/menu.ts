@@ -40,6 +40,12 @@ export const menuTranslations = {
       desserts: 'DESSERTS',
     },
     download: 'DOWNLOAD FULL MENU (PDF)',
+    emptyCategories: 'Menu categories will appear here soon.',
+    emptyProducts: 'No dishes in this category yet.',
+    pdfTitle: 'Full Menu',
+    pdfMissing: 'The menu PDF is not available yet. Please check back soon.',
+    pdfOpen: 'Open PDF in new tab',
+    pdfBackHome: 'Back to home',
     items: {
       kofta: {
         name: 'Signature Kofta',

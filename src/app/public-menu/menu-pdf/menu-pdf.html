@@ -1,0 +1,38 @@
+<div class="menu-pdf-page">
+  <header class="menu-pdf-header">
+    <a routerLink="/" class="menu-pdf-back">
+      {{ 'menu.pdfBackHome' | translate }}
+    </a>
+    <h1>{{ 'menu.pdfTitle' | translate }}</h1>
+    @if (fileUrl()) {
+      <a
+        class="menu-pdf-open"
+        [href]="fileUrl()!"
+        target="_blank"
+        rel="noopener noreferrer">
+        {{ 'menu.pdfOpen' | translate }}
+      </a>
+    }
+  </header>
+
+  <main class="menu-pdf-body">
+    @if (isLoading()) {
+      <div class="menu-pdf-loading" role="status" aria-live="polite">
+        <img
+          src="images/loading_logo.gif"
+          alt="Loading menu PDF"
+          width="140"
+          height="140" />
+      </div>
+    } @else if (errorMessage()) {
+      <p class="menu-pdf-error" role="alert">{{ errorMessage() }}</p>
+    } @else if (safePdfUrl()) {
+      <iframe
+        class="menu-pdf-frame"
+        [src]="safePdfUrl()"
+        title="Menu PDF"></iframe>
+    } @else {
+      <p class="menu-pdf-empty">{{ 'menu.pdfMissing' | translate }}</p>
+    }
+  </main>
+</div>

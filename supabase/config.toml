@@ -1,0 +1,14 @@
+# Supabase local config mirror for fawzyElkababgy
+# Project created on Free plan via MCP
+
+[project]
+id = "zveiywuiiyvokicmptxg"
+name = "fawzyElkababgy"
+organization_id = "pohlbcftdctjlbiifoqh"
+region = "eu-central-1"
+
+[api]
+enabled = true
+
+[db]
+major_version = 15

@@ -1,1 +1,36 @@
-/* Styles live in public-menu.css */
+.menu-loading,
+.menu-empty,
+.menu-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.menu-loading img {
+  display: block;
+  max-width: 140px;
+  height: auto;
+}
+
+.menu-empty {
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+
+.menu-error {
+  color: #e85a5a;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  user-select: text;
+}
+
+.menu-download .rounded-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}

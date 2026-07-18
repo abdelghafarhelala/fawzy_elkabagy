@@ -1,7 +1,7 @@
 <div class="admin-header">
   <div>
-    <p class="admin-eyebrow">Content</p>
-    <h1>Reach Out</h1>
+    <p class="admin-eyebrow">{{ 'admin.common.eyebrowContent' | translate }}</p>
+    <h1>{{ 'admin.reachOut.title' | translate }}</h1>
   </div>
 </div>
 
@@ -14,32 +14,44 @@
 
 <div class="admin-card">
   @if (isLoading()) {
-    <p class="admin-muted">Loading…</p>
+    <p class="admin-muted">{{ 'admin.common.loading' | translate }}</p>
   } @else {
     <form class="admin-form-grid" (ngSubmit)="save()">
       <label>
-        Location (EN)
+        {{ 'admin.reachOut.locationEn' | translate }}
         <input name="location_en" [(ngModel)]="form.location_en" required />
       </label>
       <label>
-        Location (AR)
-        <input name="location_ar" [(ngModel)]="form.location_ar" required dir="rtl" />
+        {{ 'admin.reachOut.locationAr' | translate }}
+        <input
+          name="location_ar"
+          [(ngModel)]="form.location_ar"
+          required
+          dir="rtl" />
       </label>
       <label>
-        Phone
+        {{ 'admin.reachOut.phone' | translate }}
         <input name="phone" [(ngModel)]="form.phone" required />
       </label>
       <label>
-        Hours (EN)
+        {{ 'admin.reachOut.hoursEn' | translate }}
         <input name="hours_en" [(ngModel)]="form.hours_en" required />
       </label>
       <label>
-        Hours (AR)
-        <input name="hours_ar" [(ngModel)]="form.hours_ar" required dir="rtl" />
+        {{ 'admin.reachOut.hoursAr' | translate }}
+        <input
+          name="hours_ar"
+          [(ngModel)]="form.hours_ar"
+          required
+          dir="rtl" />
       </label>
       <div class="admin-actions">
         <button class="admin-btn" type="submit" [disabled]="isSaving()">
-          {{ isSaving() ? 'Saving…' : 'Save' }}
+          {{
+            isSaving()
+              ? ('admin.common.saving' | translate)
+              : ('admin.common.save' | translate)
+          }}
         </button>
       </div>
     </form>

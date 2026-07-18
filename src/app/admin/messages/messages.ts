@@ -1,16 +1,19 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { ContactMessage } from '../../core/models/admin.models';
 import { AdminService } from '../../core/services/admin.service';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-admin-messages',
-  imports: [DatePipe],
+  imports: [DatePipe, TranslatePipe],
   templateUrl: './messages.html',
   styleUrl: '../admin.css',
 })
 export class AdminMessages implements OnInit {
   private readonly admin = inject(AdminService);
+  private readonly i18n = inject(TranslationService);
 
   messages = signal<ContactMessage[]>([]);
   isLoading = signal(true);
@@ -26,7 +29,9 @@ export class AdminMessages implements OnInit {
     try {
       this.messages.set(await this.admin.listMessages());
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to load messages'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.messages.loadFailed')),
+      );
     } finally {
       this.isLoading.set(false);
     }
@@ -37,19 +42,29 @@ export class AdminMessages implements OnInit {
       await this.admin.setMessageRead(msg.id, !msg.is_read);
       await this.reload();
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to update'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.messages.updateFailed')),
+      );
     }
   }
 
   async remove(msg: ContactMessage): Promise<void> {
-    if (!confirm(`Delete message from ${msg.full_name}?`)) {
+    if (
+      !confirm(
+        this.i18n.t('admin.messages.deleteConfirm', {
+          name: msg.full_name,
+        }),
+      )
+    ) {
       return;
     }
     try {
       await this.admin.deleteMessage(msg.id);
       await this.reload();
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to delete'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.messages.deleteFailed')),
+      );
     }
   }
 

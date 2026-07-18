@@ -1,16 +1,19 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { Category } from '../../core/models/menu.models';
 import { AdminService } from '../../core/services/admin.service';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-admin-categories',
-  imports: [FormsModule],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: './categories.html',
   styleUrl: '../admin.css',
 })
 export class AdminCategories implements OnInit {
   private readonly admin = inject(AdminService);
+  private readonly i18n = inject(TranslationService);
 
   categories = signal<Category[]>([]);
   isLoading = signal(true);
@@ -66,7 +69,9 @@ export class AdminCategories implements OnInit {
     try {
       this.categories.set(await this.admin.listCategories());
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to load categories'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.categories.loadFailed')),
+      );
     } finally {
       this.isLoading.set(false);
     }
@@ -85,25 +90,35 @@ export class AdminCategories implements OnInit {
         sort_order: Number(this.form.sort_order) || 0,
         is_active: this.form.is_active,
       });
-      this.successMessage.set('Category saved.');
+      this.successMessage.set(this.i18n.t('admin.categories.saved'));
       await this.reload();
       this.resetForm();
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to save category'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.categories.saveFailed')),
+      );
     } finally {
       this.isSaving.set(false);
     }
   }
 
   async remove(category: Category): Promise<void> {
-    if (!confirm(`Soft-delete category “${category.name_en}”?`)) {
+    if (
+      !confirm(
+        this.i18n.t('admin.categories.deleteConfirm', {
+          name: category.name_en,
+        }),
+      )
+    ) {
       return;
     }
     try {
       await this.admin.softDeleteCategory(category.id);
       await this.reload();
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to delete category'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.categories.deleteFailed')),
+      );
     }
   }
 

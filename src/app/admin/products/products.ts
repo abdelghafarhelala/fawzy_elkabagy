@@ -1,17 +1,20 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { Category, Product, ProductTag } from '../../core/models/menu.models';
 import { AdminService } from '../../core/services/admin.service';
+import { TranslationService } from '../../core/services/translation.service';
 import { parsePriceAmount } from '../../core/utils/price';
 
 @Component({
   selector: 'app-admin-products',
-  imports: [FormsModule],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: './products.html',
   styleUrl: '../admin.css',
 })
 export class AdminProducts implements OnInit {
   private readonly admin = inject(AdminService);
+  private readonly i18n = inject(TranslationService);
 
   categories = signal<Category[]>([]);
   products = signal<Product[]>([]);
@@ -146,7 +149,9 @@ export class AdminProducts implements OnInit {
         ? Math.max(...signatures.map((p) => p.signature_sort_order))
         : -1;
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to load products'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.products.loadFailed')),
+      );
     } finally {
       this.isLoading.set(false);
     }
@@ -154,13 +159,13 @@ export class AdminProducts implements OnInit {
 
   async save(): Promise<void> {
     if (!this.form.category_id) {
-      this.errorMessage.set('Select a category.');
+      this.errorMessage.set(this.i18n.t('admin.products.selectCategory'));
       return;
     }
 
     const price = parsePriceAmount(this.form.price) || this.form.price.trim();
     if (!price) {
-      this.errorMessage.set('Enter a price.');
+      this.errorMessage.set(this.i18n.t('admin.products.priceRequired'));
       return;
     }
 
@@ -193,25 +198,35 @@ export class AdminProducts implements OnInit {
         is_active: this.form.is_active,
       });
 
-      this.successMessage.set('Product saved.');
+      this.successMessage.set(this.i18n.t('admin.products.saved'));
       await this.reload();
       this.resetForm();
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to save product'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.products.saveFailed')),
+      );
     } finally {
       this.isSaving.set(false);
     }
   }
 
   async remove(product: Product): Promise<void> {
-    if (!confirm(`Soft-delete “${product.name_en}”?`)) {
+    if (
+      !confirm(
+        this.i18n.t('admin.products.deleteConfirm', {
+          name: product.name_en,
+        }),
+      )
+    ) {
       return;
     }
     try {
       await this.admin.softDeleteProduct(product.id);
       await this.reload();
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to delete product'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.products.deleteFailed')),
+      );
     }
   }
 

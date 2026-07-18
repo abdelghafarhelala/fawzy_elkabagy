@@ -1,7 +1,7 @@
 <div class="admin-header">
   <div>
-    <p class="admin-eyebrow">Content</p>
-    <h1>Menu PDF</h1>
+    <p class="admin-eyebrow">{{ 'admin.common.eyebrowContent' | translate }}</p>
+    <h1>{{ 'admin.menuPdf.title' | translate }}</h1>
   </div>
 </div>
 
@@ -14,21 +14,21 @@
 
 <div class="admin-card">
   @if (isLoading()) {
-    <p class="admin-muted">Loading…</p>
+    <p class="admin-muted">{{ 'admin.common.loading' | translate }}</p>
   } @else if (current(); as pdf) {
-    <p class="admin-muted">Current file updated: {{ pdf.updated_at }}</p>
+    <p class="admin-muted">{{ currentUpdatedLabel(pdf.updated_at) }}</p>
     <p>
       <a [href]="pdf.file_url" target="_blank" rel="noopener noreferrer">
-        Open current PDF
+        {{ 'admin.menuPdf.openCurrent' | translate }}
       </a>
     </p>
   } @else {
-    <p class="admin-muted">No PDF uploaded yet.</p>
+    <p class="admin-muted">{{ 'admin.menuPdf.none' | translate }}</p>
   }
 
   <div class="admin-field" style="margin-top: 1rem">
     <label>
-      Upload PDF
+      {{ 'admin.menuPdf.upload' | translate }}
       <input type="file" accept="application/pdf" (change)="onFileChange($event)" />
     </label>
   </div>
@@ -39,7 +39,11 @@
       class="admin-btn"
       (click)="upload()"
       [disabled]="isUploading()">
-      {{ isUploading() ? 'Uploading…' : 'Upload' }}
+      {{
+        isUploading()
+          ? ('admin.menuPdf.uploading' | translate)
+          : ('admin.menuPdf.uploadBtn' | translate)
+      }}
     </button>
   </div>
 </div>

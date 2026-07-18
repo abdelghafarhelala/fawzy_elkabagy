@@ -1,12 +1,23 @@
 <div class="admin-page admin-login-wrap">
   <div class="admin-login-card">
-    <p class="admin-eyebrow">Fawzy Elkababgy</p>
-    <h1>Admin Login</h1>
-    <p class="admin-muted">Sign in to manage the restaurant dashboard.</p>
+    <div class="admin-login-top">
+      <div>
+        <p class="admin-eyebrow">{{ 'admin.login.eyebrow' | translate }}</p>
+        <h1>{{ 'admin.login.title' | translate }}</h1>
+        <p class="admin-muted">{{ 'admin.login.subtitle' | translate }}</p>
+      </div>
+      <button
+        type="button"
+        class="admin-lang-toggle"
+        (click)="toggleLanguage()"
+        [attr.aria-label]="'admin.langAria' | translate">
+        <span>{{ nextLanguageLabel() }}</span>
+      </button>
+    </div>
 
     <form class="admin-form-grid" style="margin-top: 1.25rem" (ngSubmit)="onSubmit()">
       <label>
-        Email
+        {{ 'admin.login.email' | translate }}
         <input
           type="email"
           name="email"
@@ -15,7 +26,7 @@
           required />
       </label>
       <label>
-        Password
+        {{ 'admin.login.password' | translate }}
         <input
           type="password"
           name="password"
@@ -30,9 +41,15 @@
 
       <div class="admin-actions">
         <button class="admin-btn" type="submit" [disabled]="isSubmitting()">
-          {{ isSubmitting() ? 'Signing in…' : 'Sign in' }}
+          {{
+            isSubmitting()
+              ? ('admin.login.signingIn' | translate)
+              : ('admin.login.signIn' | translate)
+          }}
         </button>
-        <a routerLink="/" class="admin-btn secondary">Back to site</a>
+        <a routerLink="/" class="admin-btn secondary">
+          {{ 'admin.login.backToSite' | translate }}
+        </a>
       </div>
     </form>
   </div>

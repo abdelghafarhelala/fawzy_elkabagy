@@ -1,15 +1,18 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { AdminService } from '../../core/services/admin.service';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-admin-reach-out',
-  imports: [FormsModule],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: './reach-out.html',
   styleUrl: '../admin.css',
 })
 export class AdminReachOut implements OnInit {
   private readonly admin = inject(AdminService);
+  private readonly i18n = inject(TranslationService);
 
   isLoading = signal(true);
   isSaving = signal(false);
@@ -40,7 +43,9 @@ export class AdminReachOut implements OnInit {
         };
       }
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to load reach out'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.reachOut.loadFailed')),
+      );
     } finally {
       this.isLoading.set(false);
     }
@@ -59,9 +64,11 @@ export class AdminReachOut implements OnInit {
         hours_en: this.form.hours_en.trim(),
         hours_ar: this.form.hours_ar.trim(),
       });
-      this.successMessage.set('Reach Out saved.');
+      this.successMessage.set(this.i18n.t('admin.reachOut.saved'));
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to save'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.reachOut.saveFailed')),
+      );
     } finally {
       this.isSaving.set(false);
     }

@@ -1,10 +1,10 @@
 <div class="admin-header">
   <div>
-    <p class="admin-eyebrow">Catalog</p>
-    <h1>Categories</h1>
+    <p class="admin-eyebrow">{{ 'admin.common.eyebrowCatalog' | translate }}</p>
+    <h1>{{ 'admin.categories.title' | translate }}</h1>
   </div>
   <button type="button" class="admin-btn secondary" (click)="resetForm()">
-    New category
+    {{ 'admin.categories.new' | translate }}
   </button>
 </div>
 
@@ -17,52 +17,62 @@
 
 <div class="admin-card">
   <h2 class="admin-card-title">
-    {{ form.id ? 'Edit category' : 'Create category' }}
+    {{
+      form.id
+        ? ('admin.categories.edit' | translate)
+        : ('admin.categories.create' | translate)
+    }}
   </h2>
   <form class="admin-form-grid" (ngSubmit)="save()">
     <label>
-      Slug
+      {{ 'admin.categories.slug' | translate }}
       <input name="slug" [(ngModel)]="form.slug" required />
     </label>
     <label>
-      Name (EN)
+      {{ 'admin.common.nameEn' | translate }}
       <input name="name_en" [(ngModel)]="form.name_en" required />
     </label>
     <label>
-      Name (AR)
+      {{ 'admin.common.nameAr' | translate }}
       <input name="name_ar" [(ngModel)]="form.name_ar" required dir="rtl" />
     </label>
     <label>
-      Sort order
+      {{ 'admin.common.sortOrder' | translate }}
       <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
-      <span class="admin-field-note">Defaults to last position for new items.</span>
+      <span class="admin-field-note">
+        {{ 'admin.common.sortOrderNote' | translate }}
+      </span>
     </label>
     <label class="admin-check">
       <input type="checkbox" name="is_active" [(ngModel)]="form.is_active" />
-      Active
+      {{ 'admin.common.active' | translate }}
     </label>
     <div class="admin-actions">
       <button class="admin-btn" type="submit" [disabled]="isSaving()">
-        {{ isSaving() ? 'Saving…' : 'Save' }}
+        {{
+          isSaving()
+            ? ('admin.common.saving' | translate)
+            : ('admin.common.save' | translate)
+        }}
       </button>
     </div>
   </form>
 </div>
 
 <div class="admin-card">
-  <h2 class="admin-card-title">All categories</h2>
+  <h2 class="admin-card-title">{{ 'admin.categories.all' | translate }}</h2>
   @if (isLoading()) {
-    <p class="admin-muted">Loading…</p>
+    <p class="admin-muted">{{ 'admin.common.loading' | translate }}</p>
   } @else {
     <div class="admin-table-wrap">
       <table class="admin-table">
         <thead>
           <tr>
-            <th>Order</th>
-            <th>Slug</th>
-            <th>EN</th>
-            <th>AR</th>
-            <th>Active</th>
+            <th>{{ 'admin.categories.order' | translate }}</th>
+            <th>{{ 'admin.categories.slug' | translate }}</th>
+            <th>{{ 'admin.categories.en' | translate }}</th>
+            <th>{{ 'admin.categories.ar' | translate }}</th>
+            <th>{{ 'admin.common.active' | translate }}</th>
             <th></th>
           </tr>
         </thead>
@@ -73,20 +83,26 @@
               <td>{{ cat.slug }}</td>
               <td>{{ cat.name_en }}</td>
               <td dir="rtl">{{ cat.name_ar }}</td>
-              <td>{{ cat.is_active ? 'Yes' : 'No' }}</td>
+              <td>
+                {{
+                  cat.is_active
+                    ? ('admin.common.yes' | translate)
+                    : ('admin.common.no' | translate)
+                }}
+              </td>
               <td>
                 <div class="admin-actions" style="margin:0">
                   <button
                     type="button"
                     class="admin-btn secondary admin-btn-sm"
                     (click)="edit(cat)">
-                    Edit
+                    {{ 'admin.common.edit' | translate }}
                   </button>
                   <button
                     type="button"
                     class="admin-btn danger admin-btn-sm"
                     (click)="remove(cat)">
-                    Delete
+                    {{ 'admin.common.delete' | translate }}
                   </button>
                 </div>
               </td>

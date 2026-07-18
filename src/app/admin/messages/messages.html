@@ -1,9 +1,11 @@
 <div class="admin-header">
   <div>
-    <p class="admin-eyebrow">Inbox</p>
-    <h1>Messages</h1>
+    <p class="admin-eyebrow">{{ 'admin.common.eyebrowInbox' | translate }}</p>
+    <h1>{{ 'admin.messages.title' | translate }}</h1>
   </div>
-  <button type="button" class="admin-btn secondary" (click)="reload()">Refresh</button>
+  <button type="button" class="admin-btn secondary" (click)="reload()">
+    {{ 'admin.messages.refresh' | translate }}
+  </button>
 </div>
 
 @if (errorMessage()) {
@@ -12,44 +14,58 @@
 
 <div class="admin-card">
   @if (isLoading()) {
-    <p class="admin-muted">Loading…</p>
+    <p class="admin-muted">{{ 'admin.common.loading' | translate }}</p>
   } @else if (messages().length === 0) {
-    <p class="admin-muted">No messages yet.</p>
+    <p class="admin-muted">{{ 'admin.messages.empty' | translate }}</p>
   } @else {
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>When</th>
-          <th>From</th>
-          <th>Subject</th>
-          <th>Message</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (msg of messages(); track msg.id) {
-          <tr [class.admin-unread]="!msg.is_read">
-            <td>{{ msg.created_at | date: 'short' }}</td>
-            <td>
-              {{ msg.full_name }}
-              <br />
-              <a [href]="'mailto:' + msg.email">{{ msg.email }}</a>
-            </td>
-            <td>{{ msg.subject || '—' }}</td>
-            <td style="max-width: 280px; white-space: pre-wrap">{{ msg.message }}</td>
-            <td>
-              <div class="admin-actions" style="margin:0">
-                <button type="button" class="admin-btn secondary" (click)="toggleRead(msg)">
-                  {{ msg.is_read ? 'Mark unread' : 'Mark read' }}
-                </button>
-                <button type="button" class="admin-btn danger" (click)="remove(msg)">
-                  Delete
-                </button>
-              </div>
-            </td>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>{{ 'admin.messages.when' | translate }}</th>
+            <th>{{ 'admin.messages.from' | translate }}</th>
+            <th>{{ 'admin.messages.subject' | translate }}</th>
+            <th>{{ 'admin.messages.message' | translate }}</th>
+            <th></th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (msg of messages(); track msg.id) {
+            <tr [class.admin-unread]="!msg.is_read">
+              <td>{{ msg.created_at | date: 'short' }}</td>
+              <td>
+                {{ msg.full_name }}
+                <br />
+                <a [href]="'mailto:' + msg.email">{{ msg.email }}</a>
+              </td>
+              <td>{{ msg.subject || '—' }}</td>
+              <td style="max-width: 280px; white-space: pre-wrap">
+                {{ msg.message }}
+              </td>
+              <td>
+                <div class="admin-actions" style="margin:0">
+                  <button
+                    type="button"
+                    class="admin-btn secondary admin-btn-sm"
+                    (click)="toggleRead(msg)">
+                    {{
+                      msg.is_read
+                        ? ('admin.messages.markUnread' | translate)
+                        : ('admin.messages.markRead' | translate)
+                    }}
+                  </button>
+                  <button
+                    type="button"
+                    class="admin-btn danger admin-btn-sm"
+                    (click)="remove(msg)">
+                    {{ 'admin.common.delete' | translate }}
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   }
 </div>

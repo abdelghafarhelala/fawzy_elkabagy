@@ -1,14 +1,18 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { MenuPdf } from '../../core/models/menu.models';
 import { AdminService } from '../../core/services/admin.service';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-admin-menu-pdf',
+  imports: [TranslatePipe],
   templateUrl: './menu-pdf.html',
   styleUrl: '../admin.css',
 })
 export class AdminMenuPdf implements OnInit {
   private readonly admin = inject(AdminService);
+  private readonly i18n = inject(TranslationService);
 
   current = signal<MenuPdf | null>(null);
   isLoading = signal(true);
@@ -32,7 +36,9 @@ export class AdminMenuPdf implements OnInit {
     try {
       this.current.set(await this.admin.getLatestMenuPdf());
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Failed to load PDF'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.menuPdf.loadFailed')),
+      );
     } finally {
       this.isLoading.set(false);
     }
@@ -40,7 +46,7 @@ export class AdminMenuPdf implements OnInit {
 
   async upload(): Promise<void> {
     if (!this.selectedFile) {
-      this.errorMessage.set('Choose a PDF file first.');
+      this.errorMessage.set(this.i18n.t('admin.menuPdf.chooseFile'));
       return;
     }
 
@@ -52,12 +58,18 @@ export class AdminMenuPdf implements OnInit {
       const pdf = await this.admin.uploadMenuPdf(this.selectedFile);
       this.current.set(pdf);
       this.selectedFile = null;
-      this.successMessage.set('Menu PDF uploaded.');
+      this.successMessage.set(this.i18n.t('admin.menuPdf.saved'));
     } catch (err: unknown) {
-      this.errorMessage.set(this.errMsg(err, 'Upload failed'));
+      this.errorMessage.set(
+        this.errMsg(err, this.i18n.t('admin.menuPdf.uploadFailed')),
+      );
     } finally {
       this.isUploading.set(false);
     }
+  }
+
+  currentUpdatedLabel(date: string): string {
+    return this.i18n.t('admin.menuPdf.currentUpdated', { date });
   }
 
   private errMsg(err: unknown, fallback: string): string {

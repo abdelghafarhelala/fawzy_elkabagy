@@ -1,13 +1,11 @@
 <div class="admin-header">
   <div>
-    <p class="admin-eyebrow">Overview</p>
-    <h1>Dashboard</h1>
+    <p class="admin-eyebrow">{{ 'admin.common.eyebrowOverview' | translate }}</p>
+    <h1>{{ 'admin.dashboard.title' | translate }}</h1>
   </div>
 </div>
 
-<p class="admin-lead">
-  Manage menu content, the full-menu PDF, contact details, and inbox messages.
-</p>
+<p class="admin-lead">{{ 'admin.dashboard.lead' | translate }}</p>
 
 <div class="admin-dash-grid">
   <a class="admin-dash-card" routerLink="/admin/categories">
@@ -16,9 +14,9 @@
         <path d="M4 6h16M4 12h16M4 18h10" stroke-linecap="round" />
       </svg>
     </span>
-    <h2>Categories</h2>
-    <p class="admin-muted">Menu tabs (kebab, steaks, …)</p>
-    <span class="admin-dash-go">Open →</span>
+    <h2>{{ 'admin.dashboard.categoriesTitle' | translate }}</h2>
+    <p class="admin-muted">{{ 'admin.dashboard.categoriesDesc' | translate }}</p>
+    <span class="admin-dash-go">{{ 'admin.dashboard.open' | translate }}</span>
   </a>
   <a class="admin-dash-card" routerLink="/admin/products">
     <span class="admin-dash-icon" aria-hidden="true">
@@ -26,9 +24,9 @@
         <path d="M4 7h16v12H4V7zM8 7V5a4 4 0 0 1 8 0v2" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </span>
-    <h2>Products</h2>
-    <p class="admin-muted">Dishes, prices, signatures</p>
-    <span class="admin-dash-go">Open →</span>
+    <h2>{{ 'admin.dashboard.productsTitle' | translate }}</h2>
+    <p class="admin-muted">{{ 'admin.dashboard.productsDesc' | translate }}</p>
+    <span class="admin-dash-go">{{ 'admin.dashboard.open' | translate }}</span>
   </a>
   <a class="admin-dash-card" routerLink="/admin/menu-pdf">
     <span class="admin-dash-icon" aria-hidden="true">
@@ -37,9 +35,9 @@
         <path d="M9 13h6M9 17h4" stroke-linecap="round" />
       </svg>
     </span>
-    <h2>Menu PDF</h2>
-    <p class="admin-muted">Full menu download file</p>
-    <span class="admin-dash-go">Open →</span>
+    <h2>{{ 'admin.dashboard.menuPdfTitle' | translate }}</h2>
+    <p class="admin-muted">{{ 'admin.dashboard.menuPdfDesc' | translate }}</p>
+    <span class="admin-dash-go">{{ 'admin.dashboard.open' | translate }}</span>
   </a>
   <a class="admin-dash-card" routerLink="/admin/reach-out">
     <span class="admin-dash-icon" aria-hidden="true">
@@ -48,9 +46,9 @@
         <circle cx="12" cy="10" r="2.5" />
       </svg>
     </span>
-    <h2>Reach Out</h2>
-    <p class="admin-muted">Location, phone, hours</p>
-    <span class="admin-dash-go">Open →</span>
+    <h2>{{ 'admin.dashboard.reachOutTitle' | translate }}</h2>
+    <p class="admin-muted">{{ 'admin.dashboard.reachOutDesc' | translate }}</p>
+    <span class="admin-dash-go">{{ 'admin.dashboard.open' | translate }}</span>
   </a>
   <a class="admin-dash-card" routerLink="/admin/messages">
     <span class="admin-dash-icon" aria-hidden="true">
@@ -59,8 +57,8 @@
         <path d="m4 7 8 6 8-6" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </span>
-    <h2>Messages</h2>
-    <p class="admin-muted">Contact form inbox</p>
-    <span class="admin-dash-go">Open →</span>
+    <h2>{{ 'admin.dashboard.messagesTitle' | translate }}</h2>
+    <p class="admin-muted">{{ 'admin.dashboard.messagesDesc' | translate }}</p>
+    <span class="admin-dash-go">{{ 'admin.dashboard.open' | translate }}</span>
   </a>
 </div>

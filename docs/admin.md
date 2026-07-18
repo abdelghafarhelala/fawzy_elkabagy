@@ -4,6 +4,13 @@ English-only admin UI for managing site content. Public website stays bilingual.
 
 ## URLs
 
+On GitHub Pages (project site), use the repo base path:
+
+- Site: `https://abdelghafarhelala.github.io/fawzy_elkabagy/`
+- Login: `https://abdelghafarhelala.github.io/fawzy_elkabagy/admin/login`
+
+Deep links work after deploy copies `index.html` → `404.html` (SPA fallback in GitHub Actions).
+
 | Path | Purpose |
 |------|---------|
 | `/admin/login` | Email/password login (Supabase Auth) |

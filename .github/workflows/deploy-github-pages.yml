@@ -36,9 +36,15 @@ jobs:
       - name: Add .nojekyll (disable Jekyll README fallback)
         run: touch dist/restro-menu/browser/.nojekyll
 
+      # GitHub Pages has no SPA rewrite; serve index.html for deep links
+      # like /admin/login and /menu via 404.html fallback.
+      - name: SPA fallback for GitHub Pages
+        run: cp dist/restro-menu/browser/index.html dist/restro-menu/browser/404.html
+
       - name: Verify build output
         run: |
           test -f dist/restro-menu/browser/index.html
+          test -f dist/restro-menu/browser/404.html
           grep -q 'app-root' dist/restro-menu/browser/index.html
           grep -q 'base href="/fawzy_elkabagy/"' dist/restro-menu/browser/index.html
           ls -la dist/restro-menu/browser

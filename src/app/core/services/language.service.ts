@@ -8,7 +8,7 @@ export type Language = 'en' | 'ar';
 })
 export class LanguageService {
   private readonly LANGUAGE_KEY = 'menu-language';
-  private _currentLanguage = signal<Language>('en'); // Default to English
+  private _currentLanguage = signal<Language>('ar'); // Default to Arabic
   private directionService = inject(DirectionService);
 
   currentLanguage = computed(() => this._currentLanguage());
@@ -25,7 +25,7 @@ export class LanguageService {
     if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'ar')) {
       this._currentLanguage.set(savedLanguage);
     } else {
-      this._currentLanguage.set('en');
+      this._currentLanguage.set('ar');
     }
     this.applyLanguage();
 
@@ -55,6 +55,6 @@ export class LanguageService {
 
   resetToDefault(): void {
     localStorage.removeItem(this.LANGUAGE_KEY);
-    this.setLanguage('en'); // Default to English on logout
+    this.setLanguage('ar'); // Default to Arabic on logout
   }
 }

@@ -15,6 +15,11 @@
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
+[dir='rtl'] {
+  --font-sans: 'Cairo', system-ui, sans-serif;
+  --font-serif: 'Cairo', system-ui, sans-serif;
+}
+
 html {
   scroll-behavior: smooth;
   width: 100%;

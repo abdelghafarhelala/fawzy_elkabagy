@@ -121,6 +121,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  /* Keep pages visible while pinching; avoid layout thrash */
+  touch-action: pan-x pan-y pinch-zoom;
 }
 
 .menu-pdf-page-canvas {
@@ -128,8 +130,10 @@
   height: auto;
   display: block;
   border-radius: 8px;
-  background: #fff;
+  background: #1a120c;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  /* Prefer crisp downscale from high-res bitmap */
+  image-rendering: auto;
 }
 
 .menu-pdf-page-meta {

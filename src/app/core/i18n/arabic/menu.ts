@@ -7,9 +7,9 @@ export const menuTranslations = {
     viewMenu: 'عرض المنيو',
   },
   hero: {
-    line1: 'أصل الصنعة',
-    line2: 'ملك المشويات في مصر',
-    subtitle: 'مشوي من الاخر',
+    line1: 'ملك المشويات',
+    line2: 'في مصر',
+    subtitle: '',
     viewMenu: 'عرض المنيو',
     contactUs: 'تواصل معنا',
   },

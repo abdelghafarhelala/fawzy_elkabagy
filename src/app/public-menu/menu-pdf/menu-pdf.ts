@@ -16,7 +16,7 @@ import {
   type PDFDocumentProxy,
 } from 'pdfjs-dist';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
-import { MenuService } from '../../core/services/menu.service';
+import { MenuPdfPrefetchService } from '../../core/services/menu-pdf-prefetch.service';
 
 // Keep in sync with installed pdfjs-dist version (package.json).
 GlobalWorkerOptions.workerSrc =
@@ -29,7 +29,7 @@ GlobalWorkerOptions.workerSrc =
   styleUrl: './menu-pdf.css',
 })
 export class MenuPdf implements OnInit, OnDestroy {
-  private readonly menuService = inject(MenuService);
+  private readonly pdfPrefetch = inject(MenuPdfPrefetchService);
   private readonly injector = inject(Injector);
   private readonly pagesHost =
     viewChild<ElementRef<HTMLDivElement>>('pagesHost');
@@ -44,7 +44,6 @@ export class MenuPdf implements OnInit, OnDestroy {
   private renderToken = 0;
   private lastCssWidth = 0;
   private readonly onOrientation = () => {
-    // Orientation only — never re-render on pinch-zoom / URL bar show-hide.
     window.setTimeout(() => {
       void this.renderAllPages({ force: true });
     }, 250);
@@ -68,11 +67,15 @@ export class MenuPdf implements OnInit, OnDestroy {
 
     this.isDownloading.set(true);
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+      const cached = this.pdfPrefetch.getCachedBlob();
+      let blob = cached;
+      if (!blob) {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        blob = await response.blob();
       }
-      const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = blobUrl;
@@ -94,15 +97,16 @@ export class MenuPdf implements OnInit, OnDestroy {
     this.teardownViewer();
 
     try {
-      const pdf = await this.menuService.getLatestMenuPdf();
-      if (!pdf?.file_url) {
+      // Uses in-memory blob when home already warmed the PDF.
+      const ready = await this.pdfPrefetch.getPdfForViewer();
+      if (!ready) {
         this.fileUrl.set(null);
         return;
       }
 
-      this.fileUrl.set(pdf.file_url);
+      this.fileUrl.set(ready.meta.file_url);
       const loadingTask = getDocument({
-        url: pdf.file_url,
+        data: new Uint8Array(ready.data),
         withCredentials: false,
       });
       this.pdfDoc = await loadingTask.promise;
@@ -113,7 +117,8 @@ export class MenuPdf implements OnInit, OnDestroy {
         afterNextRender(() => resolve(), { injector: this.injector });
       });
 
-      await this.renderAllPages({ force: true });
+      // First page ASAP, then remaining pages (feels much faster).
+      await this.renderAllPages({ force: true, progressive: true });
     } catch {
       this.errorMessage.set(
         'Unable to load the menu PDF. Please try again later.',
@@ -126,11 +131,12 @@ export class MenuPdf implements OnInit, OnDestroy {
   }
 
   /**
-   * Render once at high pixel density. Pinch-zoom must NOT re-render
+   * Render at high pixel density. Pinch-zoom must NOT re-render
    * (that caused white flashing on mobile).
    */
   private async renderAllPages(options?: {
     force?: boolean;
+    progressive?: boolean;
   }): Promise<void> {
     const host = this.pagesHost()?.nativeElement;
     const doc = this.pdfDoc;
@@ -139,7 +145,6 @@ export class MenuPdf implements OnInit, OnDestroy {
     }
 
     const cssWidth = Math.max(host.clientWidth, 280);
-    // Skip tiny layout jitters (keyboard / URL bar), keep orientation updates.
     if (
       !options?.force &&
       this.lastCssWidth > 0 &&
@@ -150,57 +155,86 @@ export class MenuPdf implements OnInit, OnDestroy {
 
     const token = ++this.renderToken;
     const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
-    // Extra pixels so zoom-in stays readable on phones.
     const zoomHeadroom = cssWidth < 900 ? 2 : 1.35;
     const targetPixelWidth = Math.min(
       Math.round(cssWidth * dpr * zoomHeadroom),
       2400,
     );
 
-    // Build off-DOM so the page doesn't go blank while drawing.
-    const fragment = document.createDocumentFragment();
-
-    for (let pageNumber = 1; pageNumber <= doc.numPages; pageNumber++) {
+    if (options?.progressive) {
+      host.replaceChildren();
+      for (let pageNumber = 1; pageNumber <= doc.numPages; pageNumber++) {
+        if (token !== this.renderToken) {
+          return;
+        }
+        const canvas = await this.renderPageCanvas(
+          doc,
+          pageNumber,
+          targetPixelWidth,
+        );
+        if (token !== this.renderToken || !canvas) {
+          return;
+        }
+        host.appendChild(canvas);
+      }
+    } else {
+      const fragment = document.createDocumentFragment();
+      for (let pageNumber = 1; pageNumber <= doc.numPages; pageNumber++) {
+        if (token !== this.renderToken) {
+          return;
+        }
+        const canvas = await this.renderPageCanvas(
+          doc,
+          pageNumber,
+          targetPixelWidth,
+        );
+        if (token !== this.renderToken || !canvas) {
+          return;
+        }
+        fragment.appendChild(canvas);
+      }
       if (token !== this.renderToken) {
         return;
       }
-
-      const page = await doc.getPage(pageNumber);
-      const baseViewport = page.getViewport({ scale: 1 });
-      const scale = targetPixelWidth / baseViewport.width;
-      const viewport = page.getViewport({ scale });
-
-      const canvas = document.createElement('canvas');
-      canvas.className = 'menu-pdf-page-canvas';
-      canvas.width = Math.floor(viewport.width);
-      canvas.height = Math.floor(viewport.height);
-      canvas.style.width = '100%';
-      canvas.style.height = 'auto';
-      canvas.setAttribute('aria-label', `Menu page ${pageNumber}`);
-
-      const context = canvas.getContext('2d', { alpha: false });
-      if (!context) {
-        continue;
-      }
-
-      context.imageSmoothingEnabled = true;
-      context.imageSmoothingQuality = 'high';
-
-      await page.render({
-        canvas,
-        canvasContext: context,
-        viewport,
-      }).promise;
-
-      fragment.appendChild(canvas);
+      host.replaceChildren(fragment);
     }
 
-    if (token !== this.renderToken) {
-      return;
-    }
-
-    host.replaceChildren(fragment);
     this.lastCssWidth = cssWidth;
+  }
+
+  private async renderPageCanvas(
+    doc: PDFDocumentProxy,
+    pageNumber: number,
+    targetPixelWidth: number,
+  ): Promise<HTMLCanvasElement | null> {
+    const page = await doc.getPage(pageNumber);
+    const baseViewport = page.getViewport({ scale: 1 });
+    const scale = targetPixelWidth / baseViewport.width;
+    const viewport = page.getViewport({ scale });
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'menu-pdf-page-canvas';
+    canvas.width = Math.floor(viewport.width);
+    canvas.height = Math.floor(viewport.height);
+    canvas.style.width = '100%';
+    canvas.style.height = 'auto';
+    canvas.setAttribute('aria-label', `Menu page ${pageNumber}`);
+
+    const context = canvas.getContext('2d', { alpha: false });
+    if (!context) {
+      return null;
+    }
+
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+
+    await page.render({
+      canvas,
+      canvasContext: context,
+      viewport,
+    }).promise;
+
+    return canvas;
   }
 
   private teardownViewer(): void {

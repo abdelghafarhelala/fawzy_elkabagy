@@ -13,6 +13,8 @@
   display: block;
   max-width: 140px;
   height: auto;
+  background: transparent;
+  mix-blend-mode: lighten;
 }
 
 .menu-empty {

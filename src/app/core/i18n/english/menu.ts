@@ -7,9 +7,9 @@ export const menuTranslations = {
     viewMenu: 'View Menu',
   },
   hero: {
-    line1: 'AUTHENTIC',
-    line2: 'KING OF GRILLS IN EGYPT',
-    subtitle: 'FIRED TO PERFECTION',
+    line1: 'KING OF GRILLS',
+    line2: 'IN EGYPT',
+    subtitle: '',
     viewMenu: 'VIEW MENU',
     contactUs: 'CONTACT US',
   },

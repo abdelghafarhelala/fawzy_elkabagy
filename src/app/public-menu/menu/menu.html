@@ -7,11 +7,14 @@
 
     @if (isLoading()) {
       <div class="menu-loading" role="status" aria-live="polite">
-        <img
-          src="images/loading_logo.gif"
-          alt="Loading menu"
-          width="120"
-          height="120" />
+        <picture>
+          <source srcset="images/loading_logo.webp" type="image/webp" />
+          <img
+            src="images/loading_logo.gif"
+            alt="Loading menu"
+            width="120"
+            height="120" />
+        </picture>
       </div>
     } @else if (errorMessage()) {
       <p class="menu-error" role="alert">{{ errorMessage() }}</p>

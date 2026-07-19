@@ -10,6 +10,8 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  /* Keep physical columns stable; we place back/download manually for RTL */
+  direction: ltr;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -22,6 +24,7 @@
 
 .menu-pdf-header h1 {
   margin: 0;
+  grid-column: 2;
   font-family: var(--font-serif);
   font-size: clamp(1.05rem, 3vw, 1.5rem);
   font-weight: 600;
@@ -45,12 +48,14 @@
   cursor: pointer;
 }
 
-.menu-pdf-icon-btn:first-child {
+.menu-pdf-back {
+  grid-column: 1;
   justify-self: start;
 }
 
-.menu-pdf-header > .menu-pdf-icon-btn:last-child,
-.menu-pdf-header > button.menu-pdf-icon-btn {
+.menu-pdf-download,
+.menu-pdf-header-spacer {
+  grid-column: 3;
   justify-self: end;
 }
 
@@ -67,11 +72,36 @@
 .menu-pdf-header-spacer {
   width: 42px;
   height: 42px;
-  justify-self: end;
 }
 
 .menu-pdf-icon-label {
   white-space: nowrap;
+}
+
+.menu-pdf-back-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Arabic: back on the right, arrow points → */
+:host-context([dir='rtl']) .menu-pdf-back,
+[dir='rtl'] .menu-pdf-back {
+  grid-column: 3;
+  justify-self: end;
+  flex-direction: row-reverse;
+}
+
+:host-context([dir='rtl']) .menu-pdf-download,
+:host-context([dir='rtl']) .menu-pdf-header-spacer,
+[dir='rtl'] .menu-pdf-download,
+[dir='rtl'] .menu-pdf-header-spacer {
+  grid-column: 1;
+  justify-self: start;
+}
+
+:host-context([dir='rtl']) .menu-pdf-back-icon,
+[dir='rtl'] .menu-pdf-back-icon {
+  transform: scaleX(-1);
 }
 
 @media (max-width: 640px) {
@@ -103,6 +133,16 @@
   padding: 2rem;
   text-align: center;
   font-family: var(--font-sans);
+  background: var(--bg-dark);
+}
+
+.menu-pdf-loading img {
+  display: block;
+  max-width: 140px;
+  height: auto;
+  background: transparent;
+  /* Blend any leftover dark pad into the page background */
+  mix-blend-mode: lighten;
 }
 
 .menu-pdf-error {
@@ -121,7 +161,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  /* Keep pages visible while pinching; avoid layout thrash */
   touch-action: pan-x pan-y pinch-zoom;
 }
 
@@ -132,7 +171,6 @@
   border-radius: 8px;
   background: #1a120c;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
-  /* Prefer crisp downscale from high-res bitmap */
   image-rendering: auto;
 }
 
@@ -141,8 +179,4 @@
   text-align: center;
   color: var(--text-muted);
   font-size: 0.85rem;
-}
-
-[dir='rtl'] .menu-pdf-icon-btn:first-child svg {
-  transform: scaleX(-1);
 }

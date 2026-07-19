@@ -120,6 +120,20 @@
 </nav>
 
 <section id="home" class="pm-section banner">
+  <div class="banner-media" aria-hidden="true">
+    <video
+      class="banner-video"
+      autoplay
+      muted
+      [muted]="true"
+      loop
+      playsinline
+      preload="metadata"
+      poster="images/hero.jpg">
+      <source src="images/hero.mp4" type="video/mp4" />
+    </video>
+  </div>
+
   <div class="pm-container banner-content">
     <h1 class="banner-title">
       {{ 'hero.line1' | translate }}

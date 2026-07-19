@@ -416,6 +416,7 @@ body.nav-drawer-open {
   align-items: center;
   justify-content: center;
   padding: 96px 0 80px;
+  background-color: var(--bg-deepest);
   background-image: linear-gradient(to top, #1a120c 0%, rgba(26, 18, 12, 0.4) 50%, transparent 100%),
     var(--pm-hero-image);
   background-repeat: no-repeat;
@@ -426,6 +427,36 @@ body.nav-drawer-open {
   max-width: 100%;
 }
 
+.banner-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.banner-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  pointer-events: none;
+}
+
+.banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    #1a120c 0%,
+    rgba(26, 18, 12, 0.45) 45%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+}
+
 @media (min-width: 992px) {
   .banner {
     align-items: center;
@@ -434,6 +465,10 @@ body.nav-drawer-open {
     padding: 0;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
       var(--pm-hero-image);
+  }
+
+  .banner::after {
+    background: rgba(0, 0, 0, 0.45);
   }
 }
 
@@ -529,6 +564,7 @@ body.nav-drawer-open {
   transform: translateX(-50%);
   width: 18px;
   height: 20px;
+  z-index: 1;
 }
 
 .banner-scroll img {

@@ -47,3 +47,7 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Oversized source media (use compressed public/images/hero.mp4)
+public/images/fawzy screen.mp4
+public/images/*.orig.mp4

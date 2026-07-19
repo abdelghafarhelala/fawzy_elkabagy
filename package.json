@@ -24,6 +24,7 @@
     "@angular/router": "^21.2.0",
     "@supabase/supabase-js": "^2.110.7",
     "bootstrap": "^5.3.8",
+    "pdfjs-dist": "^5.7.284",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

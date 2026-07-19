@@ -46,6 +46,9 @@ export const menuTranslations = {
     pdfMissing: 'ملف المنيو غير متاح حالياً. يرجى المحاولة لاحقاً.',
     pdfOpen: 'فتح ملف PDF في تبويب جديد',
     pdfBackHome: 'العودة للرئيسية',
+    pdfDownload: 'تحميل',
+    pdfDownloading: 'جاري التحميل…',
+    pdfPages: '{count} صفحات',
     items: {
       kofta: {
         name: 'كفتة التوقيع',

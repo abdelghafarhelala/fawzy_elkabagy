@@ -46,6 +46,9 @@ export const menuTranslations = {
     pdfMissing: 'The menu PDF is not available yet. Please check back soon.',
     pdfOpen: 'Open PDF in new tab',
     pdfBackHome: 'Back to home',
+    pdfDownload: 'Download',
+    pdfDownloading: 'Downloading…',
+    pdfPages: '{count} pages',
     items: {
       kofta: {
         name: 'Signature Kofta',

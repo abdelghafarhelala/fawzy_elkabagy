@@ -1404,8 +1404,17 @@ body.nav-drawer-open {
   .contact-grid {
     grid-template-columns: 1fr 1fr;
     gap: clamp(32px, 4vw, 64px);
-    align-items: start;
+    align-items: center;
   }
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
 }
 
 .contact-info .section-label {
@@ -1417,6 +1426,7 @@ body.nav-drawer-open {
   font-weight: 400;
   margin-top: 8px;
   margin-bottom: 24px;
+  text-align: center;
 }
 
 @media (min-width: 992px) {
@@ -1433,31 +1443,81 @@ body.nav-drawer-open {
 }
 
 .contact-hours-row {
-  margin-bottom: 8px;
+  margin-bottom: 0;
+  justify-content: center;
+  text-align: start;
 }
 
-.contact-branches-heading {
-  margin: 28px 0 16px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: var(--secondary-color);
+/* ---------- Branches ---------- */
+.branches-section {
+  background: var(--bg-deepest);
+  padding: clamp(48px, 8vh, 80px) 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+@media (min-width: 992px) {
+  .branches-section {
+    padding: clamp(40px, 6vh, 72px) 0;
+  }
+}
+
+.branches-header {
+  text-align: start;
+  margin-bottom: clamp(24px, 4vh, 40px);
+}
+
+@media (min-width: 992px) {
+  .branches-header {
+    text-align: center;
+  }
+}
+
+.branches-header .section-title {
+  margin-top: 8px;
+  font-weight: 400;
+}
+
+.branches-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.branches-empty {
+  margin: 0;
+  color: var(--text-muted);
+  text-align: center;
 }
 
 .contact-branches {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
+.branches-section .contact-branches {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .contact-branch {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 1 240px;
+  max-width: 100%;
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
   padding: 14px 16px;
   cursor: pointer;
   transition: border-color 0.2s ease, background 0.2s ease;
   background: rgba(255, 255, 255, 0.02);
+  box-sizing: border-box;
 }
 
 .contact-branch:hover,
@@ -1652,6 +1712,12 @@ body.nav-drawer-open {
 @media (min-width: 992px) {
   .contact-map {
     display: block;
+  }
+
+  .branches-layout .contact-map {
+    margin-top: 0;
+    min-height: 280px;
+    height: clamp(240px, 32vh, 360px);
   }
 }
 

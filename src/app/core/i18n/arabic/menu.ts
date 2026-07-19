@@ -3,6 +3,7 @@ export const menuTranslations = {
     home: 'الرئيسية',
     ourStory: 'قصتنا',
     ourMenu: 'المنيو',
+    ourBranches: 'فروعنا',
     contactUs: 'تواصل معنا',
     viewMenu: 'عرض المنيو',
   },
@@ -116,6 +117,11 @@ export const menuTranslations = {
     message: 'الرسالة',
     send: 'إرسال الرسالة',
     sending: 'جاري الإرسال…',
+  },
+  branches: {
+    label: 'فروعنا',
+    title: 'زورونا في فروعنا',
+    empty: 'الفروع قريباً.',
   },
   footer: {
     tagline: 'نحمل روح مشاوي القاهرة إلى مائدتك مع كل قطعة مشوية بإتقان.',

@@ -84,11 +84,12 @@
 </section>
 
 <section class="signatures-section">
+  <header class="branches-header">
+    <h2 class="section-label">{{ 'signatures.title' | translate }}</h2>
+    <p class="signatures-subtitle">{{ 'signatures.subtitle' | translate }}</p>
+  </header>
   <div class="signatures-header">
-    <div>
-      <h2 class="section-label">{{ 'signatures.title' | translate }}</h2>
-      <p class="signatures-subtitle">{{ 'signatures.subtitle' | translate }}</p>
-    </div>
+
     @if (signatures().length > 0) {
       <div class="signatures-nav">
         <button type="button" (click)="scrollSignatures(-1)" aria-label="Previous">

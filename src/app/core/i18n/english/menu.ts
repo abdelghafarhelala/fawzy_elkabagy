@@ -3,6 +3,7 @@ export const menuTranslations = {
     home: 'Home',
     ourStory: 'Our Story',
     ourMenu: 'Our Menu',
+    ourBranches: 'Our Branches',
     contactUs: 'Contact Us',
     viewMenu: 'View Menu',
   },
@@ -116,6 +117,11 @@ export const menuTranslations = {
     message: 'MESSAGE',
     send: 'SEND MESSAGE',
     sending: 'SENDING…',
+  },
+  branches: {
+    label: 'OUR BRANCHES',
+    title: 'Visit Us Across Cairo',
+    empty: 'Branches coming soon.',
   },
   footer: {
     tagline: "Bringing the soul of Cairo's grills to your table with every perfectly charred cut.",

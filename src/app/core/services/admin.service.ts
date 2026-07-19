@@ -321,7 +321,9 @@ export class AdminService {
       throw error;
     }
 
-    return (data ?? []).map((row) => this.normalizeLocation(row));
+    return ((data ?? []) as unknown as Record<string, unknown>[]).map((row) =>
+      this.normalizeLocation(row),
+    );
   }
 
   async upsertLocation(

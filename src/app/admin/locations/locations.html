@@ -24,26 +24,30 @@
     }}
   </h2>
   <form class="admin-form-grid" (ngSubmit)="save()">
-    <label>
-      {{ 'admin.common.nameEn' | translate }}
-      <input name="name_en" [(ngModel)]="form.name_en" required />
-    </label>
-    <label>
-      {{ 'admin.common.nameAr' | translate }}
-      <input name="name_ar" [(ngModel)]="form.name_ar" required dir="rtl" />
-    </label>
-    <label>
-      {{ 'admin.locations.addressEn' | translate }}
-      <textarea name="address_en" [(ngModel)]="form.address_en" required></textarea>
-    </label>
-    <label>
-      {{ 'admin.locations.addressAr' | translate }}
-      <textarea
-        name="address_ar"
-        [(ngModel)]="form.address_ar"
-        required
-        dir="rtl"></textarea>
-    </label>
+    <div class="admin-form-row">
+      <label>
+        {{ 'admin.common.nameEn' | translate }}
+        <input name="name_en" [(ngModel)]="form.name_en" required />
+      </label>
+      <label>
+        {{ 'admin.common.nameAr' | translate }}
+        <input name="name_ar" [(ngModel)]="form.name_ar" required dir="rtl" />
+      </label>
+    </div>
+    <div class="admin-form-row">
+      <label>
+        {{ 'admin.locations.addressEn' | translate }}
+        <textarea name="address_en" [(ngModel)]="form.address_en" required></textarea>
+      </label>
+      <label>
+        {{ 'admin.locations.addressAr' | translate }}
+        <textarea
+          name="address_ar"
+          [(ngModel)]="form.address_ar"
+          required
+          dir="rtl"></textarea>
+      </label>
+    </div>
     <label style="grid-column: 1 / -1">
       {{ 'admin.locations.phones' | translate }}
       <input

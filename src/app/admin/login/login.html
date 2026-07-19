@@ -1,21 +1,25 @@
 <div class="admin-page admin-login-wrap">
+  <button
+    type="button"
+    class="admin-lang-toggle admin-login-lang"
+    (click)="toggleLanguage()"
+    [attr.aria-label]="'admin.langAria' | translate">
+    <span>{{ nextLanguageLabel() }}</span>
+  </button>
+
   <div class="admin-login-card">
-    <div class="admin-login-top">
-      <div>
-        <p class="admin-eyebrow">{{ 'admin.login.eyebrow' | translate }}</p>
-        <h1>{{ 'admin.login.title' | translate }}</h1>
-        <p class="admin-muted">{{ 'admin.login.subtitle' | translate }}</p>
-      </div>
-      <button
-        type="button"
-        class="admin-lang-toggle"
-        (click)="toggleLanguage()"
-        [attr.aria-label]="'admin.langAria' | translate">
-        <span>{{ nextLanguageLabel() }}</span>
-      </button>
+    <div class="admin-login-brand">
+      <img
+        class="admin-login-logo"
+        src="images/Logo.png"
+        alt="Fawzy Elkababgy"
+        width="280"
+        height="64" />
+      <h1>{{ 'admin.login.title' | translate }}</h1>
+      <p class="admin-muted">{{ 'admin.login.subtitle' | translate }}</p>
     </div>
 
-    <form class="admin-form-grid" style="margin-top: 1.25rem" (ngSubmit)="onSubmit()">
+    <form class="admin-form-grid" (ngSubmit)="onSubmit()">
       <label>
         {{ 'admin.login.email' | translate }}
         <input
@@ -39,7 +43,7 @@
         <p class="admin-error">{{ errorMessage() }}</p>
       }
 
-      <div class="admin-actions">
+      <div class="admin-actions admin-login-actions">
         <button class="admin-btn" type="submit" [disabled]="isSubmitting()">
           {{
             isSubmitting()

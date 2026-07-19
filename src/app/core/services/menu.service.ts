@@ -114,10 +114,13 @@ export class MenuService {
     );
   }
 
-  async getReachOutHours(): Promise<Pick<ReachOut, 'hours_en' | 'hours_ar'> | null> {
+  async getReachOutInfo(): Promise<Pick<
+    ReachOut,
+    'phone' | 'hours_en' | 'hours_ar'
+  > | null> {
     const { data, error } = await this.supabase.client
       .from('reach_out')
-      .select('hours_en, hours_ar')
+      .select('phone, hours_en, hours_ar')
       .limit(1)
       .maybeSingle();
 
@@ -125,7 +128,7 @@ export class MenuService {
       throw error;
     }
 
-    return data as Pick<ReachOut, 'hours_en' | 'hours_ar'> | null;
+    return data as Pick<ReachOut, 'phone' | 'hours_en' | 'hours_ar'> | null;
   }
 
   private normalizeLocation(row: Record<string, unknown>): LocationBranch {

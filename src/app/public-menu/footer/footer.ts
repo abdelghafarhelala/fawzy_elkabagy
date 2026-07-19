@@ -17,11 +17,17 @@ export class Footer implements OnInit {
   readonly currentLanguage = this.languageService.currentLanguage;
 
   locations = signal<LocationBranch[]>([]);
+  hotline = signal('');
   navigate = output<{ sectionId: string; event: Event }>();
 
   async ngOnInit(): Promise<void> {
     try {
-      this.locations.set(await this.menuService.getLocations());
+      const [locs, reach] = await Promise.all([
+        this.menuService.getLocations(),
+        this.menuService.getReachOutInfo(),
+      ]);
+      this.locations.set(locs);
+      this.hotline.set((reach?.phone ?? '').trim());
     } catch {
       this.locations.set([]);
     }

@@ -25,6 +25,7 @@ export class ContactUs implements OnInit {
   readonly currentLanguage = this.languageService.currentLanguage;
 
   locations = signal<LocationBranch[]>([]);
+  hotline = signal('');
   private hoursEn = signal('');
   private hoursAr = signal('');
   selectedId = signal<string | null>(null);
@@ -40,13 +41,11 @@ export class ContactUs implements OnInit {
     try {
       const [locs, reach] = await Promise.all([
         this.menuService.getLocations(),
-        this.menuService.getReachOutHours(),
+        this.menuService.getReachOutInfo(),
       ]);
       this.locations.set(locs);
-      if (locs.length) {
-        this.selectedId.set(locs[0].id);
-      }
       if (reach) {
+        this.hotline.set((reach.phone ?? '').trim());
         this.hoursEn.set(reach.hours_en);
         this.hoursAr.set(reach.hours_ar);
       }

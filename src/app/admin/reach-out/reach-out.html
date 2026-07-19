@@ -21,6 +21,10 @@
   } @else {
     <form class="admin-form-grid" (ngSubmit)="save()">
       <label>
+        {{ 'admin.reachOut.phone' | translate }}
+        <input name="phone" [(ngModel)]="form.phone" required />
+      </label>
+      <label>
         {{ 'admin.reachOut.hoursEn' | translate }}
         <input name="hours_en" [(ngModel)]="form.hours_en" required />
       </label>

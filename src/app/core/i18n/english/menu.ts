@@ -119,6 +119,7 @@ export const menuTranslations = {
   },
   footer: {
     tagline: "Bringing the soul of Cairo's grills to your table with every perfectly charred cut.",
+    hotline: 'HOTLINE',
     branches: 'BRANCHES',
     quickLinks: 'QUICK LINKS',
     legal: 'LEGAL',

@@ -119,6 +119,7 @@ export const menuTranslations = {
   },
   footer: {
     tagline: 'نحمل روح مشاوي القاهرة إلى مائدتك مع كل قطعة مشوية بإتقان.',
+    hotline: 'الخط الساخن',
     branches: 'الفروع',
     quickLinks: 'روابط سريعة',
     legal: 'قانوني',

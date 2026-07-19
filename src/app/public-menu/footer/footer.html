@@ -23,6 +23,17 @@
         </a>
       </nav>
 
+      @if (hotline(); as hotlineNumber) {
+        <div class="footer-hotline">
+          <h3 class="footer-branches-title">
+            {{ 'footer.hotline' | translate }}
+          </h3>
+          <a class="footer-hotline-link" [href]="telHref(hotlineNumber)">
+            {{ hotlineNumber }}
+          </a>
+        </div>
+      }
+
       @if (locations().length) {
         <div class="footer-branches">
           <h3 class="footer-branches-title">

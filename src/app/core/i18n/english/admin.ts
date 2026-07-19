@@ -35,7 +35,7 @@ export const adminTranslations = {
       products: 'Products',
       menuPdf: 'Menu PDF',
       locations: 'Locations',
-      reachOut: 'Hours',
+      reachOut: 'Hotline & Hours',
       messages: 'Messages',
     },
 
@@ -63,8 +63,8 @@ export const adminTranslations = {
       menuPdfDesc: 'Full menu download file',
       locationsTitle: 'Locations',
       locationsDesc: 'Branches, phones, map links',
-      reachOutTitle: 'Hours',
-      reachOutDesc: 'Shared opening hours',
+      reachOutTitle: 'Hotline & Hours',
+      reachOutDesc: 'Shared hotline and opening hours',
       messagesTitle: 'Messages',
       messagesDesc: 'Contact form inbox',
       open: 'Open →',
@@ -173,16 +173,16 @@ export const adminTranslations = {
     },
 
     reachOut: {
-      title: 'Opening Hours',
+      title: 'Hotline & Hours',
       locationEn: 'Location (EN)',
       locationAr: 'Location (AR)',
-      phone: 'Phone',
+      phone: 'Hotline',
       hoursEn: 'Hours (EN)',
       hoursAr: 'Hours (AR)',
-      saved: 'Hours saved.',
+      saved: 'Hotline & hours saved.',
       loadFailed: 'Failed to load hours',
       saveFailed: 'Failed to save',
-      note: 'Branch addresses and phones are managed under Locations.',
+      note: 'Branch addresses and phones are managed under Locations. This phone is the shared hotline (e.g. 15517).',
     },
 
     messages: {

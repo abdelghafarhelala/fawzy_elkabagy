@@ -35,7 +35,7 @@ export const adminTranslations = {
       products: 'المنتجات',
       menuPdf: 'ملف المنيو PDF',
       locations: 'الفروع',
-      reachOut: 'ساعات العمل',
+      reachOut: 'الخط الساخن وساعات العمل',
       messages: 'الرسائل',
     },
 
@@ -63,8 +63,8 @@ export const adminTranslations = {
       menuPdfDesc: 'ملف تحميل المنيو الكامل',
       locationsTitle: 'الفروع',
       locationsDesc: 'العناوين والهواتف وروابط الخرائط',
-      reachOutTitle: 'ساعات العمل',
-      reachOutDesc: 'ساعات العمل المشتركة',
+      reachOutTitle: 'الخط الساخن وساعات العمل',
+      reachOutDesc: 'الخط الساخن وساعات العمل المشتركة',
       messagesTitle: 'الرسائل',
       messagesDesc: 'رسائل نموذج التواصل',
       open: 'فتح ←',
@@ -173,16 +173,16 @@ export const adminTranslations = {
     },
 
     reachOut: {
-      title: 'ساعات العمل',
+      title: 'الخط الساخن وساعات العمل',
       locationEn: 'الموقع (EN)',
       locationAr: 'الموقع (AR)',
-      phone: 'الهاتف',
+      phone: 'الخط الساخن',
       hoursEn: 'ساعات العمل (EN)',
       hoursAr: 'ساعات العمل (AR)',
-      saved: 'تم حفظ ساعات العمل.',
+      saved: 'تم حفظ الخط الساخن وساعات العمل.',
       loadFailed: 'فشل تحميل ساعات العمل',
       saveFailed: 'فشل الحفظ',
-      note: 'عناوين الفروع والهواتف تُدار من صفحة الفروع.',
+      note: 'عناوين الفروع وهواتفها تُدار من صفحة الفروع. هذا الرقم هو الخط الساخن المشترك (مثل 15517).',
     },
 
     messages: {

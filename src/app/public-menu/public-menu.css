@@ -1886,6 +1886,22 @@ body.nav-drawer-open {
   max-width: 280px;
 }
 
+.footer-hotline {
+  min-width: 0;
+}
+
+.footer-hotline-link {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+.footer-hotline-link:hover {
+  color: var(--primary-color);
+}
+
 .footer-branches-title {
   margin: 0 0 12px;
   font-size: 12px;

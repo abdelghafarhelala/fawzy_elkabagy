@@ -9,7 +9,6 @@ export const menuTranslations = {
   hero: {
     line1: 'KING OF GRILLS',
     line2: 'IN EGYPT',
-    subtitle: '',
     viewMenu: 'VIEW MENU',
     contactUs: 'CONTACT US',
   },

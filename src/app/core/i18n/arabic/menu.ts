@@ -9,7 +9,6 @@ export const menuTranslations = {
   hero: {
     line1: 'ملك المشويات',
     line2: 'في مصر',
-    subtitle: '',
     viewMenu: 'عرض المنيو',
     contactUs: 'تواصل معنا',
   },

@@ -140,11 +140,6 @@
       <br />
       <span class="accent">{{ 'hero.line2' | translate }}</span>
     </h1>
-    @if ('hero.subtitle' | translate; as heroSubtitle) {
-      @if (heroSubtitle) {
-        <p class="banner-subtitle">{{ heroSubtitle }}</p>
-      }
-    }
 
     <div class="banner-actions">
       <a routerLink="/menu" class="rounded-btn bg-primary-color dark-text">

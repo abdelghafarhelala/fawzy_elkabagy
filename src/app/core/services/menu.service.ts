@@ -109,7 +109,7 @@ export class MenuService {
       throw error;
     }
 
-    return ((data ?? []) as Record<string, unknown>[]).map((row) =>
+    return ((data ?? []) as unknown as Record<string, unknown>[]).map((row) =>
       this.normalizeLocation(row),
     );
   }

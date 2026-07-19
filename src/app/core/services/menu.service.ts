@@ -109,7 +109,9 @@ export class MenuService {
       throw error;
     }
 
-    return (data ?? []).map((row) => this.normalizeLocation(row));
+    return ((data ?? []) as Record<string, unknown>[]).map((row) =>
+      this.normalizeLocation(row),
+    );
   }
 
   async getReachOutHours(): Promise<Pick<ReachOut, 'hours_en' | 'hours_ar'> | null> {

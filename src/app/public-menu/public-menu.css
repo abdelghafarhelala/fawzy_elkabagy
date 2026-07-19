@@ -1404,7 +1404,7 @@ body.nav-drawer-open {
   .contact-grid {
     grid-template-columns: 1fr 1fr;
     gap: clamp(32px, 4vw, 64px);
-    align-items: start;
+    align-items: stretch;
   }
 }
 
@@ -1430,6 +1430,13 @@ body.nav-drawer-open {
   display: flex;
   flex-direction: column;
   gap: 32px;
+}
+
+.contact-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 28px;
 }
 
 .contact-hours-row {
@@ -1583,6 +1590,17 @@ body.nav-drawer-open {
   overflow-wrap: anywhere;
 }
 
+.contact-row .contact-phone-link {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.contact-row .contact-phone-link:hover {
+  color: var(--secondary-color);
+}
+
 @media (max-width: 991.98px) {
   .contact-row h4 {
     color: var(--text-cream);
@@ -1667,6 +1685,10 @@ body.nav-drawer-open {
     background: var(--bg-panel);
     padding: clamp(18px, 2.5vh, 28px);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100%;
   }
 }
 
@@ -1700,12 +1722,16 @@ body.nav-drawer-open {
 
 @media (min-width: 992px) {
   .contact-form {
-    gap: clamp(10px, 1.6vh, 14px);
+    gap: clamp(12px, 1.8vh, 18px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
   }
 
   .contact-form-row {
     grid-template-columns: 1fr 1fr;
-    gap: clamp(10px, 1.6vh, 14px);
+    gap: clamp(12px, 1.8vh, 18px);
   }
 
   .contact-form .field-label {
@@ -1713,11 +1739,17 @@ body.nav-drawer-open {
   }
 
   .contact-form .form-control-dark {
-    padding: 10px 14px;
+    padding: 12px 14px;
   }
 
   .contact-form textarea.form-control-dark {
-    min-height: clamp(72px, 10vh, 100px);
+    flex: 1;
+    min-height: 280px;
+    resize: vertical;
+  }
+
+  .contact-submit {
+    margin-top: auto;
   }
 }
 
@@ -2148,7 +2180,8 @@ body.nav-drawer-open {
   }
 
   .contact-form textarea.form-control-dark {
-    min-height: 72px;
+    flex: 1;
+    min-height: 140px;
   }
 
   .contact-submit {
@@ -2197,6 +2230,7 @@ body.nav-drawer-open {
   }
 
   .contact-form textarea.form-control-dark {
-    min-height: 60px;
+    flex: 1;
+    min-height: 120px;
   }
 }

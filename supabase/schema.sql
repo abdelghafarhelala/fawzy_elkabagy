@@ -73,6 +73,21 @@ create table public.reach_out (
   updated_at timestamptz not null default now()
 );
 
+create table public.locations (
+  id uuid primary key default gen_random_uuid(),
+  name_en text not null,
+  name_ar text not null,
+  address_en text not null,
+  address_ar text not null,
+  phones jsonb not null default '[]'::jsonb,
+  map_url text,
+  sort_order integer not null default 0,
+  is_active boolean not null default true,
+  is_deleted boolean not null default false,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 create or replace function public.set_updated_at()
 returns trigger
 language plpgsql
@@ -98,6 +113,10 @@ create trigger menu_pdf_set_updated_at
 
 create trigger reach_out_set_updated_at
   before update on public.reach_out
+  for each row execute function public.set_updated_at();
+
+create trigger locations_set_updated_at
+  before update on public.locations
   for each row execute function public.set_updated_at();
 
 -- RLS enabled on all content tables (see migrations/20260718120200_storage_and_rls.sql)

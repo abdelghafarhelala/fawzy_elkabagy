@@ -35,6 +35,11 @@ export const adminRoutes: Routes = [
           import('./menu-pdf/menu-pdf').then((m) => m.AdminMenuPdf),
       },
       {
+        path: 'locations',
+        loadComponent: () =>
+          import('./locations/locations').then((m) => m.AdminLocations),
+      },
+      {
         path: 'reach-out',
         loadComponent: () =>
           import('./reach-out/reach-out').then((m) => m.AdminReachOut),

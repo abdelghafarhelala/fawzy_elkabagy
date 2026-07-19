@@ -105,6 +105,9 @@ export const menuTranslations = {
     phone: '15517',
     hoursLabel: 'WORKING HOURS',
     hours: 'Daily: 12:00 PM – 02:00 AM',
+    branchesLabel: 'OUR BRANCHES',
+    openMaps: 'Open in Maps',
+    call: 'Call',
     formTitle: 'Send Us a Message',
     fullName: 'FULL NAME',
     email: 'EMAIL ADDRESS',
@@ -116,6 +119,7 @@ export const menuTranslations = {
   },
   footer: {
     tagline: "Bringing the soul of Cairo's grills to your table with every perfectly charred cut.",
+    branches: 'BRANCHES',
     quickLinks: 'QUICK LINKS',
     legal: 'LEGAL',
     newsletter: 'NEWSLETTER',

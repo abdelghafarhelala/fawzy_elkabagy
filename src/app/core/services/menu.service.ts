@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Category, MenuPdf, Product, ProductTag } from '../models/menu.models';
+import { LocationBranch, ReachOut } from '../models/admin.models';
 import { SupabaseService } from './supabase.service';
 
 @Injectable({
@@ -91,6 +92,62 @@ export class MenuService {
     }
 
     return (data as MenuPdf | null) ?? null;
+  }
+
+  async getLocations(): Promise<LocationBranch[]> {
+    const { data, error } = await this.supabase.client
+      .from('locations')
+      .select(
+        'id, name_en, name_ar, address_en, address_ar, phones, map_url, ' +
+          'sort_order, is_active, is_deleted',
+      )
+      .eq('is_active', true)
+      .eq('is_deleted', false)
+      .order('sort_order', { ascending: true });
+
+    if (error) {
+      throw error;
+    }
+
+    return (data ?? []).map((row) => this.normalizeLocation(row));
+  }
+
+  async getReachOutHours(): Promise<Pick<ReachOut, 'hours_en' | 'hours_ar'> | null> {
+    const { data, error } = await this.supabase.client
+      .from('reach_out')
+      .select('hours_en, hours_ar')
+      .limit(1)
+      .maybeSingle();
+
+    if (error) {
+      throw error;
+    }
+
+    return data as Pick<ReachOut, 'hours_en' | 'hours_ar'> | null;
+  }
+
+  private normalizeLocation(row: Record<string, unknown>): LocationBranch {
+    return {
+      id: String(row['id']),
+      name_en: String(row['name_en'] ?? ''),
+      name_ar: String(row['name_ar'] ?? ''),
+      address_en: String(row['address_en'] ?? ''),
+      address_ar: String(row['address_ar'] ?? ''),
+      phones: this.normalizePhones(row['phones']),
+      map_url: (row['map_url'] as string | null) ?? null,
+      sort_order: Number(row['sort_order'] ?? 0),
+      is_active: !!row['is_active'],
+      is_deleted: !!row['is_deleted'],
+    };
+  }
+
+  private normalizePhones(phones: unknown): string[] {
+    if (!Array.isArray(phones)) {
+      return [];
+    }
+    return phones
+      .map((p) => String(p ?? '').trim())
+      .filter((p) => !!p);
   }
 
   private normalizeTags(tags: unknown): ProductTag[] {

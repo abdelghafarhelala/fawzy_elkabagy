@@ -8,6 +8,21 @@ export interface ReachOut {
   updated_at: string;
 }
 
+export interface LocationBranch {
+  id: string;
+  name_en: string;
+  name_ar: string;
+  address_en: string;
+  address_ar: string;
+  phones: string[];
+  map_url: string | null;
+  sort_order: number;
+  is_active: boolean;
+  is_deleted: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface ContactMessage {
   id: string;
   full_name: string;

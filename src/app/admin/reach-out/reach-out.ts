@@ -56,6 +56,7 @@ export class AdminReachOut implements OnInit {
     this.errorMessage.set(null);
     this.successMessage.set(null);
     try {
+      // Preserve legacy location/phone columns; branches live in Locations.
       await this.admin.updateReachOut({
         ...(this.form.id ? { id: this.form.id } : {}),
         location_en: this.form.location_en.trim(),

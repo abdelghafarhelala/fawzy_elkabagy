@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Category, MenuPdf, Product, ProductTag } from '../models/menu.models';
-import { ContactMessage, ReachOut } from '../models/admin.models';
+import { ContactMessage, LocationBranch, ReachOut } from '../models/admin.models';
 import { SupabaseService } from './supabase.service';
 
 @Injectable({
@@ -303,6 +303,90 @@ export class AdminService {
     if (error) {
       throw error;
     }
+  }
+
+  // —— Locations ——
+
+  async listLocations(): Promise<LocationBranch[]> {
+    const { data, error } = await this.supabase.client
+      .from('locations')
+      .select(
+        'id, name_en, name_ar, address_en, address_ar, phones, map_url, ' +
+          'sort_order, is_active, is_deleted, created_at, updated_at',
+      )
+      .eq('is_deleted', false)
+      .order('sort_order', { ascending: true });
+
+    if (error) {
+      throw error;
+    }
+
+    return (data ?? []).map((row) => this.normalizeLocation(row));
+  }
+
+  async upsertLocation(
+    payload: Partial<LocationBranch> & {
+      name_en: string;
+      name_ar: string;
+      address_en: string;
+      address_ar: string;
+      phones: string[];
+    },
+  ): Promise<void> {
+    const row = {
+      ...(payload.id ? { id: payload.id } : {}),
+      name_en: payload.name_en,
+      name_ar: payload.name_ar,
+      address_en: payload.address_en,
+      address_ar: payload.address_ar,
+      phones: payload.phones ?? [],
+      map_url: payload.map_url?.trim() || null,
+      sort_order: payload.sort_order ?? 0,
+      is_active: payload.is_active ?? true,
+      is_deleted: false,
+      updated_at: new Date().toISOString(),
+    };
+
+    const { error } = await this.supabase.client.from('locations').upsert(row);
+    if (error) {
+      throw error;
+    }
+  }
+
+  async softDeleteLocation(id: string): Promise<void> {
+    const { error } = await this.supabase.client
+      .from('locations')
+      .update({ is_deleted: true, is_active: false })
+      .eq('id', id);
+    if (error) {
+      throw error;
+    }
+  }
+
+  private normalizeLocation(row: Record<string, unknown>): LocationBranch {
+    return {
+      id: String(row['id']),
+      name_en: String(row['name_en'] ?? ''),
+      name_ar: String(row['name_ar'] ?? ''),
+      address_en: String(row['address_en'] ?? ''),
+      address_ar: String(row['address_ar'] ?? ''),
+      phones: this.normalizePhones(row['phones']),
+      map_url: (row['map_url'] as string | null) ?? null,
+      sort_order: Number(row['sort_order'] ?? 0),
+      is_active: !!row['is_active'],
+      is_deleted: !!row['is_deleted'],
+      created_at: row['created_at'] as string | undefined,
+      updated_at: row['updated_at'] as string | undefined,
+    };
+  }
+
+  private normalizePhones(phones: unknown): string[] {
+    if (!Array.isArray(phones)) {
+      return [];
+    }
+    return phones
+      .map((p) => String(p ?? '').trim())
+      .filter((p) => !!p);
   }
 
   private normalizeTags(tags: unknown): ProductTag[] {

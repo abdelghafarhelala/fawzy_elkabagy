@@ -105,6 +105,9 @@ export const menuTranslations = {
     phone: '15517',
     hoursLabel: 'ساعات العمل',
     hours: 'يومياً: 12:00 ظهراً – 2:00 صباحاً',
+    branchesLabel: 'فروعنا',
+    openMaps: 'فتح الخريطة',
+    call: 'اتصال',
     formTitle: 'أرسل لنا رسالة',
     fullName: 'الاسم الكامل',
     email: 'البريد الإلكتروني',
@@ -116,6 +119,7 @@ export const menuTranslations = {
   },
   footer: {
     tagline: 'نحمل روح مشاوي القاهرة إلى مائدتك مع كل قطعة مشوية بإتقان.',
+    branches: 'الفروع',
     quickLinks: 'روابط سريعة',
     legal: 'قانوني',
     newsletter: 'النشرة',

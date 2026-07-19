@@ -13,26 +13,13 @@
 }
 
 <div class="admin-card">
+  <p class="admin-field-note" style="margin-bottom: 1rem">
+    {{ 'admin.reachOut.note' | translate }}
+  </p>
   @if (isLoading()) {
     <p class="admin-muted">{{ 'admin.common.loading' | translate }}</p>
   } @else {
     <form class="admin-form-grid" (ngSubmit)="save()">
-      <label>
-        {{ 'admin.reachOut.locationEn' | translate }}
-        <input name="location_en" [(ngModel)]="form.location_en" required />
-      </label>
-      <label>
-        {{ 'admin.reachOut.locationAr' | translate }}
-        <input
-          name="location_ar"
-          [(ngModel)]="form.location_ar"
-          required
-          dir="rtl" />
-      </label>
-      <label>
-        {{ 'admin.reachOut.phone' | translate }}
-        <input name="phone" [(ngModel)]="form.phone" required />
-      </label>
       <label>
         {{ 'admin.reachOut.hoursEn' | translate }}
         <input name="hours_en" [(ngModel)]="form.hours_en" required />

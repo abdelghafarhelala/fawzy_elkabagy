@@ -1,0 +1,143 @@
+<div class="admin-header">
+  <div>
+    <p class="admin-eyebrow">{{ 'admin.common.eyebrowContent' | translate }}</p>
+    <h1>{{ 'admin.locations.title' | translate }}</h1>
+  </div>
+  <button type="button" class="admin-btn secondary" (click)="resetForm()">
+    {{ 'admin.locations.new' | translate }}
+  </button>
+</div>
+
+@if (errorMessage()) {
+  <p class="admin-error" role="alert">{{ errorMessage() }}</p>
+}
+@if (successMessage()) {
+  <p class="admin-success">{{ successMessage() }}</p>
+}
+
+<div class="admin-card">
+  <h2 class="admin-card-title">
+    {{
+      form.id
+        ? ('admin.locations.edit' | translate)
+        : ('admin.locations.create' | translate)
+    }}
+  </h2>
+  <form class="admin-form-grid" (ngSubmit)="save()">
+    <label>
+      {{ 'admin.common.nameEn' | translate }}
+      <input name="name_en" [(ngModel)]="form.name_en" required />
+    </label>
+    <label>
+      {{ 'admin.common.nameAr' | translate }}
+      <input name="name_ar" [(ngModel)]="form.name_ar" required dir="rtl" />
+    </label>
+    <label>
+      {{ 'admin.locations.addressEn' | translate }}
+      <textarea name="address_en" [(ngModel)]="form.address_en" required></textarea>
+    </label>
+    <label>
+      {{ 'admin.locations.addressAr' | translate }}
+      <textarea
+        name="address_ar"
+        [(ngModel)]="form.address_ar"
+        required
+        dir="rtl"></textarea>
+    </label>
+    <label style="grid-column: 1 / -1">
+      {{ 'admin.locations.phones' | translate }}
+      <input
+        name="phonesText"
+        [(ngModel)]="phonesText"
+        required
+        [placeholder]="'admin.locations.phonesPlaceholder' | translate" />
+      <span class="admin-field-note">
+        {{ 'admin.locations.phonesNote' | translate }}
+      </span>
+    </label>
+    <label style="grid-column: 1 / -1">
+      <span class="admin-label-row">
+        {{ 'admin.locations.mapUrl' | translate }}
+        <span class="admin-optional">{{ 'admin.common.optional' | translate }}</span>
+      </span>
+      <input
+        name="map_url"
+        [(ngModel)]="form.map_url"
+        [placeholder]="'admin.locations.mapUrlPlaceholder' | translate" />
+    </label>
+    <label>
+      {{ 'admin.common.sortOrder' | translate }}
+      <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
+    </label>
+    <label class="admin-check">
+      <input type="checkbox" name="is_active" [(ngModel)]="form.is_active" />
+      {{ 'admin.common.active' | translate }}
+    </label>
+    <div class="admin-actions">
+      <button class="admin-btn" type="submit" [disabled]="isSaving()">
+        {{
+          isSaving()
+            ? ('admin.common.saving' | translate)
+            : ('admin.common.save' | translate)
+        }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="admin-card">
+  <h2 class="admin-card-title">{{ 'admin.locations.all' | translate }}</h2>
+  @if (isLoading()) {
+    <p class="admin-muted">{{ 'admin.common.loading' | translate }}</p>
+  } @else {
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>{{ 'admin.categories.order' | translate }}</th>
+            <th>{{ 'admin.common.nameEn' | translate }}</th>
+            <th>{{ 'admin.locations.phones' | translate }}</th>
+            <th>{{ 'admin.common.active' | translate }}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (loc of locations(); track loc.id) {
+            <tr>
+              <td>{{ loc.sort_order }}</td>
+              <td>
+                {{ loc.name_en }}
+                <br />
+                <span class="admin-muted" dir="rtl">{{ loc.name_ar }}</span>
+              </td>
+              <td>{{ loc.phones.join(' · ') }}</td>
+              <td>
+                {{
+                  loc.is_active
+                    ? ('admin.common.yes' | translate)
+                    : ('admin.common.no' | translate)
+                }}
+              </td>
+              <td>
+                <div class="admin-actions" style="margin:0">
+                  <button
+                    type="button"
+                    class="admin-btn secondary admin-btn-sm"
+                    (click)="edit(loc)">
+                    {{ 'admin.common.edit' | translate }}
+                  </button>
+                  <button
+                    type="button"
+                    class="admin-btn danger admin-btn-sm"
+                    (click)="remove(loc)">
+                    {{ 'admin.common.delete' | translate }}
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

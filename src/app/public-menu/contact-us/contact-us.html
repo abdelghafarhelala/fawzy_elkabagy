@@ -1,41 +1,41 @@
 <section class="contact-section">
-  <header class="branches-header">
-    <h2 class="section-label">{{ 'contact.label' | translate }}</h2>
-  </header>
-
   <div class="pm-container contact-grid">
     <div class="contact-info">
       <h2 class="section-label">{{ 'contact.label' | translate }}</h2>
       <h3 class="section-title">{{ 'contact.title' | translate }}</h3>
 
-      <div class="contact-meta">
-        @if (hotline(); as hotlineNumber) {
-          <div class="contact-row">
-            <div class="contact-icon">
-              <img src="images/icons/phone.svg" alt="" width="18" height="18" />
-            </div>
-            <div>
-              <h4>{{ 'contact.phoneLabel' | translate }}</h4>
-              <p>
-                <a class="contact-phone-link" [href]="telHref(hotlineNumber)">
-                  {{ hotlineNumber }}
-                </a>
-              </p>
-            </div>
+      <div class="contact-rows">
+        <!-- <div class="contact-row">
+          <div class="contact-icon">
+            <img src="images/icons/location.svg" alt="" width="16" height="20" />
           </div>
-        }
+          <div>
+            <h4>{{ 'contact.locationLabel' | translate }}</h4>
+            <p>{{ 'contact.location' | translate }}</p>
+          </div>
+        </div> -->
+        <div class="contact-row">
+          <div class="contact-icon">
+            <img src="images/icons/phone.svg" alt="" width="18" height="18" />
+          </div>
+          <div>
+            <h4>{{ 'contact.phoneLabel' | translate }}</h4>
+            <p>{{ 'contact.phone' | translate }}</p>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">
+            <img src="images/icons/hours.svg" alt="" width="20" height="20" />
+          </div>
+          <div>
+            <h4>{{ 'contact.hoursLabel' | translate }}</h4>
+            <p>{{ 'contact.hours' | translate }}</p>
+          </div>
+        </div>
+      </div>
 
-        @if (displayHours(); as hoursText) {
-          <div class="contact-row">
-            <div class="contact-icon">
-              <img src="images/icons/hours.svg" alt="" width="20" height="20" />
-            </div>
-            <div>
-              <h4>{{ 'contact.hoursLabel' | translate }}</h4>
-              <p>{{ hoursText }}</p>
-            </div>
-          </div>
-        }
+      <div class="contact-map">
+        <img src="images/map.jpg" alt="Restaurant location map" width="560" height="256" />
       </div>
     </div>
 
@@ -45,19 +45,11 @@
         <div class="contact-form-row">
           <label>
             <span class="field-label">{{ 'contact.fullName' | translate }}</span>
-            <input
-              class="form-control-dark"
-              type="text"
-              name="fullName"
-              autocomplete="name" />
+            <input class="form-control-dark" type="text" name="fullName" autocomplete="name" />
           </label>
           <label>
             <span class="field-label">{{ 'contact.email' | translate }}</span>
-            <input
-              class="form-control-dark"
-              type="email"
-              name="email"
-              autocomplete="email" />
+            <input class="form-control-dark" type="email" name="email" autocomplete="email" />
           </label>
         </div>
 
@@ -68,10 +60,7 @@
 
         <label>
           <span class="field-label">{{ 'contact.message' | translate }}</span>
-          <textarea
-            class="form-control-dark"
-            name="message"
-            rows="8"></textarea>
+          <textarea class="form-control-dark" name="message" rows="3"></textarea>
         </label>
 
         <button
@@ -97,20 +86,6 @@
           </p>
         }
       </form>
-    </div>
-    <div class="contact-info">
-      <h3 class="section-title">{{ 'contact.title' | translate }}</h3>
-      @if (displayHours(); as hoursText) {
-        <div class="contact-row contact-hours-row">
-          <div class="contact-icon">
-            <img src="images/icons/hours.svg" alt="" width="20" height="20" />
-          </div>
-          <div>
-            <h4>{{ 'contact.hoursLabel' | translate }}</h4>
-            <p>{{ hoursText }}</p>
-          </div>
-        </div>
-      }
     </div>
   </div>
 </section>

@@ -9,6 +9,7 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { AdminService } from '../../core/services/admin.service';
 import { LanguageService } from '../../core/services/language.service';
 import { MenuService } from '../../core/services/menu.service';
+import { LocationBranch } from '../../core/models/admin.models';
 
 @Component({
   selector: 'app-contact-us',

@@ -1482,18 +1482,23 @@ body.nav-drawer-open {
 .signatures-dots {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 8px;
   margin-top: 24px;
 }
 
-.signatures-dots span {
+.signatures-dot {
   height: 4px;
   width: 8px;
+  border: none;
   border-radius: 9999px;
+  padding: 0;
   background: var(--border-warm);
+  cursor: pointer;
+  transition: width 0.2s ease, background 0.2s ease;
 }
 
-.signatures-dots span.active {
+.signatures-dot.active {
   width: 32px;
   background: var(--secondary-color);
 }

@@ -41,6 +41,7 @@ export class Menu implements OnInit {
   products = signal<Product[]>([]);
   signatures = signal<Product[]>([]);
   activeCategoryId = signal<string | null>(null);
+  activeSignatureIndex = signal(0);
 
   visibleProducts = computed(() => {
     const categoryId = this.activeCategoryId();
@@ -71,6 +72,7 @@ export class Menu implements OnInit {
       this.products.set(products);
       this.signatures.set(signatures);
       this.activeCategoryId.set(categories[0]?.id ?? null);
+      this.activeSignatureIndex.set(0);
     } catch {
       this.errorMessage.set(
         'Unable to load the menu. Please try again later.',
@@ -79,6 +81,7 @@ export class Menu implements OnInit {
       this.products.set([]);
       this.signatures.set([]);
       this.activeCategoryId.set(null);
+      this.activeSignatureIndex.set(0);
     } finally {
       this.isLoading.set(false);
     }
@@ -184,6 +187,52 @@ export class Menu implements OnInit {
     const gap = parseFloat(styles.columnGap || styles.gap) || 0;
     const amount = card ? card.offsetWidth + gap : 740;
     this.scrollTrack(track, direction, amount);
+  }
+
+  onSignaturesScroll(): void {
+    const track = this.signaturesTrack()?.nativeElement;
+    if (!track) {
+      return;
+    }
+
+    const cards = Array.from(track.children) as HTMLElement[];
+    if (cards.length === 0) {
+      return;
+    }
+
+    const trackCenter =
+      track.getBoundingClientRect().left + track.clientWidth / 2;
+    let closestIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    cards.forEach((card, index) => {
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.left + rect.width / 2;
+      const distance = Math.abs(cardCenter - trackCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    if (closestIndex !== this.activeSignatureIndex()) {
+      this.activeSignatureIndex.set(closestIndex);
+    }
+  }
+
+  goToSignature(index: number): void {
+    const track = this.signaturesTrack()?.nativeElement;
+    const card = track?.children[index] as HTMLElement | undefined;
+    if (!track || !card) {
+      return;
+    }
+
+    card.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'start',
+      block: 'nearest',
+    });
+    this.activeSignatureIndex.set(index);
   }
 
   private getCardStep(track: HTMLElement): number {

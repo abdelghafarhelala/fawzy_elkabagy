@@ -145,7 +145,10 @@
         aria-label="Previous signatures">
         <img src="images/icons/arrow-left.svg" alt="" width="16" height="16" />
       </button>
-      <div class="signatures-track" #signaturesTrack>
+      <div
+        class="signatures-track"
+        #signaturesTrack
+        (scroll)="onSignaturesScroll()">
         @for (sig of signatures(); track sig.id) {
           <article class="signature-card">
             <img
@@ -170,9 +173,15 @@
       </button>
     </div>
 
-    <div class="signatures-dots">
+    <div class="signatures-dots" role="tablist" aria-label="Signature slides">
       @for (sig of signatures(); track sig.id; let i = $index) {
-        <span [class.active]="i === 0"></span>
+        <button
+          type="button"
+          class="signatures-dot"
+          [class.active]="i === activeSignatureIndex()"
+          [attr.aria-label]="'Go to signature ' + (i + 1)"
+          [attr.aria-current]="i === activeSignatureIndex() ? 'true' : null"
+          (click)="goToSignature(i)"></button>
       }
     </div>
   }

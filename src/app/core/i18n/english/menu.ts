@@ -16,10 +16,10 @@ export const menuTranslations = {
   story: {
     label: 'OUR STORY',
     title: 'A Legacy Carved in Fire and Tradition',
-    body: "Fawzy Elkababgy has been more than just a restaurant; it's a celebration of the Egyptian spirit. We believe that the best flavors are born from simplicity—high-quality meat, artisanal charcoal, and time-honored recipes passed down through families.",
+    body: 'Fawzy Elkababgy has more than 30 years of experience in grills and Oriental cuisine. What sets us apart is quality and excellence in our Oriental menu, attested by every expert and our customers over more than a quarter of a century.',
     heritageTitle: 'Heritage',
     heritageBody: 'Three generations of secret marinades and traditional Egyptian grilling techniques.',
-    yearsValue: '5+',
+    yearsValue: '30+',
     yearsLabel: 'YEARS EXP',
     dishesValue: '50+',
     dishesLabel: 'DISHES',

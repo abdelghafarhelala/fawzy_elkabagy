@@ -971,14 +971,19 @@ body.nav-drawer-open {
 }
 
 @media (max-width: 991.98px) {
-  .menu-scroll-btn {
-    width: 36px;
-    height: 36px;
+  .menu-tabs-wrap,
+  .menu-grid-wrap {
+    gap: 0;
   }
 
-  .menu-scroll-btn img {
-    width: 12px;
-    height: 12px;
+  .menu-scroll-btn {
+    display: none;
+  }
+
+  .menu-card {
+    /* One full card + half of the next to hint horizontal scroll */
+    flex: 0 0 calc((100% - 16px) / 1.5);
+    max-width: calc((100% - 16px) / 1.5);
   }
 }
 

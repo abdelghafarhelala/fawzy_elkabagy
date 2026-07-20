@@ -21,56 +21,91 @@
     } @else if (categories().length === 0) {
       <p class="menu-empty">{{ 'menu.emptyCategories' | translate }}</p>
     } @else {
-      <div class="menu-tabs" role="tablist">
-        @for (category of categories(); track category.id) {
-          <button
-            type="button"
-            role="tab"
-            [class.active]="activeCategoryId() === category.id"
-            [attr.aria-selected]="activeCategoryId() === category.id"
-            (click)="selectCategory(category.id)">
-            {{ categoryName(category) }}
-          </button>
-        }
+      <div class="menu-tabs-wrap">
+        <button
+          type="button"
+          class="menu-scroll-btn"
+          (click)="scrollCategories(-1)"
+          aria-label="Previous categories">
+          <img src="images/icons/arrow-left.svg" alt="" width="16" height="16" />
+        </button>
+        <div class="menu-tabs" role="tablist" #categoriesTrack>
+          @for (category of categories(); track category.id) {
+            <button
+              type="button"
+              role="tab"
+              [class.active]="activeCategoryId() === category.id"
+              [attr.aria-selected]="activeCategoryId() === category.id"
+              (click)="selectCategory(category.id)">
+              {{ categoryName(category) }}
+            </button>
+          }
+        </div>
+        <button
+          type="button"
+          class="menu-scroll-btn"
+          (click)="scrollCategories(1)"
+          aria-label="Next categories">
+          <img src="images/icons/arrow-right.svg" alt="" width="16" height="16" />
+        </button>
       </div>
 
       @if (visibleProducts().length === 0) {
         <p class="menu-empty">{{ 'menu.emptyProducts' | translate }}</p>
       } @else {
-        <div class="menu-grid" #menuTrack>
-          @for (item of visibleProducts(); track item.id) {
-            <article class="menu-card">
-              <div class="menu-card-image">
-                <img
-                  [src]="item.image_url || 'images/menu-kofta.jpg'"
-                  [alt]="productName(item)"
-                  width="400"
-                  height="256"
-                  (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
-                @if (productBadge(item); as badge) {
-                  <span class="menu-badge">{{ badge }}</span>
-                }
-              </div>
-              <div class="menu-card-body">
-                <div class="menu-card-top">
-                  <h3>{{ productName(item) }}</h3>
-                  <span>{{ productPrice(item) }}</span>
+        <div
+          class="menu-grid-wrap"
+          (pointerenter)="pauseItemsAutoScroll()"
+          (pointerleave)="resumeItemsAutoScroll()">
+          <button
+            type="button"
+            class="menu-scroll-btn"
+            (click)="scrollMenu(-1)"
+            aria-label="Previous dishes">
+            <img src="images/icons/arrow-left.svg" alt="" width="16" height="16" />
+          </button>
+          <div class="menu-grid" #menuTrack>
+            @for (item of visibleProducts(); track item.id) {
+              <article class="menu-card">
+                <div class="menu-card-image">
+                  <img
+                    [src]="item.image_url || 'images/menu-kofta.jpg'"
+                    [alt]="productName(item)"
+                    width="400"
+                    height="300"
+                    (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
+                  @if (productBadge(item); as badge) {
+                    <span class="menu-badge">{{ badge }}</span>
+                  }
                 </div>
-                <p>{{ productDescription(item) }}</p>
-                @if (item.tags.length) {
-                  <div class="menu-tags">
-                    @for (tag of item.tags; track tag.en + tag.ar) {
-                      <span
-                        class="menu-tag"
-                        [class.muted]="tag.muted">
-                        {{ productTagLabel(tag) }}
-                      </span>
-                    }
+                <div class="menu-card-body">
+                  <div class="menu-card-top">
+                    <h3>{{ productName(item) }}</h3>
+                    <span>{{ productPrice(item) }}</span>
                   </div>
-                }
-              </div>
-            </article>
-          }
+                  <p>{{ productDescription(item) }}</p>
+                  @if (item.tags.length) {
+                    <div class="menu-tags">
+                      @for (tag of item.tags; track tag.en + tag.ar) {
+                        <span
+                          class="menu-tag"
+                          [class.muted]="tag.muted">
+                          {{ productTagLabel(tag) }}
+                        </span>
+                      }
+                    </div>
+                  }
+                </div>
+              </article>
+            }
+          </div>
+          <button
+            type="button"
+            class="menu-scroll-btn"
+            (click)="scrollMenu(1)"
+            aria-label="Next dishes">
+            <img src="images/icons/arrow-right.svg" alt="" width="16" height="16" />
+          </button>
         </div>
       }
     }

@@ -37,7 +37,7 @@
       @if (visibleProducts().length === 0) {
         <p class="menu-empty">{{ 'menu.emptyProducts' | translate }}</p>
       } @else {
-        <div class="menu-grid">
+        <div class="menu-grid" #menuTrack>
           @for (item of visibleProducts(); track item.id) {
             <article class="menu-card">
               <div class="menu-card-image">
@@ -76,8 +76,19 @@
     }
 
     <div class="menu-download">
-      <a routerLink="/menu" class="rounded-btn-outline">
-        {{ 'menu.download' | translate }}
+      <button
+        type="button"
+        class="rounded-btn-outline"
+        (click)="downloadFullMenu()"
+        [disabled]="isDownloadingPdf()">
+        {{
+          isDownloadingPdf()
+            ? ('menu.pdfDownloading' | translate)
+            : ('menu.download' | translate)
+        }}
+      </button>
+      <a routerLink="/menu" class="rounded-btn">
+        {{ 'menu.viewFull' | translate }}
       </a>
     </div>
   </div>

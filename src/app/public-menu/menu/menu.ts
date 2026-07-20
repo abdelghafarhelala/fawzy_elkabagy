@@ -11,6 +11,7 @@ import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { Category, Product } from '../../core/models/menu.models';
 import { LanguageService } from '../../core/services/language.service';
+import { MenuPdfPrefetchService } from '../../core/services/menu-pdf-prefetch.service';
 import { MenuService } from '../../core/services/menu.service';
 import { formatProductPrice } from '../../core/utils/price';
 
@@ -23,12 +24,16 @@ import { formatProductPrice } from '../../core/utils/price';
 export class Menu implements OnInit {
   private readonly menuService = inject(MenuService);
   private readonly languageService = inject(LanguageService);
+  private readonly pdfPrefetch = inject(MenuPdfPrefetchService);
   private readonly signaturesTrack =
     viewChild<ElementRef<HTMLElement>>('signaturesTrack');
+  private readonly menuTrack =
+    viewChild<ElementRef<HTMLElement>>('menuTrack');
 
   readonly currentLanguage = this.languageService.currentLanguage;
 
   isLoading = signal(true);
+  isDownloadingPdf = signal(false);
   errorMessage = signal<string | null>(null);
   categories = signal<Category[]>([]);
   products = signal<Product[]>([]);
@@ -79,6 +84,46 @@ export class Menu implements OnInit {
 
   selectCategory(categoryId: string): void {
     this.activeCategoryId.set(categoryId);
+    queueMicrotask(() => {
+      const track = this.menuTrack()?.nativeElement;
+      track?.scrollTo({ left: 0, behavior: 'smooth' });
+    });
+  }
+
+  async downloadFullMenu(): Promise<void> {
+    if (this.isDownloadingPdf()) {
+      return;
+    }
+
+    this.isDownloadingPdf.set(true);
+    try {
+      await this.pdfPrefetch.ensurePrefetched();
+      let blob = this.pdfPrefetch.getCachedBlob();
+
+      if (!blob) {
+        const pdf = await this.pdfPrefetch.getPdfForViewer();
+        if (!pdf) {
+          return;
+        }
+        blob = new Blob([pdf.data], { type: 'application/pdf' });
+      }
+
+      const blobUrl = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = blobUrl;
+      anchor.download = 'fawzy-elkababgy-menu.pdf';
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(blobUrl);
+    } catch {
+      const meta = this.pdfPrefetch.getCachedMeta();
+      if (meta?.file_url) {
+        window.open(meta.file_url, '_blank', 'noopener,noreferrer');
+      }
+    } finally {
+      this.isDownloadingPdf.set(false);
+    }
   }
 
   categoryName(category: Category): string {

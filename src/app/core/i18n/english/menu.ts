@@ -40,6 +40,7 @@ export const menuTranslations = {
       desserts: 'DESSERTS',
     },
     download: 'DOWNLOAD FULL MENU (PDF)',
+    viewFull: 'VIEW FULL MENU',
     emptyCategories: 'Menu categories will appear here soon.',
     emptyProducts: 'No dishes in this category yet.',
     pdfTitle: 'Full Menu',

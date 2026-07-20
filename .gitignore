@@ -34,6 +34,12 @@ yarn-error.log
 .env.local
 .env.*.local
 
+# Local menu import tooling
+.venv-pdf/
+.menu-pdf-preview/
+.tessdata/
+scripts/_tmp_products.sql
+
 # Miscellaneous
 /.angular/cache
 .sass-cache/

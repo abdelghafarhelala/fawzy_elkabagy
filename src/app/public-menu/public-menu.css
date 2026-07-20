@@ -922,6 +922,7 @@ body.nav-drawer-open {
   overflow-x: auto;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
+  padding-inline: 4px;
   padding-bottom: 8px;
   margin-bottom: clamp(20px, 3vh, 32px);
   max-width: 100%;
@@ -956,12 +957,13 @@ body.nav-drawer-open {
 
 @media (min-width: 992px) {
   .menu-tabs {
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0;
     border-bottom: 1px solid var(--border-subtle);
     margin-bottom: clamp(24px, 3.5vh, 40px);
+    padding-inline: 8px;
     padding-bottom: 0;
-    overflow: visible;
+    overflow-x: auto;
   }
 
   .menu-tabs button {
@@ -971,7 +973,15 @@ body.nav-drawer-open {
     background: transparent;
     color: var(--text-muted);
     padding: 0 0 12px;
-    margin-inline: clamp(12px, 2vw, 24px);
+    margin-inline: clamp(12px, 1.5vw, 24px);
+  }
+
+  .menu-tabs button:first-child {
+    margin-inline-start: 0;
+  }
+
+  .menu-tabs button:last-child {
+    margin-inline-end: 0;
   }
 
   .menu-tabs button.active {
@@ -991,38 +1001,43 @@ body.nav-drawer-open {
   scroll-snap-type: x mandatory;
   max-width: 100%;
   min-width: 0;
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 183, 129, 0.35) transparent;
 }
 
 .menu-grid::-webkit-scrollbar {
-  display: none;
+  height: 6px;
+}
+
+.menu-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 183, 129, 0.35);
+  border-radius: 9999px;
 }
 
 @media (min-width: 992px) {
   .menu-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    overflow: visible;
-    padding-bottom: 0;
-    scroll-snap-type: none;
+    padding-bottom: 12px;
   }
 }
 
 .menu-card {
-  flex: 0 0 100%;
-  max-width: 100%;
+  flex: 0 0 min(100%, 320px);
+  max-width: min(100%, 320px);
   scroll-snap-align: start;
   background: #322821;
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 992px) {
   .menu-card {
-    flex: none;
-    max-width: none;
+    /* Exactly 3 cards visible; scroll for the rest */
+    flex: 0 0 calc((100% - 48px) / 3);
+    max-width: calc((100% - 48px) / 3);
     background: var(--bg-card);
     border-radius: 12px;
   }
@@ -1032,23 +1047,27 @@ body.nav-drawer-open {
   position: relative;
   height: clamp(180px, 28vh, 256px);
   overflow: hidden;
+  background: #1a120c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (min-width: 992px) {
   .menu-card-image {
-    height: clamp(140px, 22vh, 200px);
+    height: clamp(160px, 24vh, 220px);
   }
 }
 
 .menu-card-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 0.4s ease;
 }
 
 .menu-card:hover .menu-card-image img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
 .menu-badge {
@@ -1065,6 +1084,7 @@ body.nav-drawer-open {
 
 .menu-card-body {
   padding: clamp(16px, 2.5vh, 24px);
+  flex: 1;
 }
 
 @media (min-width: 992px) {
@@ -1167,16 +1187,47 @@ body.nav-drawer-open {
   display: none;
   margin-top: clamp(24px, 4vh, 40px);
   text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+
+.menu-download .rounded-btn,
+.menu-download .rounded-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 9999px;
+  padding: 14px 28px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .menu-download .rounded-btn-outline {
-  border-color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  background: transparent;
   color: var(--secondary-color);
+}
+
+.menu-download .rounded-btn-outline:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.menu-download .rounded-btn {
+  border: 1px solid var(--primary-color);
+  background: var(--primary-color);
+  color: var(--text-dark);
 }
 
 @media (min-width: 992px) {
   .menu-download {
-    display: block;
+    display: flex;
   }
 }
 

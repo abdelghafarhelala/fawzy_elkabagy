@@ -7,7 +7,8 @@
     "build": "ng build",
     "build:pages": "ng build --base-href=/fawzy_elkabagy/",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "upload:menu-images": "node scripts/upload-menu-images.mjs"
   },
   "private": true,
   "packageManager": "npm@10.8.2",

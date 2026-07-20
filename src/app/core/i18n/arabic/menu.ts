@@ -40,6 +40,7 @@ export const menuTranslations = {
       desserts: 'حلويات',
     },
     download: 'تحميل المنيو كاملة (PDF)',
+    viewFull: 'عرض المنيو كاملة',
     emptyCategories: 'أقسام المنيو ستظهر هنا قريباً.',
     emptyProducts: 'لا توجد أطباق في هذا القسم بعد.',
     pdfTitle: 'المنيو كاملة',

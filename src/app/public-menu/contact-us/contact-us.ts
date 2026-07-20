@@ -6,7 +6,6 @@ import {
   signal,
 } from '@angular/core';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
-import { LocationBranch } from '../../core/models/admin.models';
 import { AdminService } from '../../core/services/admin.service';
 import { LanguageService } from '../../core/services/language.service';
 import { MenuService } from '../../core/services/menu.service';
@@ -28,7 +27,6 @@ export class ContactUs implements OnInit {
   hotline = signal('');
   private hoursEn = signal('');
   private hoursAr = signal('');
-  selectedId = signal<string | null>(null);
   isSubmitting = signal(false);
   errorMessage = signal<string | null>(null);
   successMessage = signal<string | null>(null);
@@ -50,32 +48,8 @@ export class ContactUs implements OnInit {
         this.hoursAr.set(reach.hours_ar);
       }
     } catch {
-      // Keep empty lists; form still works.
+      // Form still works without hours.
     }
-  }
-
-  branchName(loc: LocationBranch): string {
-    return this.currentLanguage() === 'ar' ? loc.name_ar : loc.name_en;
-  }
-
-  branchAddress(loc: LocationBranch): string {
-    return this.currentLanguage() === 'ar'
-      ? loc.address_ar
-      : loc.address_en;
-  }
-
-  selectBranch(id: string): void {
-    this.selectedId.set(id);
-  }
-
-  selectedMapUrl(): string | null {
-    const id = this.selectedId();
-    const loc = this.locations().find((l) => l.id === id);
-    return loc?.map_url?.trim() || null;
-  }
-
-  telHref(phone: string): string {
-    return `tel:${phone.replace(/[^\d+]/g, '')}`;
   }
 
   async onSubmit(event: Event): Promise<void> {

@@ -1,4 +1,8 @@
 <section class="contact-section">
+  <header class="branches-header">
+    <h2 class="section-label">{{ 'contact.label' | translate }}</h2>
+  </header>
+
   <div class="pm-container contact-grid">
     <div class="contact-info">
       <h2 class="section-label">{{ 'contact.label' | translate }}</h2>
@@ -146,6 +150,20 @@
           </p>
         }
       </form>
+    </div>
+    <div class="contact-info">
+      <h3 class="section-title">{{ 'contact.title' | translate }}</h3>
+      @if (displayHours(); as hoursText) {
+        <div class="contact-row contact-hours-row">
+          <div class="contact-icon">
+            <img src="images/icons/hours.svg" alt="" width="20" height="20" />
+          </div>
+          <div>
+            <h4>{{ 'contact.hoursLabel' | translate }}</h4>
+            <p>{{ hoursText }}</p>
+          </div>
+        </div>
+      }
     </div>
   </div>
 </section>

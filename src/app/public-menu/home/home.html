@@ -88,6 +88,15 @@
         <li class="nav-item">
           <a
             class="nav-link"
+            href="#branches"
+            [class.active]="isActive('branches')"
+            (click)="scrollToSection('branches', $event)">
+            {{ 'navbar.ourBranches' | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
             href="#contact"
             [class.active]="isActive('contact')"
             (click)="scrollToSection('contact', $event)">
@@ -162,6 +171,10 @@
 
 <section id="menu" class="pm-section">
   <app-menu />
+</section>
+
+<section id="branches" class="pm-section">
+  <app-branches />
 </section>
 
 <section id="contact" class="pm-section">

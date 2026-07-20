@@ -4,18 +4,19 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { LanguageService } from '../../core/services/language.service';
 import { Story } from '../story/story';
 import { Menu } from '../menu/menu';
+import { Branches } from '../branches/branches';
 import { ContactUs } from '../contact-us/contact-us';
 import { Footer } from '../footer/footer';
 
 @Component({
   selector: 'app-home',
-  imports: [TranslatePipe, RouterLink, Story, Menu, ContactUs, Footer],
+  imports: [TranslatePipe, RouterLink, Story, Menu, Branches, ContactUs, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home implements AfterViewInit, OnDestroy {
   private readonly languageService = inject(LanguageService);
-  private readonly sectionIds = ['home', 'our-story', 'menu', 'contact'];
+  private readonly sectionIds = ['home', 'our-story', 'menu', 'branches', 'contact'];
   private observer?: IntersectionObserver;
 
   activeSection = signal('home');

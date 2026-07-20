@@ -1,7 +1,6 @@
 import {
   Component,
   ElementRef,
-  OnDestroy,
   OnInit,
   computed,
   inject,
@@ -22,9 +21,7 @@ import { formatProductPrice } from '../../core/utils/price';
   templateUrl: './menu.html',
   styleUrl: './menu.css',
 })
-export class Menu implements OnInit, OnDestroy {
-  private static readonly AUTO_SCROLL_MS = 4500;
-
+export class Menu implements OnInit {
   private readonly menuService = inject(MenuService);
   private readonly languageService = inject(LanguageService);
   private readonly pdfPrefetch = inject(MenuPdfPrefetchService);
@@ -34,13 +31,6 @@ export class Menu implements OnInit, OnDestroy {
     viewChild<ElementRef<HTMLElement>>('menuTrack');
   private readonly categoriesTrack =
     viewChild<ElementRef<HTMLElement>>('categoriesTrack');
-
-  private itemsAutoScrollTimer: ReturnType<typeof setInterval> | null =
-    null;
-  private itemsAutoScrollResumeTimer: ReturnType<typeof setTimeout> | null =
-    null;
-  private isItemsAutoScrollPaused = false;
-  private itemsScrollIndex = 0;
 
   readonly currentLanguage = this.languageService.currentLanguage;
 
@@ -66,10 +56,6 @@ export class Menu implements OnInit, OnDestroy {
     await this.loadMenu();
   }
 
-  ngOnDestroy(): void {
-    this.stopItemsAutoScroll();
-  }
-
   async loadMenu(): Promise<void> {
     this.isLoading.set(true);
     this.errorMessage.set(null);
@@ -85,7 +71,6 @@ export class Menu implements OnInit, OnDestroy {
       this.products.set(products);
       this.signatures.set(signatures);
       this.activeCategoryId.set(categories[0]?.id ?? null);
-      this.resetItemsAutoScroll();
     } catch {
       this.errorMessage.set(
         'Unable to load the menu. Please try again later.',
@@ -94,7 +79,6 @@ export class Menu implements OnInit, OnDestroy {
       this.products.set([]);
       this.signatures.set([]);
       this.activeCategoryId.set(null);
-      this.stopItemsAutoScroll();
     } finally {
       this.isLoading.set(false);
     }
@@ -102,11 +86,9 @@ export class Menu implements OnInit, OnDestroy {
 
   selectCategory(categoryId: string): void {
     this.activeCategoryId.set(categoryId);
-    this.itemsScrollIndex = 0;
     queueMicrotask(() => {
       const track = this.menuTrack()?.nativeElement;
       track?.scrollTo({ left: 0, behavior: 'smooth' });
-      this.resetItemsAutoScroll();
     });
   }
 
@@ -189,7 +171,6 @@ export class Menu implements OnInit, OnDestroy {
     }
 
     this.scrollTrack(track, direction, this.getCardStep(track));
-    this.syncItemsScrollIndex(track);
   }
 
   scrollSignatures(direction: -1 | 1): void {
@@ -198,116 +179,6 @@ export class Menu implements OnInit, OnDestroy {
       return;
     }
     track.scrollBy({ left: direction * 740, behavior: 'smooth' });
-  }
-
-  pauseItemsAutoScroll(): void {
-    this.isItemsAutoScrollPaused = true;
-    if (this.itemsAutoScrollResumeTimer) {
-      clearTimeout(this.itemsAutoScrollResumeTimer);
-      this.itemsAutoScrollResumeTimer = null;
-    }
-  }
-
-  resumeItemsAutoScroll(): void {
-    if (this.itemsAutoScrollResumeTimer) {
-      clearTimeout(this.itemsAutoScrollResumeTimer);
-    }
-
-    // Keep paused briefly after interaction (esp. touch).
-    this.itemsAutoScrollResumeTimer = setTimeout(() => {
-      this.isItemsAutoScrollPaused = false;
-      this.itemsAutoScrollResumeTimer = null;
-    }, 2500);
-  }
-
-  private resetItemsAutoScroll(): void {
-    this.stopItemsAutoScroll();
-    this.itemsScrollIndex = 0;
-    this.isItemsAutoScrollPaused = false;
-
-    queueMicrotask(() => {
-      if (this.visibleProducts().length <= 1) {
-        return;
-      }
-
-      this.itemsAutoScrollTimer = setInterval(() => {
-        this.autoScrollItemsStep();
-      }, Menu.AUTO_SCROLL_MS);
-    });
-  }
-
-  private stopItemsAutoScroll(): void {
-    if (this.itemsAutoScrollTimer) {
-      clearInterval(this.itemsAutoScrollTimer);
-      this.itemsAutoScrollTimer = null;
-    }
-    if (this.itemsAutoScrollResumeTimer) {
-      clearTimeout(this.itemsAutoScrollResumeTimer);
-      this.itemsAutoScrollResumeTimer = null;
-    }
-  }
-
-  private autoScrollItemsStep(): void {
-    if (this.isItemsAutoScrollPaused) {
-      return;
-    }
-
-    const track = this.menuTrack()?.nativeElement;
-    if (!track) {
-      return;
-    }
-
-    const cards = track.querySelectorAll('.menu-card');
-    if (cards.length <= 1) {
-      return;
-    }
-
-    // Only auto-scroll when content overflows the viewport.
-    if (track.scrollWidth <= track.clientWidth + 4) {
-      return;
-    }
-
-    this.itemsScrollIndex = (this.itemsScrollIndex + 1) % cards.length;
-    this.scrollToCard(track, this.itemsScrollIndex);
-  }
-
-  private scrollToCard(
-    track: HTMLElement,
-    index: number,
-  ): void {
-    const card = track.children[index] as HTMLElement | undefined;
-    if (!card) {
-      return;
-    }
-
-    card.scrollIntoView({
-      behavior: 'smooth',
-      inline: 'start',
-      block: 'nearest',
-    });
-  }
-
-  private syncItemsScrollIndex(track: HTMLElement): void {
-    const cards = Array.from(track.children) as HTMLElement[];
-    if (cards.length === 0) {
-      return;
-    }
-
-    const trackCenter = track.getBoundingClientRect().left + track.clientWidth / 2;
-    let closestIndex = 0;
-    let closestDistance = Number.POSITIVE_INFINITY;
-
-    cards.forEach((card, index) => {
-      const rect = card.getBoundingClientRect();
-      const cardCenter = rect.left + rect.width / 2;
-      const distance = Math.abs(cardCenter - trackCenter);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
-
-    this.itemsScrollIndex = closestIndex;
   }
 
   private getCardStep(track: HTMLElement): number {

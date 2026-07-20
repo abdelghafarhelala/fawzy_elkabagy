@@ -25,7 +25,7 @@
         <button
           type="button"
           class="menu-scroll-btn"
-          (click)="scrollCategories(-1)"
+          (click)="scrollCategories(1)"
           aria-label="Previous categories">
           <img src="images/icons/arrow-left.svg" alt="" width="16" height="16" />
         </button>
@@ -44,7 +44,7 @@
         <button
           type="button"
           class="menu-scroll-btn"
-          (click)="scrollCategories(1)"
+          (click)="scrollCategories(-1)"
           aria-label="Next categories">
           <img src="images/icons/arrow-right.svg" alt="" width="16" height="16" />
         </button>
@@ -53,14 +53,11 @@
       @if (visibleProducts().length === 0) {
         <p class="menu-empty">{{ 'menu.emptyProducts' | translate }}</p>
       } @else {
-        <div
-          class="menu-grid-wrap"
-          (pointerenter)="pauseItemsAutoScroll()"
-          (pointerleave)="resumeItemsAutoScroll()">
+        <div class="menu-grid-wrap">
           <button
             type="button"
             class="menu-scroll-btn"
-            (click)="scrollMenu(-1)"
+            (click)="scrollMenu(1)"
             aria-label="Previous dishes">
             <img src="images/icons/arrow-left.svg" alt="" width="16" height="16" />
           </button>
@@ -102,7 +99,7 @@
           <button
             type="button"
             class="menu-scroll-btn"
-            (click)="scrollMenu(1)"
+            (click)="scrollMenu(-1)"
             aria-label="Next dishes">
             <img src="images/icons/arrow-right.svg" alt="" width="16" height="16" />
           </button>

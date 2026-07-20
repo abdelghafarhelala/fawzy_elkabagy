@@ -43,6 +43,27 @@
         {{ 'admin.common.sortOrderNote' | translate }}
       </span>
     </label>
+    <label>
+      {{ 'admin.categories.imageUrl' | translate }}
+      <input name="image_url" [(ngModel)]="form.image_url" />
+    </label>
+    <label>
+      {{ 'admin.categories.uploadImage' | translate }}
+      <input type="file" accept="image/*" (change)="onFileChange($event)" />
+    </label>
+    @if (form.image_url) {
+      <div class="admin-field">
+        <span class="admin-label-row">
+          {{ 'admin.categories.preview' | translate }}
+        </span>
+        <img
+          class="admin-thumb"
+          [src]="form.image_url"
+          alt=""
+          width="120"
+          height="90" />
+      </div>
+    }
     <label class="admin-check">
       <input type="checkbox" name="is_active" [(ngModel)]="form.is_active" />
       {{ 'admin.common.active' | translate }}
@@ -69,6 +90,7 @@
         <thead>
           <tr>
             <th>{{ 'admin.categories.order' | translate }}</th>
+            <th>{{ 'admin.categories.image' | translate }}</th>
             <th>{{ 'admin.categories.slug' | translate }}</th>
             <th>{{ 'admin.categories.en' | translate }}</th>
             <th>{{ 'admin.categories.ar' | translate }}</th>
@@ -80,6 +102,18 @@
           @for (cat of categories(); track cat.id) {
             <tr>
               <td>{{ cat.sort_order }}</td>
+              <td>
+                @if (cat.image_url) {
+                  <img
+                    class="admin-thumb"
+                    [src]="cat.image_url"
+                    alt=""
+                    width="48"
+                    height="36" />
+                } @else {
+                  <span class="admin-muted">—</span>
+                }
+              </td>
               <td>{{ cat.slug }}</td>
               <td>{{ cat.name_en }}</td>
               <td dir="rtl">{{ cat.name_ar }}</td>

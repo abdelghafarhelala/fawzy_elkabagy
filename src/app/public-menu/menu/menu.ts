@@ -27,8 +27,6 @@ export class Menu implements OnInit {
   private readonly pdfPrefetch = inject(MenuPdfPrefetchService);
   private readonly signaturesTrack =
     viewChild<ElementRef<HTMLElement>>('signaturesTrack');
-  private readonly menuTrack =
-    viewChild<ElementRef<HTMLElement>>('menuTrack');
   private readonly categoriesTrack =
     viewChild<ElementRef<HTMLElement>>('categoriesTrack');
 
@@ -42,6 +40,24 @@ export class Menu implements OnInit {
   signatures = signal<Product[]>([]);
   activeCategoryId = signal<string | null>(null);
   activeSignatureIndex = signal(0);
+
+  /** Categories that have at least one product (empty categories are hidden). */
+  categoriesWithProducts = computed(() =>
+    this.categories().filter((category) =>
+      this.products().some((product) => product.category_id === category.id),
+    ),
+  );
+
+  activeCategory = computed(() => {
+    const id = this.activeCategoryId();
+    if (!id) {
+      return null;
+    }
+    return (
+      this.categoriesWithProducts().find((category) => category.id === id) ??
+      null
+    );
+  });
 
   visibleProducts = computed(() => {
     const categoryId = this.activeCategoryId();
@@ -71,7 +87,11 @@ export class Menu implements OnInit {
       this.categories.set(categories);
       this.products.set(products);
       this.signatures.set(signatures);
-      this.activeCategoryId.set(categories[0]?.id ?? null);
+
+      const firstWithProducts = categories.find((category) =>
+        products.some((product) => product.category_id === category.id),
+      );
+      this.activeCategoryId.set(firstWithProducts?.id ?? null);
       this.activeSignatureIndex.set(0);
     } catch {
       this.errorMessage.set(
@@ -89,10 +109,6 @@ export class Menu implements OnInit {
 
   selectCategory(categoryId: string): void {
     this.activeCategoryId.set(categoryId);
-    queueMicrotask(() => {
-      const track = this.menuTrack()?.nativeElement;
-      track?.scrollTo({ left: 0, behavior: 'smooth' });
-    });
   }
 
   async downloadFullMenu(): Promise<void> {
@@ -153,27 +169,8 @@ export class Menu implements OnInit {
       : product.description_en;
   }
 
-  productBadge(product: Product): string | null {
-    const badge =
-      this.currentLanguage() === 'ar' ? product.badge_ar : product.badge_en;
-    return badge?.trim() ? badge : null;
-  }
-
-  productTagLabel(tag: { en: string; ar: string }): string {
-    return this.currentLanguage() === 'ar' ? tag.ar : tag.en;
-  }
-
   scrollCategories(direction: -1 | 1): void {
     this.scrollTrack(this.categoriesTrack()?.nativeElement, direction);
-  }
-
-  scrollMenu(direction: -1 | 1): void {
-    const track = this.menuTrack()?.nativeElement;
-    if (!track) {
-      return;
-    }
-
-    this.scrollTrack(track, direction, this.getCardStep(track));
   }
 
   scrollSignatures(direction: -1 | 1): void {
@@ -233,17 +230,6 @@ export class Menu implements OnInit {
       block: 'nearest',
     });
     this.activeSignatureIndex.set(index);
-  }
-
-  private getCardStep(track: HTMLElement): number {
-    const card = track.querySelector('.menu-card') as HTMLElement | null;
-    if (!card) {
-      return Math.max(track.clientWidth * 0.6, 160);
-    }
-
-    const styles = getComputedStyle(track);
-    const gap = parseFloat(styles.columnGap || styles.gap) || 0;
-    return card.offsetWidth + gap;
   }
 
   private scrollTrack(

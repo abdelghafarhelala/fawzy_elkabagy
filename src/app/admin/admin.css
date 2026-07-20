@@ -597,6 +597,21 @@
   font-size: 0.8rem;
 }
 
+.admin-thumb {
+  display: block;
+  width: 48px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-panel);
+}
+
+.admin-field .admin-thumb {
+  width: 120px;
+  height: 90px;
+}
+
 .admin-login-wrap {
   position: relative;
   min-height: 100vh;

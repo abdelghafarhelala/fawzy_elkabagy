@@ -9,6 +9,7 @@ export interface Category {
   slug: string;
   name_en: string;
   name_ar: string;
+  image_url: string | null;
   sort_order: number;
   is_active: boolean;
   is_deleted: boolean;

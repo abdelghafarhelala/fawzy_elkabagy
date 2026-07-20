@@ -13,7 +13,7 @@ export class MenuService {
     const { data, error } = await this.supabase.client
       .from('categories')
       .select(
-        'id, slug, name_en, name_ar, sort_order, is_active, is_deleted',
+        'id, slug, name_en, name_ar, image_url, sort_order, is_active, is_deleted',
       )
       .eq('is_active', true)
       .eq('is_deleted', false)

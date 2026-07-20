@@ -15,7 +15,7 @@ export class AdminService {
     let query = this.supabase.client
       .from('categories')
       .select(
-        'id, slug, name_en, name_ar, sort_order, is_active, is_deleted',
+        'id, slug, name_en, name_ar, image_url, sort_order, is_active, is_deleted',
       )
       .order('sort_order', { ascending: true });
 
@@ -41,6 +41,7 @@ export class AdminService {
       name_en: payload.name_en,
       name_ar: payload.name_ar,
       slug: payload.slug,
+      image_url: payload.image_url ?? null,
       sort_order: payload.sort_order ?? 0,
       is_active: payload.is_active ?? true,
       is_deleted: payload.is_deleted ?? false,
@@ -137,6 +138,14 @@ export class AdminService {
   }
 
   async uploadProductImage(file: File): Promise<string> {
+    return this.uploadCatalogImage(file);
+  }
+
+  async uploadCategoryImage(file: File): Promise<string> {
+    return this.uploadCatalogImage(file);
+  }
+
+  private async uploadCatalogImage(file: File): Promise<string> {
     const ext = file.name.split('.').pop() || 'jpg';
     const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 

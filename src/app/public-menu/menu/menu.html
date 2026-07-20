@@ -18,7 +18,7 @@
       </div>
     } @else if (errorMessage()) {
       <p class="menu-error" role="alert">{{ errorMessage() }}</p>
-    } @else if (categories().length === 0) {
+    } @else if (categoriesWithProducts().length === 0) {
       <p class="menu-empty">{{ 'menu.emptyCategories' | translate }}</p>
     } @else {
       <div class="menu-tabs-wrap">
@@ -30,7 +30,7 @@
           <img src="images/icons/arrow-left.svg" alt="" width="16" height="16" />
         </button>
         <div class="menu-tabs" role="tablist" #categoriesTrack>
-          @for (category of categories(); track category.id) {
+          @for (category of categoriesWithProducts(); track category.id) {
             <button
               type="button"
               role="tab"
@@ -50,60 +50,25 @@
         </button>
       </div>
 
-      @if (visibleProducts().length === 0) {
-        <p class="menu-empty">{{ 'menu.emptyProducts' | translate }}</p>
-      } @else {
-        <div class="menu-grid-wrap">
-          <button
-            type="button"
-            class="menu-scroll-btn"
-            (click)="scrollMenu(1)"
-            aria-label="Previous dishes">
-            <img src="images/icons/arrow-left.svg" alt="" width="16" height="16" />
-          </button>
-          <div class="menu-grid" #menuTrack>
+      @if (activeCategory(); as category) {
+        <article class="menu-card menu-category-card">
+          <div class="menu-card-image">
+            <img
+              [src]="category.image_url || 'images/menu-kofta.jpg'"
+              [alt]="categoryName(category)"
+              width="800"
+              height="600"
+              (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
+          </div>
+          <div class="menu-card-body">
             @for (item of visibleProducts(); track item.id) {
-              <article class="menu-card">
-                <div class="menu-card-image">
-                  <img
-                    [src]="item.image_url || 'images/menu-kofta.jpg'"
-                    [alt]="productName(item)"
-                    width="400"
-                    height="300"
-                    (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
-                  @if (productBadge(item); as badge) {
-                    <span class="menu-badge">{{ badge }}</span>
-                  }
-                </div>
-                <div class="menu-card-body">
-                  <div class="menu-card-top">
-                    <h3>{{ productName(item) }}</h3>
-                    <span>{{ productPrice(item) }}</span>
-                  </div>
-                  <p>{{ productDescription(item) }}</p>
-                  @if (item.tags.length) {
-                    <div class="menu-tags">
-                      @for (tag of item.tags; track tag.en + tag.ar) {
-                        <span
-                          class="menu-tag"
-                          [class.muted]="tag.muted">
-                          {{ productTagLabel(tag) }}
-                        </span>
-                      }
-                    </div>
-                  }
-                </div>
-              </article>
+              <div class="menu-product-row">
+                <h3>{{ productName(item) }}</h3>
+                <span>{{ productPrice(item) }}</span>
+              </div>
             }
           </div>
-          <button
-            type="button"
-            class="menu-scroll-btn"
-            (click)="scrollMenu(-1)"
-            aria-label="Next dishes">
-            <img src="images/icons/arrow-right.svg" alt="" width="16" height="16" />
-          </button>
-        </div>
+        </article>
       }
     }
 

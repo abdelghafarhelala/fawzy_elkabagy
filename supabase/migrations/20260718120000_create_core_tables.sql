@@ -8,6 +8,7 @@ create table public.categories (
   slug text not null unique,
   name_en text not null,
   name_ar text not null,
+  image_url text,
   sort_order integer not null default 0,
   is_active boolean not null default true,
   is_deleted boolean not null default false,

@@ -20,6 +20,7 @@ export class AdminCategories implements OnInit {
   isSaving = signal(false);
   errorMessage = signal<string | null>(null);
   successMessage = signal<string | null>(null);
+  selectedFile: File | null = null;
 
   form = this.emptyForm();
 
@@ -34,6 +35,7 @@ export class AdminCategories implements OnInit {
       slug: '',
       name_en: '',
       name_ar: '',
+      image_url: '' as string | null,
       sort_order: this.nextSortOrder(),
       is_active: true,
     };
@@ -53,14 +55,22 @@ export class AdminCategories implements OnInit {
       slug: category.slug,
       name_en: category.name_en,
       name_ar: category.name_ar,
+      image_url: category.image_url,
       sort_order: category.sort_order,
       is_active: category.is_active,
     };
+    this.selectedFile = null;
     this.successMessage.set(null);
   }
 
   resetForm(): void {
     this.form = this.emptyForm();
+    this.selectedFile = null;
+  }
+
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.selectedFile = input.files?.[0] ?? null;
   }
 
   async reload(): Promise<void> {
@@ -82,11 +92,17 @@ export class AdminCategories implements OnInit {
     this.errorMessage.set(null);
     this.successMessage.set(null);
     try {
+      let imageUrl = this.form.image_url;
+      if (this.selectedFile) {
+        imageUrl = await this.admin.uploadCategoryImage(this.selectedFile);
+      }
+
       await this.admin.upsertCategory({
         ...(this.form.id ? { id: this.form.id } : {}),
         slug: this.form.slug.trim(),
         name_en: this.form.name_en.trim(),
         name_ar: this.form.name_ar.trim(),
+        image_url: imageUrl || null,
         sort_order: Number(this.form.sort_order) || 0,
         is_active: this.form.is_active,
       });

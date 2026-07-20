@@ -928,6 +928,14 @@ body.nav-drawer-open {
   direction: ltr;
 }
 
+.menu-categories-wrap {
+  align-items: flex-start;
+}
+
+.menu-categories-wrap > .menu-scroll-btn {
+  align-self: center;
+}
+
 .menu-tabs-wrap {
   margin-bottom: clamp(20px, 3vh, 32px);
 }
@@ -1080,6 +1088,7 @@ body.nav-drawer-open {
 .menu-categories-track {
   display: flex;
   flex: 1 1 auto;
+  align-items: flex-start;
   gap: 12px;
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -1145,7 +1154,6 @@ body.nav-drawer-open {
 
 .menu-card-body {
   padding: clamp(16px, 2.5vh, 24px);
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 12px;

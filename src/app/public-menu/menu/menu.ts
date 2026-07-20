@@ -178,7 +178,12 @@ export class Menu implements OnInit {
     if (!track) {
       return;
     }
-    track.scrollBy({ left: direction * 740, behavior: 'smooth' });
+
+    const card = track.querySelector('.signature-card') as HTMLElement | null;
+    const styles = getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+    const amount = card ? card.offsetWidth + gap : 740;
+    this.scrollTrack(track, direction, amount);
   }
 
   private getCardStep(track: HTMLElement): number {

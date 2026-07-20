@@ -127,42 +127,47 @@
 </section>
 
 <section class="signatures-section">
-  <header class="branches-header">
-    <h2 class="section-label">{{ 'signatures.title' | translate }}</h2>
-    <p class="signatures-subtitle">{{ 'signatures.subtitle' | translate }}</p>
-  </header>
-  <div class="signatures-header">
-
-    @if (signatures().length > 0) {
-      <div class="signatures-nav">
-        <button type="button" (click)="scrollSignatures(-1)" aria-label="Previous">
-          <img src="images/icons/arrow-left.svg" alt="" width="16" height="16" />
-        </button>
-        <button type="button" (click)="scrollSignatures(1)" aria-label="Next">
-          <img src="images/icons/arrow-right.svg" alt="" width="16" height="16" />
-        </button>
-      </div>
-    }
+  <div class="pm-container">
+    <header class="branches-header">
+      <h2 class="section-label">{{ 'signatures.title' | translate }}</h2>
+      <p class="signatures-subtitle">{{ 'signatures.subtitle' | translate }}</p>
+    </header>
   </div>
 
   @if (signatures().length === 0) {
     <p class="signatures-empty">{{ 'signatures.empty' | translate }}</p>
   } @else {
-    <div class="signatures-track" #signaturesTrack>
-      @for (sig of signatures(); track sig.id) {
-        <article class="signature-card">
-          <img
-            [src]="sig.image_url || 'images/menu-kofta.jpg'"
-            [alt]="productName(sig)"
-            width="716"
-            height="400"
-            (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
-          <div class="signature-card-overlay">
-            <h3>{{ productName(sig) }}</h3>
-            <p>{{ productDescription(sig) }}</p>
-          </div>
-        </article>
-      }
+    <div class="signatures-track-wrap">
+      <button
+        type="button"
+        class="menu-scroll-btn"
+        (click)="scrollSignatures(1)"
+        aria-label="Previous signatures">
+        <img src="images/icons/arrow-left.svg" alt="" width="16" height="16" />
+      </button>
+      <div class="signatures-track" #signaturesTrack>
+        @for (sig of signatures(); track sig.id) {
+          <article class="signature-card">
+            <img
+              [src]="sig.image_url || 'images/menu-kofta.jpg'"
+              [alt]="productName(sig)"
+              width="716"
+              height="400"
+              (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
+            <div class="signature-card-overlay">
+              <h3>{{ productName(sig) }}</h3>
+              <p>{{ productDescription(sig) }}</p>
+            </div>
+          </article>
+        }
+      </div>
+      <button
+        type="button"
+        class="menu-scroll-btn"
+        (click)="scrollSignatures(-1)"
+        aria-label="Next signatures">
+        <img src="images/icons/arrow-right.svg" alt="" width="16" height="16" />
+      </button>
     </div>
 
     <div class="signatures-dots">

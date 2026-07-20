@@ -29,6 +29,9 @@ export class Menu implements OnInit {
     viewChild<ElementRef<HTMLElement>>('signaturesTrack');
   private readonly categoriesTrack =
     viewChild<ElementRef<HTMLElement>>('categoriesTrack');
+  private readonly menuTrack =
+    viewChild<ElementRef<HTMLElement>>('menuTrack');
+  private isProgrammaticMenuScroll = false;
 
   readonly currentLanguage = this.languageService.currentLanguage;
 
@@ -47,27 +50,6 @@ export class Menu implements OnInit {
       this.products().some((product) => product.category_id === category.id),
     ),
   );
-
-  activeCategory = computed(() => {
-    const id = this.activeCategoryId();
-    if (!id) {
-      return null;
-    }
-    return (
-      this.categoriesWithProducts().find((category) => category.id === id) ??
-      null
-    );
-  });
-
-  visibleProducts = computed(() => {
-    const categoryId = this.activeCategoryId();
-    if (!categoryId) {
-      return [];
-    }
-    return this.products().filter(
-      (product) => product.category_id === categoryId,
-    );
-  });
 
   async ngOnInit(): Promise<void> {
     await this.loadMenu();
@@ -109,6 +91,100 @@ export class Menu implements OnInit {
 
   selectCategory(categoryId: string): void {
     this.activeCategoryId.set(categoryId);
+    this.scrollActiveTabIntoView();
+    queueMicrotask(() => this.scrollToCategoryCard(categoryId));
+  }
+
+  productsForCategory(categoryId: string): Product[] {
+    return this.products().filter(
+      (product) => product.category_id === categoryId,
+    );
+  }
+
+  scrollMenuCategories(direction: -1 | 1): void {
+    const track = this.menuTrack()?.nativeElement;
+    if (!track) {
+      return;
+    }
+
+    const card = track.querySelector(
+      '.menu-category-card',
+    ) as HTMLElement | null;
+    const styles = getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+    const amount = card ? card.offsetWidth + gap : track.clientWidth;
+    this.scrollTrack(track, direction, amount);
+  }
+
+  onMenuCategoriesScroll(): void {
+    if (this.isProgrammaticMenuScroll) {
+      return;
+    }
+
+    const track = this.menuTrack()?.nativeElement;
+    if (!track) {
+      return;
+    }
+
+    const cards = Array.from(
+      track.querySelectorAll('.menu-category-card'),
+    ) as HTMLElement[];
+    if (cards.length === 0) {
+      return;
+    }
+
+    const trackCenter =
+      track.getBoundingClientRect().left + track.clientWidth / 2;
+    let closestCard = cards[0];
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    for (const card of cards) {
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.left + rect.width / 2;
+      const distance = Math.abs(cardCenter - trackCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestCard = card;
+      }
+    }
+
+    const categoryId = closestCard.dataset['categoryId'];
+    if (categoryId && categoryId !== this.activeCategoryId()) {
+      this.activeCategoryId.set(categoryId);
+      this.scrollActiveTabIntoView();
+    }
+  }
+
+  private scrollToCategoryCard(categoryId: string): void {
+    const track = this.menuTrack()?.nativeElement;
+    const card = track?.querySelector(
+      `[data-category-id="${categoryId}"]`,
+    ) as HTMLElement | null;
+    if (!track || !card) {
+      return;
+    }
+
+    this.isProgrammaticMenuScroll = true;
+    card.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'start',
+      block: 'nearest',
+    });
+    window.setTimeout(() => {
+      this.isProgrammaticMenuScroll = false;
+    }, 400);
+  }
+
+  private scrollActiveTabIntoView(): void {
+    const track = this.categoriesTrack()?.nativeElement;
+    const active = track?.querySelector(
+      'button.active',
+    ) as HTMLElement | null;
+    active?.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+      block: 'nearest',
+    });
   }
 
   async downloadFullMenu(): Promise<void> {

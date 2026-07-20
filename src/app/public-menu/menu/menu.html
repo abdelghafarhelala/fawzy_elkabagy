@@ -50,26 +50,49 @@
         </button>
       </div>
 
-      @if (activeCategory(); as category) {
-        <article class="menu-card menu-category-card">
-          <div class="menu-card-image">
-            <img
-              [src]="category.image_url || 'images/menu-kofta.jpg'"
-              [alt]="categoryName(category)"
-              width="800"
-              height="600"
-              (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
-          </div>
-          <div class="menu-card-body">
-            @for (item of visibleProducts(); track item.id) {
-              <div class="menu-product-row">
-                <h3>{{ productName(item) }}</h3>
-                <span>{{ productPrice(item) }}</span>
+      <div class="menu-categories-wrap">
+        <button
+          type="button"
+          class="menu-scroll-btn"
+          (click)="scrollMenuCategories(1)"
+          aria-label="Previous category">
+          <img src="images/icons/arrow-left.svg" alt="" width="16" height="16" />
+        </button>
+        <div
+          class="menu-categories-track"
+          #menuTrack
+          (scroll)="onMenuCategoriesScroll()">
+          @for (category of categoriesWithProducts(); track category.id) {
+            <article
+              class="menu-card menu-category-card"
+              [attr.data-category-id]="category.id">
+              <div class="menu-card-image">
+                <img
+                  [src]="category.image_url || 'images/menu-kofta.jpg'"
+                  [alt]="categoryName(category)"
+                  width="800"
+                  height="200"
+                  (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
               </div>
-            }
-          </div>
-        </article>
-      }
+              <div class="menu-card-body">
+                @for (item of productsForCategory(category.id); track item.id) {
+                  <div class="menu-product-row">
+                    <h3>{{ productName(item) }}</h3>
+                    <span>{{ productPrice(item) }}</span>
+                  </div>
+                }
+              </div>
+            </article>
+          }
+        </div>
+        <button
+          type="button"
+          class="menu-scroll-btn"
+          (click)="scrollMenuCategories(-1)"
+          aria-label="Next category">
+          <img src="images/icons/arrow-right.svg" alt="" width="16" height="16" />
+        </button>
+      </div>
     }
 
     <div class="menu-download">

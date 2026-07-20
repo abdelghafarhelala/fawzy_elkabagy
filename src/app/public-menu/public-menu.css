@@ -916,7 +916,8 @@ body.nav-drawer-open {
   }
 }
 
-.menu-tabs-wrap {
+.menu-tabs-wrap,
+.menu-categories-wrap {
   position: relative;
   display: flex;
   align-items: center;
@@ -925,10 +926,14 @@ body.nav-drawer-open {
   min-width: 0;
   /* Keep prev/next arrows on left/right in both LTR and RTL */
   direction: ltr;
+}
+
+.menu-tabs-wrap {
   margin-bottom: clamp(20px, 3vh, 32px);
 }
 
-[dir='rtl'] .menu-tabs {
+[dir='rtl'] .menu-tabs,
+[dir='rtl'] .menu-categories-track {
   direction: rtl;
 }
 
@@ -966,7 +971,8 @@ body.nav-drawer-open {
 }
 
 @media (max-width: 991.98px) {
-  .menu-tabs-wrap {
+  .menu-tabs-wrap,
+  .menu-categories-wrap {
     gap: 0;
   }
 
@@ -1016,9 +1022,14 @@ body.nav-drawer-open {
 }
 
 @media (min-width: 992px) {
-  .menu-tabs-wrap {
+  .menu-tabs-wrap,
+  .menu-categories-wrap {
     margin-bottom: clamp(24px, 3.5vh, 40px);
     gap: 12px;
+  }
+
+  .menu-categories-wrap {
+    margin-bottom: 0;
   }
 
   .menu-scroll-btn {
@@ -1066,9 +1077,34 @@ body.nav-drawer-open {
   }
 }
 
-.menu-category-card {
-  width: 100%;
+.menu-categories-track {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
   max-width: 100%;
+  min-width: 0;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+
+.menu-categories-track::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .menu-categories-track {
+    gap: 24px;
+  }
+}
+
+.menu-category-card {
+  flex: 0 0 calc(100% - 28px);
+  max-width: calc(100% - 28px);
+  scroll-snap-align: start;
   background: #322821;
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
@@ -1079,6 +1115,8 @@ body.nav-drawer-open {
 
 @media (min-width: 992px) {
   .menu-category-card {
+    flex: 0 0 100%;
+    max-width: 100%;
     background: var(--bg-card);
     border-radius: 12px;
   }
@@ -1086,8 +1124,8 @@ body.nav-drawer-open {
 
 .menu-card-image {
   position: relative;
-  aspect-ratio: 4 / 3;
   width: 100%;
+  height: clamp(140px, 28vw, 200px);
   overflow: hidden;
   background: #1a120c;
 }

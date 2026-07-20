@@ -9,7 +9,6 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { AdminService } from '../../core/services/admin.service';
 import { LanguageService } from '../../core/services/language.service';
 import { MenuService } from '../../core/services/menu.service';
-import { LocationBranch } from '../../core/models/admin.models';
 
 @Component({
   selector: 'app-contact-us',
@@ -24,8 +23,6 @@ export class ContactUs implements OnInit {
 
   readonly currentLanguage = this.languageService.currentLanguage;
 
-  locations = signal<LocationBranch[]>([]);
-  selectedId = signal<string | null>(null);
   hotline = signal('');
   private hoursEn = signal('');
   private hoursAr = signal('');
@@ -39,14 +36,7 @@ export class ContactUs implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      const [locs, reach] = await Promise.all([
-        this.menuService.getLocations(),
-        this.menuService.getReachOutInfo(),
-      ]);
-      this.locations.set(locs);
-      if (locs.length) {
-        this.selectedId.set(locs[0].id);
-      }
+      const reach = await this.menuService.getReachOutInfo();
       if (reach) {
         this.hotline.set((reach.phone ?? '').trim());
         this.hoursEn.set(reach.hours_en);
@@ -55,26 +45,6 @@ export class ContactUs implements OnInit {
     } catch {
       // Form still works without hours.
     }
-  }
-
-  branchName(loc: LocationBranch): string {
-    return this.currentLanguage() === 'ar' ? loc.name_ar : loc.name_en;
-  }
-
-  branchAddress(loc: LocationBranch): string {
-    return this.currentLanguage() === 'ar'
-      ? loc.address_ar
-      : loc.address_en;
-  }
-
-  selectBranch(id: string): void {
-    this.selectedId.set(id);
-  }
-
-  selectedMapUrl(): string | null {
-    const id = this.selectedId();
-    const loc = this.locations().find((l) => l.id === id);
-    return loc?.map_url?.trim() || null;
   }
 
   telHref(phone: string): string {

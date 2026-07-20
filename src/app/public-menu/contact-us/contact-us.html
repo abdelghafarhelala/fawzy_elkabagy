@@ -37,59 +37,6 @@
           </div>
         }
       </div>
-
-      <h4 class="contact-branches-heading">
-        {{ 'contact.branchesLabel' | translate }}
-      </h4>
-
-      <div class="contact-branches">
-        @for (loc of locations(); track loc.id) {
-          <article
-            class="contact-branch"
-            [class.is-selected]="selectedId() === loc.id"
-            (click)="selectBranch(loc.id)">
-            <h5 class="contact-branch-name">{{ branchName(loc) }}</h5>
-            <p class="contact-branch-address">{{ branchAddress(loc) }}</p>
-            <div class="contact-branch-phones">
-              @for (phone of loc.phones; track phone) {
-                <a
-                  class="contact-phone-link"
-                  [href]="telHref(phone)"
-                  (click)="$event.stopPropagation()">
-                  {{ phone }}
-                </a>
-              }
-            </div>
-            @if (loc.map_url) {
-              <a
-                class="contact-maps-link"
-                [href]="loc.map_url"
-                target="_blank"
-                rel="noopener noreferrer"
-                (click)="$event.stopPropagation()">
-                {{ 'contact.openMaps' | translate }}
-              </a>
-            }
-          </article>
-        }
-      </div>
-
-      @if (selectedMapUrl(); as mapUrl) {
-        <div class="contact-map">
-          <a
-            class="contact-map-fallback"
-            [href]="mapUrl"
-            target="_blank"
-            rel="noopener noreferrer">
-            <img
-              src="images/map.jpg"
-              alt="Restaurant location map"
-              width="560"
-              height="256" />
-            <span>{{ 'contact.openMaps' | translate }}</span>
-          </a>
-        </div>
-      }
     </div>
 
     <div class="contact-form-card">

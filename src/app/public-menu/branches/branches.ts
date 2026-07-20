@@ -22,9 +22,6 @@ export class Branches implements OnInit {
     try {
       const locs = await this.menuService.getLocations();
       this.locations.set(locs);
-      if (locs.length) {
-        this.selectedId.set(locs[0].id);
-      }
     } catch {
       this.locations.set([]);
     }

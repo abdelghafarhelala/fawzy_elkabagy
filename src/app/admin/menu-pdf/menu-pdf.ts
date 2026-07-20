@@ -11,6 +11,8 @@ import { TranslationService } from '../../core/services/translation.service';
   styleUrl: '../admin.css',
 })
 export class AdminMenuPdf implements OnInit {
+  private static readonly MAX_PDF_BYTES = 50 * 1024 * 1024; // 50 MB
+
   private readonly admin = inject(AdminService);
   private readonly i18n = inject(TranslationService);
 
@@ -27,7 +29,16 @@ export class AdminMenuPdf implements OnInit {
 
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.selectedFile = input.files?.[0] ?? null;
+    const file = input.files?.[0] ?? null;
+    this.selectedFile = file;
+    this.errorMessage.set(null);
+    this.successMessage.set(null);
+
+    if (file && file.size > AdminMenuPdf.MAX_PDF_BYTES) {
+      this.selectedFile = null;
+      input.value = '';
+      this.errorMessage.set(this.i18n.t('admin.menuPdf.tooLarge'));
+    }
   }
 
   async reload(): Promise<void> {
@@ -50,6 +61,11 @@ export class AdminMenuPdf implements OnInit {
       return;
     }
 
+    if (this.selectedFile.size > AdminMenuPdf.MAX_PDF_BYTES) {
+      this.errorMessage.set(this.i18n.t('admin.menuPdf.tooLarge'));
+      return;
+    }
+
     this.isUploading.set(true);
     this.errorMessage.set(null);
     this.successMessage.set(null);
@@ -60,8 +76,13 @@ export class AdminMenuPdf implements OnInit {
       this.selectedFile = null;
       this.successMessage.set(this.i18n.t('admin.menuPdf.saved'));
     } catch (err: unknown) {
+      const message = this.errMsg(err, this.i18n.t('admin.menuPdf.uploadFailed'));
       this.errorMessage.set(
-        this.errMsg(err, this.i18n.t('admin.menuPdf.uploadFailed')),
+        /maximum allowed size|exceeded|too large|Payload too large/i.test(
+          message,
+        )
+          ? this.i18n.t('admin.menuPdf.tooLarge')
+          : message,
       );
     } finally {
       this.isUploading.set(false);

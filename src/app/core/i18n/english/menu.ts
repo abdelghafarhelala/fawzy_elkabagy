@@ -43,6 +43,8 @@ export const menuTranslations = {
     viewFull: 'VIEW FULL MENU',
     emptyCategories: 'Menu categories will appear here soon.',
     emptyProducts: 'No dishes in this category yet.',
+    showMore: 'Show more',
+    showLess: 'Show less',
     pdfTitle: 'Full Menu',
     pdfMissing: 'The menu PDF is not available yet. Please check back soon.',
     pdfOpen: 'Open PDF in new tab',

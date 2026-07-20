@@ -22,6 +22,8 @@ import { formatProductPrice } from '../../core/utils/price';
   styleUrl: './menu.css',
 })
 export class Menu implements OnInit {
+  private static readonly MAX_VISIBLE_PRODUCTS = 8;
+
   private readonly menuService = inject(MenuService);
   private readonly languageService = inject(LanguageService);
   private readonly pdfPrefetch = inject(MenuPdfPrefetchService);
@@ -43,6 +45,8 @@ export class Menu implements OnInit {
   signatures = signal<Product[]>([]);
   activeCategoryId = signal<string | null>(null);
   activeSignatureIndex = signal(0);
+  /** Category ids whose product list is fully expanded. */
+  expandedCategoryIds = signal<ReadonlySet<string>>(new Set());
 
   /** Categories that have at least one product (empty categories are hidden). */
   categoriesWithProducts = computed(() =>
@@ -90,8 +94,7 @@ export class Menu implements OnInit {
   }
 
   selectCategory(categoryId: string): void {
-    this.activeCategoryId.set(categoryId);
-    this.scrollActiveTabIntoView();
+    this.setActiveCategory(categoryId);
     queueMicrotask(() => this.scrollToCategoryCard(categoryId));
   }
 
@@ -99,6 +102,36 @@ export class Menu implements OnInit {
     return this.products().filter(
       (product) => product.category_id === categoryId,
     );
+  }
+
+  visibleProductsForCategory(categoryId: string): Product[] {
+    const products = this.productsForCategory(categoryId);
+    if (this.isCategoryExpanded(categoryId)) {
+      return products;
+    }
+    return products.slice(0, Menu.MAX_VISIBLE_PRODUCTS);
+  }
+
+  categoryHasMoreProducts(categoryId: string): boolean {
+    return (
+      this.productsForCategory(categoryId).length > Menu.MAX_VISIBLE_PRODUCTS
+    );
+  }
+
+  isCategoryExpanded(categoryId: string): boolean {
+    return this.expandedCategoryIds().has(categoryId);
+  }
+
+  toggleCategoryExpand(categoryId: string): void {
+    this.expandedCategoryIds.update((current) => {
+      const next = new Set(current);
+      if (next.has(categoryId)) {
+        next.delete(categoryId);
+      } else {
+        next.add(categoryId);
+      }
+      return next;
+    });
   }
 
   scrollMenuCategories(direction: -1 | 1): void {
@@ -150,9 +183,14 @@ export class Menu implements OnInit {
 
     const categoryId = closestCard.dataset['categoryId'];
     if (categoryId && categoryId !== this.activeCategoryId()) {
-      this.activeCategoryId.set(categoryId);
-      this.scrollActiveTabIntoView();
+      this.setActiveCategory(categoryId);
     }
+  }
+
+  private setActiveCategory(categoryId: string): void {
+    this.activeCategoryId.set(categoryId);
+    this.expandedCategoryIds.set(new Set());
+    this.scrollActiveTabIntoView();
   }
 
   private scrollToCategoryCard(categoryId: string): void {

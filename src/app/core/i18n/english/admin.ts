@@ -150,6 +150,8 @@ export const adminTranslations = {
       uploadBtn: 'Upload',
       uploading: 'Uploading…',
       chooseFile: 'Choose a PDF file first.',
+      sizeHint: 'Maximum file size: 50 MB.',
+      tooLarge: 'This PDF is too large. Please upload a file under 50 MB.',
       saved: 'Menu PDF uploaded.',
       loadFailed: 'Failed to load PDF',
       uploadFailed: 'Upload failed',

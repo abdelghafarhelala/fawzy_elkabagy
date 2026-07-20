@@ -87,7 +87,7 @@ REACH OUT block (location, phone, hours) — singleton row.
 
 | Bucket | Public read | Authenticated write | Allowed types |
 |--------|-------------|---------------------|---------------|
-| `menu-pdfs` | yes | yes | PDF (10 MB) |
+| `menu-pdfs` | yes | yes | PDF (50 MB) |
 | `product-images` | yes | yes | jpeg/png/webp/gif (5 MB) |
 
 ## Seeded data

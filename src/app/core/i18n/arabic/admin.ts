@@ -150,6 +150,8 @@ export const adminTranslations = {
       uploadBtn: 'رفع',
       uploading: 'جاري الرفع…',
       chooseFile: 'اختر ملف PDF أولاً.',
+      sizeHint: 'الحد الأقصى لحجم الملف: 50 ميجابايت.',
+      tooLarge: 'ملف PDF كبير جداً. يرجى رفع ملف أقل من 50 ميجابايت.',
       saved: 'تم رفع ملف المنيو.',
       loadFailed: 'فشل تحميل ملف PDF',
       uploadFailed: 'فشل الرفع',

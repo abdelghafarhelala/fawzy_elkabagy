@@ -75,11 +75,23 @@
                   (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
               </div>
               <div class="menu-card-body">
-                @for (item of productsForCategory(category.id); track item.id) {
+                @for (item of visibleProductsForCategory(category.id); track item.id) {
                   <div class="menu-product-row">
                     <h3>{{ productName(item) }}</h3>
                     <span>{{ productPrice(item) }}</span>
                   </div>
+                }
+                @if (categoryHasMoreProducts(category.id)) {
+                  <button
+                    type="button"
+                    class="menu-expand-btn"
+                    (click)="toggleCategoryExpand(category.id)">
+                    {{
+                      isCategoryExpanded(category.id)
+                        ? ('menu.showLess' | translate)
+                        : ('menu.showMore' | translate)
+                    }}
+                  </button>
                 }
               </div>
             </article>

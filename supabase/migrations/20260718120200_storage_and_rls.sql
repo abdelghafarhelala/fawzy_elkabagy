@@ -7,7 +7,7 @@ values
     'menu-pdfs',
     'menu-pdfs',
     true,
-    10485760,
+    52428800,
     array['application/pdf']::text[]
   ),
   (

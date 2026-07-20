@@ -30,6 +30,9 @@
     <label>
       {{ 'admin.menuPdf.upload' | translate }}
       <input type="file" accept="application/pdf" (change)="onFileChange($event)" />
+      <span class="admin-field-note">
+        {{ 'admin.menuPdf.sizeHint' | translate }}
+      </span>
     </label>
   </div>
 

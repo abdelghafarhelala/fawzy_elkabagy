@@ -43,6 +43,8 @@ export const menuTranslations = {
     viewFull: 'عرض المنيو كاملة',
     emptyCategories: 'أقسام المنيو ستظهر هنا قريباً.',
     emptyProducts: 'لا توجد أطباق في هذا القسم بعد.',
+    showMore: 'عرض المزيد',
+    showLess: 'عرض أقل',
     pdfTitle: 'المنيو كاملة',
     pdfMissing: 'ملف المنيو غير متاح حالياً. يرجى المحاولة لاحقاً.',
     pdfOpen: 'فتح ملف PDF في تبويب جديد',

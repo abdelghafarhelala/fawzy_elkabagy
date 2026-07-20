@@ -1481,15 +1481,24 @@ body.nav-drawer-open {
   }
 }
 
-.branches-header .section-title {
-  margin-top: 8px;
-  font-weight: 400;
+.branches-section .branches-header {
+  text-align: center;
+  margin-bottom: clamp(28px, 5vh, 48px);
 }
 
-.branches-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+.branches-subtitle {
+  margin: 12px auto 0;
+  max-width: 640px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+@media (min-width: 992px) {
+  .branches-subtitle {
+    font-size: 16px;
+    line-height: 1.65;
+  }
 }
 
 .branches-empty {
@@ -1498,60 +1507,161 @@ body.nav-drawer-open {
   text-align: center;
 }
 
-.contact-branches {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+.branches-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  min-width: 0;
 }
 
-.branches-section .contact-branches {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 16px;
+@media (min-width: 640px) {
+  .branches-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
 }
 
-.contact-branch {
-  display: inline-flex;
+@media (min-width: 992px) {
+  .branches-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(20px, 2.5vw, 28px);
+  }
+}
+
+.branch-card {
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
-  flex: 1 1 240px;
-  max-width: 100%;
+  gap: 16px;
+  min-width: 0;
+  height: 100%;
+  padding: clamp(24px, 3vh, 32px);
+  border-radius: 16px;
   border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 14px 16px;
-  cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-card);
   box-sizing: border-box;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.contact-branch:hover,
-.contact-branch.is-selected {
+@media (min-width: 992px) {
+  .branch-card {
+    background: var(--bg-panel);
+  }
+}
+
+.branch-card:hover {
+  transform: translateY(-6px);
   border-color: rgba(255, 183, 129, 0.45);
   background: rgba(255, 183, 129, 0.06);
+  box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.55);
 }
 
-.contact-branch-name {
+.branch-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 183, 129, 0.3);
+  background: rgba(20, 12, 7, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.branch-card:hover .branch-card-icon {
+  border-color: rgba(255, 183, 129, 0.65);
+  transform: scale(1.05);
+}
+
+.branch-card-icon img {
+  width: 16px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.branch-card-name {
   margin: 0;
-  font-size: 16px;
+  font-family: var(--font-serif);
+  font-size: 22px;
   font-weight: 600;
+  line-height: 1.3;
   color: var(--text-cream);
 }
 
-.contact-branch-address {
-  margin: 6px 0 0;
+.branch-card-address {
+  margin: 0;
   font-size: 14px;
-  line-height: 1.45;
+  line-height: 1.55;
   color: var(--text-muted);
   overflow-wrap: anywhere;
 }
 
-.contact-branch-phones {
+.branch-card-phones {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 14px;
-  margin-top: 10px;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.branch-card-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-cream);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.branch-card-phone img {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.branch-card-phone:hover {
+  color: var(--secondary-color);
+}
+
+.branch-maps-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+  padding: 12px 18px;
+  width: 100%;
+  border-radius: 10px;
+  background: var(--primary-color);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: background 0.2s ease, filter 0.2s ease;
+}
+
+.branch-card:hover .branch-maps-btn {
+  background: var(--secondary-color);
+}
+
+.branch-maps-btn:hover {
+  filter: brightness(1.05);
+}
+
+.branch-maps-btn-icon {
+  flex-shrink: 0;
 }
 
 .contact-phone-link {
@@ -1563,44 +1673,6 @@ body.nav-drawer-open {
 
 .contact-phone-link:hover {
   text-decoration: underline;
-}
-
-.contact-maps-link {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  color: var(--secondary-color);
-  text-decoration: none;
-}
-
-.contact-maps-link:hover {
-  text-decoration: underline;
-}
-
-.contact-map-fallback {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  color: inherit;
-  text-decoration: none;
-}
-
-.contact-map-fallback span {
-  position: absolute;
-  inset-inline-start: 16px;
-  bottom: 14px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(20, 16, 12, 0.75);
-  color: var(--secondary-color);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
 }
 
 .contact-row {
@@ -1729,12 +1801,6 @@ body.nav-drawer-open {
 @media (min-width: 992px) {
   .contact-map {
     display: block;
-  }
-
-  .branches-layout .contact-map {
-    margin-top: 0;
-    min-height: 280px;
-    height: clamp(240px, 32vh, 360px);
   }
 }
 

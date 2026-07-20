@@ -121,6 +121,9 @@ export const menuTranslations = {
   branches: {
     label: 'OUR BRANCHES',
     title: 'Visit Us Across Cairo',
+    subtitle:
+      'Visit us at any of our premium locations to experience the authentic taste of the Egyptian hearth.',
+    viewOnMaps: 'VIEW ON MAPS',
     empty: 'Branches coming soon.',
   },
   footer: {

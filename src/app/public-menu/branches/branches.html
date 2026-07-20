@@ -2,57 +2,64 @@
   <div class="pm-container">
     <header class="branches-header">
       <h2 class="section-label">{{ 'branches.label' | translate }}</h2>
+      <p class="branches-subtitle">{{ 'branches.subtitle' | translate }}</p>
     </header>
 
     @if (locations().length) {
-      <div class="branches-layout">
-        <div class="contact-branches">
-          @for (loc of locations(); track loc.id) {
-            <article
-              class="contact-branch"
-              [class.is-selected]="selectedId() === loc.id"
-              (click)="selectBranch(loc.id)">
-              <h5 class="contact-branch-name">{{ branchName(loc) }}</h5>
-              <p class="contact-branch-address">{{ branchAddress(loc) }}</p>
-              <div class="contact-branch-phones">
+      <div class="branches-grid">
+        @for (loc of locations(); track loc.id) {
+          <article class="branch-card">
+            <div class="branch-card-icon" aria-hidden="true">
+              <img
+                src="images/icons/location.svg"
+                alt=""
+                width="16"
+                height="20" />
+            </div>
+
+            <h3 class="branch-card-name">{{ branchName(loc) }}</h3>
+            <p class="branch-card-address">{{ branchAddress(loc) }}</p>
+
+            @if (loc.phones.length) {
+              <div class="branch-card-phones">
                 @for (phone of loc.phones; track phone) {
-                  <a
-                    class="contact-phone-link"
-                    [href]="telHref(phone)"
-                    (click)="$event.stopPropagation()">
-                    {{ phone }}
+                  <a class="branch-card-phone" [href]="telHref(phone)">
+                    <img
+                      src="images/icons/phone.svg"
+                      alt=""
+                      width="14"
+                      height="14" />
+                    <span>{{ phone }}</span>
                   </a>
                 }
               </div>
-              @if (loc.map_url) {
-                <a
-                  class="contact-maps-link"
-                  [href]="loc.map_url"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  (click)="$event.stopPropagation()">
-                  {{ 'contact.openMaps' | translate }}
-                </a>
-              }
-            </article>
-          }
-        </div>
+            }
 
-        @if (selectedMapUrl(); as mapUrl) {
-          <div class="contact-map">
-            <a
-              class="contact-map-fallback"
-              [href]="mapUrl"
-              target="_blank"
-              rel="noopener noreferrer">
-              <img
-                src="images/map.jpg"
-                alt="Restaurant location map"
-                width="560"
-                height="256" />
-              <span>{{ 'contact.openMaps' | translate }}</span>
-            </a>
-          </div>
+            @if (loc.map_url) {
+              <a
+                class="branch-maps-btn"
+                [href]="loc.map_url"
+                target="_blank"
+                rel="noopener noreferrer">
+                {{ 'branches.viewOnMaps' | translate }}
+                <svg
+                  class="branch-maps-btn-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true">
+                  <path
+                    d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </a>
+            }
+          </article>
         }
       </div>
     } @else {

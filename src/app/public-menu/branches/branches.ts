@@ -16,7 +16,6 @@ export class Branches implements OnInit {
 
   readonly currentLanguage = this.languageService.currentLanguage;
   locations = signal<LocationBranch[]>([]);
-  selectedId = signal<string | null>(null);
 
   async ngOnInit(): Promise<void> {
     try {
@@ -33,16 +32,6 @@ export class Branches implements OnInit {
 
   branchAddress(loc: LocationBranch): string {
     return this.currentLanguage() === 'ar' ? loc.address_ar : loc.address_en;
-  }
-
-  selectBranch(id: string): void {
-    this.selectedId.set(id);
-  }
-
-  selectedMapUrl(): string | null {
-    const id = this.selectedId();
-    const loc = this.locations().find((l) => l.id === id);
-    return loc?.map_url?.trim() || null;
   }
 
   telHref(phone: string): string {

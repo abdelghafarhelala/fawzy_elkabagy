@@ -121,6 +121,9 @@ export const menuTranslations = {
   branches: {
     label: 'فروعنا',
     title: 'زورونا في فروعنا',
+    subtitle:
+      'زورونا في أي من فروعنا المميزة لتذوق أصالة المذاق المصري الأصيل.',
+    viewOnMaps: 'عرض على الخريطة',
     empty: 'الفروع قريباً.',
   },
   footer: {

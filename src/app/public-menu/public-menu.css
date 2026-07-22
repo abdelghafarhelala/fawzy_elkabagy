@@ -1396,8 +1396,8 @@ body.nav-drawer-open {
   position: relative;
   flex: 0 0 100%;
   max-width: 100%;
-  /* Match product photos (~3:2 landscape) */
-  aspect-ratio: 3 / 2;
+  /* Match category photos (3:4 portrait) */
+  aspect-ratio: 3 / 4;
   border-radius: 24px;
   overflow: hidden;
   scroll-snap-align: start;

@@ -35,6 +35,11 @@ export interface Product {
   is_deleted: boolean;
 }
 
+/** Signature carousel item — prefers category photo over product photo. */
+export interface SignatureProduct extends Product {
+  category_image_url: string | null;
+}
+
 export interface MenuPdf {
   id: string;
   file_path: string;

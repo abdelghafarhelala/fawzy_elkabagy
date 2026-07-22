@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
-import { Category, Product } from '../../core/models/menu.models';
+import { Category, Product, SignatureProduct } from '../../core/models/menu.models';
 import { LanguageService } from '../../core/services/language.service';
 import { MenuPdfPrefetchService } from '../../core/services/menu-pdf-prefetch.service';
 import { MenuService } from '../../core/services/menu.service';
@@ -42,7 +42,7 @@ export class Menu implements OnInit {
   errorMessage = signal<string | null>(null);
   categories = signal<Category[]>([]);
   products = signal<Product[]>([]);
-  signatures = signal<Product[]>([]);
+  signatures = signal<SignatureProduct[]>([]);
   activeCategoryId = signal<string | null>(null);
   activeSignatureIndex = signal(0);
   /** Category ids whose product list is fully expanded. */
@@ -281,6 +281,10 @@ export class Menu implements OnInit {
     return this.currentLanguage() === 'ar'
       ? product.description_ar
       : product.description_en;
+  }
+
+  signatureImage(product: SignatureProduct): string | null {
+    return product.category_image_url || product.image_url;
   }
 
   scrollCategories(direction: -1 | 1): void {

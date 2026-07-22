@@ -151,9 +151,9 @@
         (scroll)="onSignaturesScroll()">
         @for (sig of signatures(); track sig.id) {
           <article class="signature-card">
-            @if (sig.image_url) {
+            @if (signatureImage(sig); as imageUrl) {
               <img
-                [src]="sig.image_url"
+                [src]="imageUrl"
                 [alt]="productName(sig)"
                 width="716"
                 height="400" />

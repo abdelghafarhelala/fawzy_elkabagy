@@ -1,7 +1,20 @@
 import { Injectable, inject } from '@angular/core';
-import { Category, MenuPdf, Product, ProductTag } from '../models/menu.models';
+import {
+  Category,
+  MenuPdf,
+  Product,
+  ProductTag,
+  SignatureProduct,
+} from '../models/menu.models';
 import { LocationBranch, ReachOut } from '../models/admin.models';
 import { SupabaseService } from './supabase.service';
+
+type SignatureRow = Product & {
+  categories:
+    | { image_url: string | null }
+    | { image_url: string | null }[]
+    | null;
+};
 
 @Injectable({
   providedIn: 'root',
@@ -55,31 +68,56 @@ export class MenuService {
     }));
   }
 
-  async getSignatures(): Promise<Product[]> {
+  async getSignatures(): Promise<SignatureProduct[]> {
     const { data, error } = await this.supabase.client
       .from('products')
       .select(
         'id, category_id, name_en, name_ar, description_en, description_ar, ' +
           'price_en, price_ar, image_url, badge_en, badge_ar, tags, ' +
-          'sort_order, is_signature, signature_sort_order, is_active, is_deleted',
+          'sort_order, is_signature, signature_sort_order, is_active, is_deleted, ' +
+          'categories(image_url)',
       )
       .eq('is_signature', true)
       .eq('is_active', true)
       .eq('is_deleted', false)
-      .not('image_url', 'is', null)
       .order('signature_sort_order', { ascending: true });
 
     if (error) {
       throw error;
     }
 
-    const rows = (data ?? []) as unknown as Product[];
+    const rows = (data ?? []) as unknown as SignatureRow[];
     return rows
-      .filter((product) => !!product.image_url?.trim())
-      .map((product) => ({
-        ...product,
-        tags: this.normalizeTags(product.tags),
-      }));
+      .map((row) => {
+        const category = Array.isArray(row.categories)
+          ? row.categories[0]
+          : row.categories;
+        const categoryImageUrl = category?.image_url?.trim() || null;
+        return {
+          id: row.id,
+          category_id: row.category_id,
+          name_en: row.name_en,
+          name_ar: row.name_ar,
+          description_en: row.description_en,
+          description_ar: row.description_ar,
+          price_en: row.price_en,
+          price_ar: row.price_ar,
+          image_url: row.image_url,
+          badge_en: row.badge_en,
+          badge_ar: row.badge_ar,
+          tags: this.normalizeTags(row.tags),
+          sort_order: row.sort_order,
+          is_signature: row.is_signature,
+          signature_sort_order: row.signature_sort_order,
+          is_active: row.is_active,
+          is_deleted: row.is_deleted,
+          category_image_url: categoryImageUrl,
+        };
+      })
+      .filter(
+        (product) =>
+          !!product.category_image_url || !!product.image_url?.trim(),
+      );
   }
 
   async getLatestMenuPdf(): Promise<MenuPdf | null> {

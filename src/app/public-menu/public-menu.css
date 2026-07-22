@@ -1134,7 +1134,9 @@ body.nav-drawer-open {
 .menu-card-image {
   position: relative;
   width: 100%;
-  height: clamp(140px, 28vw, 200px);
+  /* Match category photos (733×969 ≈ 3:4 portrait) */
+  aspect-ratio: 3 / 4;
+  max-height: clamp(240px, 55vw, 380px);
   overflow: hidden;
   background: #1a120c;
 }

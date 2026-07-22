@@ -151,15 +151,19 @@
         (scroll)="onSignaturesScroll()">
         @for (sig of signatures(); track sig.id) {
           <article class="signature-card">
-            <img
-              [src]="sig.image_url || 'images/menu-kofta.jpg'"
-              [alt]="productName(sig)"
-              width="716"
-              height="400"
-              (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
+            @if (sig.image_url) {
+              <img
+                [src]="sig.image_url"
+                [alt]="productName(sig)"
+                width="716"
+                height="400" />
+            }
             <div class="signature-card-overlay">
               <h3>{{ productName(sig) }}</h3>
-              <p>{{ productDescription(sig) }}</p>
+              @if (productDescription(sig)) {
+                <p>{{ productDescription(sig) }}</p>
+              }
+              <span class="signature-price">{{ productPrice(sig) }}</span>
             </div>
           </article>
         }

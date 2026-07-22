@@ -87,18 +87,6 @@ export const menuTranslations = {
     title: 'SIGNATURE SELECTIONS',
     subtitle: 'The masterpieces of our charcoal hearth.',
     empty: 'Signature dishes will appear here soon.',
-    royal: {
-      title: 'The Royal Platter',
-      desc: 'Our most prestigious selection, designed for large gatherings and special celebrations.',
-    },
-    steaks: {
-      title: 'Prime Charcoal Steaks',
-      desc: 'Aged for 21 days and finished over the high heat of lemonwood charcoal.',
-    },
-    garden: {
-      title: 'Garden Appetizers',
-      desc: 'The perfect accompaniment to our grilled selections, prepared fresh every morning.',
-    },
   },
   contact: {
     label: 'REACH OUT',

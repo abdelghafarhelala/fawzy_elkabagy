@@ -66,6 +66,7 @@ export class MenuService {
       .eq('is_signature', true)
       .eq('is_active', true)
       .eq('is_deleted', false)
+      .not('image_url', 'is', null)
       .order('signature_sort_order', { ascending: true });
 
     if (error) {
@@ -73,10 +74,12 @@ export class MenuService {
     }
 
     const rows = (data ?? []) as unknown as Product[];
-    return rows.map((product) => ({
-      ...product,
-      tags: this.normalizeTags(product.tags),
-    }));
+    return rows
+      .filter((product) => !!product.image_url?.trim())
+      .map((product) => ({
+        ...product,
+        tags: this.normalizeTags(product.tags),
+      }));
   }
 
   async getLatestMenuPdf(): Promise<MenuPdf | null> {

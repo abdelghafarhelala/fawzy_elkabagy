@@ -1,5 +1,5 @@
--- Signature selections: one dish per category so category images differ.
--- Keep King's Crown (royal) + Kofta (grills); add tajine + main.
+-- Signature selections: one featured dish lineup.
+-- Crown + Grill (royal), tajine, main.
 
 update public.products
 set is_signature = false, signature_sort_order = 0
@@ -11,11 +11,11 @@ where name_en = 'The King''s Crown' and is_deleted = false;
 
 update public.products
 set is_signature = true, signature_sort_order = 2
-where name_en = 'Kofta (1 kg)' and is_deleted = false;
+where name_en = 'The King''s Grill' and is_deleted = false;
 
 update public.products
 set is_signature = true, signature_sort_order = 3
-where name_en = 'Tajine Fattah Kaware' and is_deleted = false;
+where name_en = 'Tajine Grape Leaves with Oxtail' and is_deleted = false;
 
 update public.products
 set is_signature = true, signature_sort_order = 4

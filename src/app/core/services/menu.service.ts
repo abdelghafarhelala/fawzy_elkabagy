@@ -116,10 +116,7 @@ export class MenuService {
           category_slug: categorySlug,
         };
       })
-      .filter(
-        (product) =>
-          !!product.category_image_url || !!product.image_url?.trim(),
-      );
+      .filter((product) => !!product.image_url?.trim());
   }
 
   async getLatestMenuPdf(): Promise<MenuPdf | null> {

@@ -350,7 +350,7 @@ export class Menu implements OnInit, OnDestroy {
   }
 
   signatureImage(product: SignatureProduct): string | null {
-    return product.category_image_url || product.image_url;
+    return product.image_url || product.category_image_url;
   }
 
   scrollCategories(direction: -1 | 1): void {

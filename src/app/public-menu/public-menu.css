@@ -629,10 +629,19 @@ body.nav-drawer-open {
   overflow-x: clip;
 }
 
+/* Hide "قصتنا / OUR STORY" above the chef photo on mobile */
+.story-section > .branches-header {
+  display: none;
+}
+
 @media (min-width: 992px) {
   .story-section {
     background: var(--bg-deeper);
     padding: clamp(48px, 7vh, 80px) 0;
+  }
+
+  .story-section > .branches-header {
+    display: block;
   }
 }
 

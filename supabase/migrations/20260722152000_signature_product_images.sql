@@ -37,14 +37,14 @@ where c.id = p.category_id
   and p.is_signature = true
   and p.is_deleted = false
   and c.image_url is not null
-  and p.name_en <> 'The King''s Crown';
+  and p.name_en <> 'The King''s Grill';
 
--- King's Crown uses grills category image (not royal)
+-- King's Grill uses grills category image (not royal)
 update public.products p
 set image_url = c.image_url,
     updated_at = now()
 from public.categories c
 where c.slug = 'grills'
   and c.is_deleted = false
-  and p.name_en = 'The King''s Crown'
+  and p.name_en = 'The King''s Grill'
   and p.is_deleted = false;

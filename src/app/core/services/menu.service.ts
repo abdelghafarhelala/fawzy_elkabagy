@@ -11,8 +11,8 @@ import { SupabaseService } from './supabase.service';
 
 type SignatureRow = Product & {
   categories:
-    | { image_url: string | null }
-    | { image_url: string | null }[]
+    | { image_url: string | null; slug: string }
+    | { image_url: string | null; slug: string }[]
     | null;
 };
 
@@ -75,7 +75,7 @@ export class MenuService {
         'id, category_id, name_en, name_ar, description_en, description_ar, ' +
           'price_en, price_ar, image_url, badge_en, badge_ar, tags, ' +
           'sort_order, is_signature, signature_sort_order, is_active, is_deleted, ' +
-          'categories(image_url)',
+          'categories(image_url, slug)',
       )
       .eq('is_signature', true)
       .eq('is_active', true)
@@ -93,6 +93,7 @@ export class MenuService {
           ? row.categories[0]
           : row.categories;
         const categoryImageUrl = category?.image_url?.trim() || null;
+        const categorySlug = category?.slug?.trim() || null;
         return {
           id: row.id,
           category_id: row.category_id,
@@ -112,6 +113,7 @@ export class MenuService {
           is_active: row.is_active,
           is_deleted: row.is_deleted,
           category_image_url: categoryImageUrl,
+          category_slug: categorySlug,
         };
       })
       .filter(

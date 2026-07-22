@@ -1403,6 +1403,12 @@ body.nav-drawer-open {
   scroll-snap-align: start;
   border: 1px solid var(--border-subtle);
   background: #1a120c;
+  cursor: pointer;
+}
+
+.signature-card:focus-visible {
+  outline: 2px solid var(--primary-color, #d48141);
+  outline-offset: 3px;
 }
 
 @media (min-width: 992px) {

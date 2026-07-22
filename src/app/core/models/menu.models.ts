@@ -38,6 +38,7 @@ export interface Product {
 /** Signature carousel item — prefers category photo over product photo. */
 export interface SignatureProduct extends Product {
   category_image_url: string | null;
+  category_slug: string | null;
 }
 
 export interface MenuPdf {

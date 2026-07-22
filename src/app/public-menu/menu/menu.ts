@@ -1,19 +1,21 @@
 import {
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   computed,
   inject,
   signal,
   viewChild,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { Category, Product, SignatureProduct } from '../../core/models/menu.models';
 import { LanguageService } from '../../core/services/language.service';
 import { MenuPdfPrefetchService } from '../../core/services/menu-pdf-prefetch.service';
 import { MenuService } from '../../core/services/menu.service';
 import { formatProductPrice } from '../../core/utils/price';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -21,12 +23,14 @@ import { formatProductPrice } from '../../core/utils/price';
   templateUrl: './menu.html',
   styleUrl: './menu.css',
 })
-export class Menu implements OnInit {
+export class Menu implements OnInit, OnDestroy {
   private static readonly MAX_VISIBLE_PRODUCTS = 8;
 
   private readonly menuService = inject(MenuService);
   private readonly languageService = inject(LanguageService);
   private readonly pdfPrefetch = inject(MenuPdfPrefetchService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly signaturesTrack =
     viewChild<ElementRef<HTMLElement>>('signaturesTrack');
   private readonly categoriesTrack =
@@ -34,6 +38,7 @@ export class Menu implements OnInit {
   private readonly menuTrack =
     viewChild<ElementRef<HTMLElement>>('menuTrack');
   private isProgrammaticMenuScroll = false;
+  private querySub?: Subscription;
 
   readonly currentLanguage = this.languageService.currentLanguage;
 
@@ -57,6 +62,16 @@ export class Menu implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.loadMenu();
+    this.querySub = this.route.queryParamMap.subscribe((params) => {
+      const slug = params.get('category');
+      if (slug) {
+        this.applyCategorySlug(slug);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.querySub?.unsubscribe();
   }
 
   async loadMenu(): Promise<void> {
@@ -74,10 +89,19 @@ export class Menu implements OnInit {
       this.products.set(products);
       this.signatures.set(signatures);
 
-      const firstWithProducts = categories.find((category) =>
-        products.some((product) => product.category_id === category.id),
-      );
-      this.activeCategoryId.set(firstWithProducts?.id ?? null);
+      const categorySlug = this.route.snapshot.queryParamMap.get('category');
+      const matched = categorySlug
+        ? this.categoriesWithProducts().find((c) => c.slug === categorySlug)
+        : null;
+
+      if (matched) {
+        this.activeCategoryId.set(matched.id);
+      } else {
+        const firstWithProducts = categories.find((category) =>
+          products.some((product) => product.category_id === category.id),
+        );
+        this.activeCategoryId.set(firstWithProducts?.id ?? null);
+      }
       this.activeSignatureIndex.set(0);
     } catch {
       this.errorMessage.set(
@@ -90,7 +114,49 @@ export class Menu implements OnInit {
       this.activeSignatureIndex.set(0);
     } finally {
       this.isLoading.set(false);
+      const slug = this.route.snapshot.queryParamMap.get('category');
+      if (slug) {
+        // Wait for category cards to render, then scroll into place.
+        queueMicrotask(() => this.applyCategorySlug(slug));
+      }
     }
+  }
+
+  /** Opens the menu section on this signature's category slide. */
+  openSignatureCategory(sig: SignatureProduct): void {
+    const slug = sig.category_slug;
+    if (!slug) {
+      return;
+    }
+
+    void this.router.navigate(['/'], {
+      queryParams: { category: slug },
+      fragment: 'menu',
+    });
+
+    // Same-page: ensure section scrolls into view after navigation settles.
+    queueMicrotask(() => {
+      document.getElementById('menu')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+      this.applyCategorySlug(slug);
+    });
+  }
+
+  /**
+   * Selects and scrolls to a category by slug.
+   * @returns true when a matching category was found
+   */
+  private applyCategorySlug(slug: string): boolean {
+    const category = this.categoriesWithProducts().find(
+      (item) => item.slug === slug,
+    );
+    if (!category) {
+      return false;
+    }
+    this.selectCategory(category.id);
+    return true;
   }
 
   selectCategory(categoryId: string): void {

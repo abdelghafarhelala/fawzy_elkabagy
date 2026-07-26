@@ -15,6 +15,11 @@ import { LanguageService } from '../../core/services/language.service';
 import { MenuPdfPrefetchService } from '../../core/services/menu-pdf-prefetch.service';
 import { MenuService } from '../../core/services/menu.service';
 import { formatProductPrice } from '../../core/utils/price';
+import {
+  MenuProductRow,
+  categoryHasWeightedProducts,
+  groupProductsForMenu,
+} from '../../core/utils/menu-product-rows';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -170,18 +175,42 @@ export class Menu implements OnInit, OnDestroy {
     );
   }
 
-  visibleProductsForCategory(categoryId: string): Product[] {
-    const products = this.productsForCategory(categoryId);
+  productRowsForCategory(categoryId: string): MenuProductRow[] {
+    return groupProductsForMenu(this.productsForCategory(categoryId));
+  }
+
+  visibleProductRowsForCategory(categoryId: string): MenuProductRow[] {
+    const rows = this.productRowsForCategory(categoryId);
     if (this.isCategoryExpanded(categoryId)) {
-      return products;
+      return rows;
     }
-    return products.slice(0, Menu.MAX_VISIBLE_PRODUCTS);
+    return rows.slice(0, Menu.MAX_VISIBLE_PRODUCTS);
+  }
+
+  categoryHasWeightedRows(categoryId: string): boolean {
+    return categoryHasWeightedProducts(this.productsForCategory(categoryId));
   }
 
   categoryHasMoreProducts(categoryId: string): boolean {
     return (
-      this.productsForCategory(categoryId).length > Menu.MAX_VISIBLE_PRODUCTS
+      this.productRowsForCategory(categoryId).length >
+      Menu.MAX_VISIBLE_PRODUCTS
     );
+  }
+
+  rowName(row: MenuProductRow): string {
+    return this.currentLanguage() === 'ar' ? row.name_ar : row.name_en;
+  }
+
+  currencyLabel(): string {
+    return this.currentLanguage() === 'ar' ? 'ج.م' : 'EGP';
+  }
+
+  weightAmount(
+    row: MenuProductRow,
+    key: 'quarter' | 'third' | 'kilo',
+  ): string {
+    return row.prices?.[key] ?? '—';
   }
 
   isCategoryExpanded(categoryId: string): boolean {

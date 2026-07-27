@@ -1198,6 +1198,15 @@ body.nav-drawer-open {
   padding-bottom: 0;
 }
 
+/* Shared grid keeps 1/4 · 1/3 · 1kg columns aligned across rows */
+.menu-product-row--weights {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 3.4rem 3.4rem 3.6rem;
+  column-gap: 8px;
+  align-items: start;
+  justify-content: stretch;
+}
+
 .menu-product-row--header {
   border-bottom-color: rgba(255, 183, 129, 0.25);
   padding-bottom: 8px;
@@ -1208,48 +1217,20 @@ body.nav-drawer-open {
   min-height: 1em;
 }
 
-.menu-product-row--header .menu-weight-prices span {
-  color: var(--secondary-color);
-  font-size: 12px;
-  font-weight: 600;
-  opacity: 0.9;
-}
-
-.menu-weight-prices {
-  display: grid;
-  grid-template-columns: minmax(52px, 1fr) minmax(52px, 1fr) minmax(52px, 1fr) auto;
-  gap: 6px 8px;
-  align-items: baseline;
-  flex: 1 1 auto;
-  min-width: 0;
-  max-width: min(100%, 280px);
-  text-align: end;
-}
-
-/* AR (RTL): name → 1/4 → 1/3 → 1kg → ج.م (right to left) */
-[dir='rtl'] .menu-weight-prices {
-  direction: rtl;
-  text-align: start;
-}
-
-/* EN (LTR): name → 1/4 → 1/3 → 1kg → EGP (left to right) */
-[dir='ltr'] .menu-weight-prices {
-  direction: ltr;
-  text-align: end;
-}
-
-.menu-weight-prices span {
+.menu-product-row--weights > span {
   font-family: var(--font-serif);
   font-size: 14px;
   line-height: 1.35;
   color: var(--secondary-color);
   white-space: nowrap;
+  text-align: end;
+  font-variant-numeric: tabular-nums;
 }
 
-.menu-weight-currency {
-  min-width: 2.25em;
-  font-size: 12px !important;
-  opacity: 0.85;
+.menu-product-row--header > span {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.9;
 }
 
 .menu-expand-btn {
@@ -1280,8 +1261,11 @@ body.nav-drawer-open {
   line-height: 1.35;
   color: var(--text-cream);
   margin: 0;
-  flex: 0 1 auto;
   min-width: 0;
+}
+
+.menu-product-row--weights h3 {
+  padding-inline-end: 4px;
 }
 
 .menu-product-row > span {
@@ -1302,16 +1286,16 @@ body.nav-drawer-open {
     font-size: 18px;
   }
 
-  .menu-weight-prices {
-    max-width: 320px;
-    gap: 8px 12px;
+  .menu-product-row--weights {
+    grid-template-columns: minmax(0, 1fr) 4rem 4rem 4.25rem;
+    column-gap: 12px;
   }
 
-  .menu-weight-prices span {
+  .menu-product-row--weights > span {
     font-size: 16px;
   }
 
-  .menu-product-row--header .menu-weight-prices span {
+  .menu-product-row--header > span {
     font-size: 13px;
   }
 }
@@ -1325,18 +1309,16 @@ body.nav-drawer-open {
     font-size: 16px;
   }
 
-  .menu-weight-prices {
-    max-width: 210px;
-    grid-template-columns:
-      minmax(40px, 1fr) minmax(40px, 1fr) minmax(44px, 1fr) auto;
-    gap: 4px 6px;
+  .menu-product-row--weights {
+    grid-template-columns: minmax(0, 1fr) 3rem 3rem 3.25rem;
+    column-gap: 6px;
   }
 
-  .menu-weight-prices span {
+  .menu-product-row--weights > span {
     font-size: 13px;
   }
 
-  .menu-product-row--header .menu-weight-prices span {
+  .menu-product-row--header > span {
     font-size: 11px;
   }
 }

@@ -80,12 +80,9 @@
                     class="menu-product-row menu-product-row--weights menu-product-row--header"
                     aria-hidden="true">
                     <h3></h3>
-                    <div class="menu-weight-prices">
-                      <span>{{ 'menu.weightQuarter' | translate }}</span>
-                      <span>{{ 'menu.weightThird' | translate }}</span>
-                      <span>{{ 'menu.weightKilo' | translate }}</span>
-                      <span class="menu-weight-currency"></span>
-                    </div>
+                    <span>{{ 'menu.weightQuarter' | translate }}</span>
+                    <span>{{ 'menu.weightThird' | translate }}</span>
+                    <span>{{ 'menu.weightKilo' | translate }}</span>
                   </div>
                 }
                 @for (
@@ -95,14 +92,9 @@
                   @if (item.kind === 'weighted') {
                     <div class="menu-product-row menu-product-row--weights">
                       <h3>{{ rowName(item) }}</h3>
-                      <div class="menu-weight-prices">
-                        <span>{{ weightAmount(item, 'quarter') }}</span>
-                        <span>{{ weightAmount(item, 'third') }}</span>
-                        <span>{{ weightAmount(item, 'kilo') }}</span>
-                        <span class="menu-weight-currency">{{
-                          currencyLabel()
-                        }}</span>
-                      </div>
+                      <span>{{ weightAmount(item, 'quarter') }}</span>
+                      <span>{{ weightAmount(item, 'third') }}</span>
+                      <span>{{ weightAmount(item, 'kilo') }}</span>
                     </div>
                   } @else {
                     <div class="menu-product-row">

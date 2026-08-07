@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-08-07T13:18:12.326Z",
+  "exportedAt": "2026-08-07T13:19:44.228Z",
   "categories": [
     {
       "id": "64636d6d-ea15-4b6c-a7f1-0aaabf52d971",
@@ -3797,25 +3797,6 @@
       "sort_order": 48,
       "is_signature": false,
       "signature_sort_order": 0,
-      "is_active": true,
-      "is_deleted": false
-    },
-    {
-      "id": "b30940c0-042c-490d-a57a-7c3b3eef7ab4",
-      "category_id": "64636d6d-ea15-4b6c-a7f1-0aaabf52d971",
-      "name_en": "test",
-      "name_ar": "test",
-      "description_en": "",
-      "description_ar": "test",
-      "price_en": "380",
-      "price_ar": "380",
-      "image_url": null,
-      "badge_en": null,
-      "badge_ar": null,
-      "tags": [],
-      "sort_order": 49,
-      "is_signature": false,
-      "signature_sort_order": 5,
       "is_active": true,
       "is_deleted": false
     }

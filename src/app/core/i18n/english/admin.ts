@@ -68,6 +68,20 @@ export const adminTranslations = {
       messagesTitle: 'Messages',
       messagesDesc: 'Contact form inbox',
       open: 'Open →',
+      publishTitle: 'Publish to website',
+      publishDesc:
+        'Push the latest menu, images, and PDF from Supabase to the live site. Visitors read static files — no Supabase bandwidth.',
+      publishButton: 'Publish changes to website',
+      publishWorking: 'Starting publish…',
+      publishStarted:
+        'Publish started — the live site usually updates in about 3–5 minutes.',
+      publishPolling: 'Publishing… waiting for the export to finish.',
+      publishSuccess: 'Published successfully. The live site will refresh shortly.',
+      publishFailed: 'Publish failed. Try again or check GitHub Actions.',
+      publishUnauthorized: 'Your session expired. Sign in again and retry.',
+      publishStatusIdle: 'No publish run yet.',
+      publishStatusRunning: 'Status: {status}',
+      publishStatusDone: 'Last run: {conclusion}',
     },
 
     categories: {

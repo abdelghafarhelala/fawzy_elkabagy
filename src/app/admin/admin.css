@@ -715,6 +715,18 @@
   gap: 1rem;
 }
 
+.admin-publish-card {
+  margin-bottom: 1.5rem;
+}
+
+.admin-publish-card .admin-muted {
+  margin-bottom: 0.75rem;
+}
+
+.admin-publish-card a {
+  color: var(--secondary-color);
+}
+
 .admin-dash-card {
   display: flex;
   flex-direction: column;

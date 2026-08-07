@@ -7,6 +7,58 @@
 
 <p class="admin-lead">{{ 'admin.dashboard.lead' | translate }}</p>
 
+<section class="admin-card admin-publish-card">
+  <h2 class="admin-card-title">
+    {{ 'admin.dashboard.publishTitle' | translate }}
+  </h2>
+  <p class="admin-muted">{{ 'admin.dashboard.publishDesc' | translate }}</p>
+
+  <div class="admin-actions" style="justify-content: flex-start">
+    <button
+      type="button"
+      class="admin-btn"
+      (click)="publish()"
+      [disabled]="isPublishing()"
+    >
+      @if (isPublishing()) {
+        {{ 'admin.dashboard.publishWorking' | translate }}
+      } @else {
+        {{ 'admin.dashboard.publishButton' | translate }}
+      }
+    </button>
+  </div>
+
+  @if (statusMessage()) {
+    <p class="admin-success" role="status">{{ statusMessage() }}</p>
+  }
+  @if (errorMessage()) {
+    <p class="admin-error" role="alert">{{ errorMessage() }}</p>
+  }
+  @if (lastRun(); as run) {
+    <p class="admin-muted">
+      @if (run.conclusion) {
+        {{
+          'admin.dashboard.publishStatusDone'
+            | translate: { conclusion: run.conclusion }
+        }}
+      } @else if (run.status) {
+        {{
+          'admin.dashboard.publishStatusRunning'
+            | translate: { status: run.status }
+        }}
+      } @else {
+        {{ 'admin.dashboard.publishStatusIdle' | translate }}
+      }
+      @if (run.html_url) {
+        —
+        <a [href]="run.html_url" target="_blank" rel="noopener noreferrer">
+          GitHub Actions
+        </a>
+      }
+    </p>
+  }
+</section>
+
 <div class="admin-dash-grid">
   <a class="admin-dash-card" routerLink="/admin/categories">
     <span class="admin-dash-icon" aria-hidden="true">

@@ -68,6 +68,20 @@ export const adminTranslations = {
       messagesTitle: 'الرسائل',
       messagesDesc: 'رسائل نموذج التواصل',
       open: 'فتح ←',
+      publishTitle: 'نشر على الموقع',
+      publishDesc:
+        'ادفع أحدث المنيو والصور وملف PDF من Supabase إلى الموقع المباشر. الزوار يقرأون ملفات ثابتة دون استهلاك باقة Supabase.',
+      publishButton: 'نشر التغييرات على الموقع',
+      publishWorking: 'جاري بدء النشر…',
+      publishStarted:
+        'بدأ النشر — عادة يظهر التحديث على الموقع خلال ٣–٥ دقائق.',
+      publishPolling: 'جاري النشر… بانتظار انتهاء التصدير.',
+      publishSuccess: 'تم النشر بنجاح. سيتم تحديث الموقع المباشر قريباً.',
+      publishFailed: 'فشل النشر. أعد المحاولة أو راجع GitHub Actions.',
+      publishUnauthorized: 'انتهت الجلسة. سجّل الدخول ثم أعد المحاولة.',
+      publishStatusIdle: 'لا يوجد تشغيل نشر بعد.',
+      publishStatusRunning: 'الحالة: {status}',
+      publishStatusDone: 'آخر تشغيل: {conclusion}',
     },
 
     categories: {

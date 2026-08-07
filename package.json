@@ -9,7 +9,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "upload:menu-images": "node scripts/upload-menu-images.mjs",
-    "upload:category-images": "node scripts/upload-category-images.mjs"
+    "upload:category-images": "node scripts/upload-category-images.mjs",
+    "export:data": "node scripts/export-static-data.mjs"
   },
   "private": true,
   "packageManager": "npm@10.8.2",
@@ -34,6 +35,7 @@
     "@angular/build": "^21.2.14",
     "@angular/cli": "^21.2.14",
     "@angular/compiler-cli": "^21.2.0",
+    "@vercel/node": "^5.9.5",
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",

@@ -6,15 +6,17 @@ Backend for the public website and future `/admin` dashboard.
 
 | Field | Value |
 |-------|--------|
-| Name | `fawzy-elkabagy-live` |
-| Project ref / id | `mrcmlorpbveilbeaeqvu` |
+| Org | [fawzy-live](https://supabase.com/dashboard/org/oqjdzhfbkllcrqgcfgqp) (`oqjdzhfbkllcrqgcfgqp`) |
+| Name | `fawzy-elkabagy` |
+| Project ref / id | `hviscqhamtdmjorhuoum` |
 | Plan | **Free** |
-| Organization | `pohlbcftdctjlbiifoqh` |
-| Region | `eu-central-1` |
-| API URL | `https://mrcmlorpbveilbeaeqvu.supabase.co` |
-| Dashboard | https://supabase.com/dashboard/project/mrcmlorpbveilbeaeqvu |
+| Region | `eu-west-3` |
+| API URL | `https://hviscqhamtdmjorhuoum.supabase.co` |
+| Dashboard | https://supabase.com/dashboard/project/hviscqhamtdmjorhuoum |
 
-Previous (egress-locked) project: `zveiywuiiyvokicmptxg` — do not use.
+Retired (egress-locked) projects — do not use:
+- `zveiywuiiyvokicmptxg` (old org)
+- `mrcmlorpbveilbeaeqvu` (same locked org)
 
 ## Local repo mirror
 
@@ -42,7 +44,7 @@ Angular builds use [`src/environments/environment.ts`](../src/environments/envir
 Also keep a local `.env` (gitignored) for reference — see `.env.example`:
 
 ```env
-SUPABASE_URL=https://mrcmlorpbveilbeaeqvu.supabase.co
+SUPABASE_URL=https://hviscqhamtdmjorhuoum.supabase.co
 SUPABASE_ANON_KEY=
 ```
 

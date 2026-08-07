@@ -1,11 +1,11 @@
-# Supabase local config mirror for fawzy-elkabagy-live
-# Project created on Free plan via MCP
+# Supabase local config mirror for fawzy-elkabagy
+# Org: fawzy-live (oqjdzhfbkllcrqgcfgqp)
 
 [project]
-id = "mrcmlorpbveilbeaeqvu"
-name = "fawzy-elkabagy-live"
-organization_id = "pohlbcftdctjlbiifoqh"
-region = "eu-central-1"
+id = "hviscqhamtdmjorhuoum"
+name = "fawzy-elkabagy"
+organization_id = "oqjdzhfbkllcrqgcfgqp"
+region = "eu-west-3"
 
 [api]
 enabled = true

@@ -85,8 +85,11 @@ export class AdminDashboard implements OnDestroy {
       }
 
       if (!response.ok || body.ok === false) {
+        const detail =
+          body.error?.trim() ||
+          `HTTP ${response.status}`;
         throw new Error(
-          body.error || this.i18n.t('admin.dashboard.publishFailed'),
+          `${this.i18n.t('admin.dashboard.publishFailed')} — ${detail}`,
         );
       }
 
@@ -171,8 +174,10 @@ export class AdminDashboard implements OnDestroy {
       ) {
         this.phase.set('error');
         this.isPublishing.set(false);
+        const conclusion = body.run.conclusion;
         this.errorMessage.set(
-          this.i18n.t('admin.dashboard.publishFailed'),
+          this.i18n.t('admin.dashboard.publishFailed') +
+            ` (${conclusion})`,
         );
         this.statusMessage.set(null);
         this.stopPolling();

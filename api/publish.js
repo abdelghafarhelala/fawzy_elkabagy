@@ -1,15 +1,11 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import {
+const {
   dispatchPublishWorkflow,
   requireAdmin,
   setCors,
   statusFromError,
-} from './_lib';
+} = require('./_lib');
 
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse,
-): Promise<void> {
+module.exports = async function handler(req, res) {
   setCors(res);
 
   if (req.method === 'OPTIONS') {
@@ -37,4 +33,4 @@ export default async function handler(
     console.error('[api/publish]', message);
     res.status(status).json({ ok: false, error: message });
   }
-}
+};

@@ -1,15 +1,11 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import {
+const {
   latestPublishRun,
   requireAdmin,
   setCors,
   statusFromError,
-} from './_lib';
+} = require('./_lib');
 
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse,
-): Promise<void> {
+module.exports = async function handler(req, res) {
   setCors(res);
 
   if (req.method === 'OPTIONS') {
@@ -18,7 +14,7 @@ export default async function handler(
   }
 
   if (req.method !== 'GET') {
-    res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ ok: false, error: 'Method not allowed' });
     return;
   }
 
@@ -30,6 +26,7 @@ export default async function handler(
     const status = statusFromError(error);
     const message =
       error instanceof Error ? error.message : 'Status check failed';
+    console.error('[api/publish-status]', message);
     res.status(status).json({ ok: false, error: message });
   }
-}
+};

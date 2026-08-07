@@ -72,11 +72,17 @@ export class AdminDashboard implements OnDestroy {
         },
       });
 
-      const body = (await response.json().catch(() => ({}))) as {
+      const raw = await response.text();
+      let body: {
         ok?: boolean;
         error?: string;
         message?: string;
-      };
+      } = {};
+      try {
+        body = JSON.parse(raw) as typeof body;
+      } catch {
+        // Vercel platform errors are sometimes HTML / non-JSON.
+      }
 
       if (response.status === 401) {
         throw new Error(
@@ -87,6 +93,7 @@ export class AdminDashboard implements OnDestroy {
       if (!response.ok || body.ok === false) {
         const detail =
           body.error?.trim() ||
+          raw.trim().slice(0, 240) ||
           `HTTP ${response.status}`;
         throw new Error(
           `${this.i18n.t('admin.dashboard.publishFailed')} — ${detail}`,

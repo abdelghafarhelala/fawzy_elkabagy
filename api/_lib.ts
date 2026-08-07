@@ -1,10 +1,9 @@
-import { createClient } from '@supabase/supabase-js';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const GITHUB_API = 'https://api.github.com';
 
 function requiredEnv(name: string): string {
-  const value = process.env[name];
+  const value = process.env[name]?.trim();
   if (!value) {
     throw new Error(`Missing env var: ${name}`);
   }
@@ -54,20 +53,41 @@ export async function requireAdmin(
     throw error;
   }
 
-  const supabaseUrl = requiredEnv('SUPABASE_URL');
+  const supabaseUrl = requiredEnv('SUPABASE_URL').replace(/\/$/, '');
   const serviceKey = requiredEnv('SUPABASE_SERVICE_ROLE_KEY');
-  const supabase = createClient(supabaseUrl, serviceKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
+  const accessToken = match[1];
+
+  // Use Auth REST (no supabase-js) so the serverless function stays lean.
+  const response = await fetch(`${supabaseUrl}/auth/v1/user`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      apikey: serviceKey,
+    },
   });
 
-  const { data, error } = await supabase.auth.getUser(match[1]);
-  if (error || !data.user) {
+  if (!response.ok) {
+    const body = await response.text();
+    const err = new Error(
+      response.status === 401 || response.status === 403
+        ? 'Invalid or expired session'
+        : `Supabase auth check failed (${response.status}): ${body.slice(0, 200)}`,
+    );
+    (err as Error & { status: number }).status =
+      response.status === 401 || response.status === 403 ? 401 : 500;
+    throw err;
+  }
+
+  const user = (await response.json()) as {
+    id?: string;
+    email?: string;
+  };
+  if (!user?.id) {
     const err = new Error('Invalid or expired session');
     (err as Error & { status: number }).status = 401;
     throw err;
   }
 
-  return { userId: data.user.id, email: data.user.email };
+  return { userId: user.id, email: user.email };
 }
 
 export async function dispatchPublishWorkflow(): Promise<void> {
@@ -148,6 +168,25 @@ export async function latestPublishRun(): Promise<{
     html_url: run.html_url,
     created_at: run.created_at,
     updated_at: run.updated_at,
+  };
+}
+
+export function envDiagnostics(): {
+  supabaseUrl: boolean;
+  serviceRole: boolean;
+  githubToken: boolean;
+  githubRepo: string;
+  workflowFile: string;
+  workflowRef: string;
+} {
+  return {
+    supabaseUrl: !!process.env['SUPABASE_URL']?.trim(),
+    serviceRole: !!process.env['SUPABASE_SERVICE_ROLE_KEY']?.trim(),
+    githubToken: !!process.env['GITHUB_TOKEN']?.trim(),
+    githubRepo:
+      process.env['GITHUB_REPO']?.trim() || 'abdelghafarhelala/fawzy_elkabagy',
+    workflowFile: workflowFile(),
+    workflowRef: workflowRef(),
   };
 }
 

@@ -18,7 +18,7 @@ export default async function handler(
   }
 
   if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ ok: false, error: 'Method not allowed' });
     return;
   }
 
@@ -34,6 +34,7 @@ export default async function handler(
     const status = statusFromError(error);
     const message =
       error instanceof Error ? error.message : 'Publish failed';
+    console.error('[api/publish]', message);
     res.status(status).json({ ok: false, error: message });
   }
 }

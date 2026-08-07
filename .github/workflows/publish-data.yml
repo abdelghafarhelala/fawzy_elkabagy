@@ -38,7 +38,8 @@ jobs:
         run: |
           git config user.name "menu-publish-bot"
           git config user.email "actions@github.com"
-          git add public/data
+          # site-data.json + localized images/PDF under public/data
+          git add -A public/data
           if git diff --cached --quiet; then
             echo "No changes to publish."
           else

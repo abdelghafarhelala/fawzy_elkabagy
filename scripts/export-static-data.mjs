@@ -363,30 +363,42 @@ async function main() {
   if (menuPdfError) throw menuPdfError;
 
   let menuPdf = null;
-  if (menuPdfRaw?.file_url && !skipAssets) {
-    if (dryRun) {
-      console.log(`[dry-run] ↓ PDF ${menuPdfRaw.file_url} → /data/menu.pdf`);
+  if (menuPdfRaw?.file_url) {
+    const pdfUrl = String(menuPdfRaw.file_url).trim();
+    // Local public paths (e.g. /images/menu/menu.pdf) already ship with the
+    // site — keep them as-is. Remote Storage URLs are downloaded into /data.
+    if (pdfUrl.startsWith('/')) {
       menuPdf = {
         id: menuPdfRaw.id,
-        file_path: 'menu.pdf',
-        file_url: '/data/menu.pdf',
+        file_path: menuPdfRaw.file_path || pdfUrl,
+        file_url: pdfUrl,
         updated_at: menuPdfRaw.updated_at,
       };
-    } else {
-      console.log(`↓ PDF ${menuPdfRaw.file_url}`);
-      try {
-        await downloadToFile(menuPdfRaw.file_url, MENU_PDF_PATH);
-        console.log('  ✓ /data/menu.pdf');
+    } else if (!skipAssets) {
+      if (dryRun) {
+        console.log(`[dry-run] ↓ PDF ${pdfUrl} → /data/menu.pdf`);
         menuPdf = {
           id: menuPdfRaw.id,
           file_path: 'menu.pdf',
           file_url: '/data/menu.pdf',
           updated_at: menuPdfRaw.updated_at,
         };
-      } catch (error) {
-        const message =
-          error instanceof Error ? error.message : String(error);
-        console.warn(`  ✗ PDF skipped (${message})`);
+      } else {
+        console.log(`↓ PDF ${pdfUrl}`);
+        try {
+          await downloadToFile(pdfUrl, MENU_PDF_PATH);
+          console.log('  ✓ /data/menu.pdf');
+          menuPdf = {
+            id: menuPdfRaw.id,
+            file_path: 'menu.pdf',
+            file_url: '/data/menu.pdf',
+            updated_at: menuPdfRaw.updated_at,
+          };
+        } catch (error) {
+          const message =
+            error instanceof Error ? error.message : String(error);
+          console.warn(`  ✗ PDF skipped (${message})`);
+        }
       }
     }
   }

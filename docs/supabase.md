@@ -6,12 +6,15 @@ Backend for the public website and future `/admin` dashboard.
 
 | Field | Value |
 |-------|--------|
-| Name | `fawzyElkababgy` |
-| Project ref / id | `zveiywuiiyvokicmptxg` |
-| Plan | **Free** ($0/month at creation) |
-| Organization | `fawzyelkbabgy1@gmail.com's Org` (`pohlbcftdctjlbiifoqh`) |
+| Name | `fawzy-elkabagy-live` |
+| Project ref / id | `mrcmlorpbveilbeaeqvu` |
+| Plan | **Free** |
+| Organization | `pohlbcftdctjlbiifoqh` |
 | Region | `eu-central-1` |
-| API URL | `https://zveiywuiiyvokicmptxg.supabase.co` |
+| API URL | `https://mrcmlorpbveilbeaeqvu.supabase.co` |
+| Dashboard | https://supabase.com/dashboard/project/mrcmlorpbveilbeaeqvu |
+
+Previous (egress-locked) project: `zveiywuiiyvokicmptxg` — do not use.
 
 ## Local repo mirror
 
@@ -39,7 +42,7 @@ Angular builds use [`src/environments/environment.ts`](../src/environments/envir
 Also keep a local `.env` (gitignored) for reference — see `.env.example`:
 
 ```env
-SUPABASE_URL=https://zveiywuiiyvokicmptxg.supabase.co
+SUPABASE_URL=https://mrcmlorpbveilbeaeqvu.supabase.co
 SUPABASE_ANON_KEY=
 ```
 

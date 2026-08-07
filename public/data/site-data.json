@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-08-07T11:09:27.544Z",
+  "exportedAt": "2026-08-07T11:50:04.451Z",
   "note": "Using local images from public/images/menu (including sandwiches.webp). No Supabase Storage reads.",
   "categories": [
     {
@@ -1321,7 +1321,7 @@
       "description_ar": "",
       "price_en": "710 EGP",
       "price_ar": "710 ج.م",
-      "image_url": null,
+      "image_url": "/images/menu/fata-moza-dany.webp",
       "badge_en": null,
       "badge_ar": null,
       "tags": [],
@@ -1397,7 +1397,7 @@
       "description_ar": "",
       "price_en": "2350",
       "price_ar": "2350",
-      "image_url": null,
+      "image_url": "/images/menu/main-dishes.webp",
       "badge_en": null,
       "badge_ar": null,
       "tags": [],
@@ -3804,6 +3804,27 @@
   ],
   "signatures": [
     {
+      "id": "1a0e0c7e-b7ec-4f44-9521-09d6f835ae2d",
+      "category_id": "219a9aef-8679-4429-8989-45520b4acb57",
+      "name_en": "Lamb Shoulder Zend",
+      "name_ar": "زند ضاني",
+      "description_en": "",
+      "description_ar": "",
+      "price_en": "2350",
+      "price_ar": "2350",
+      "image_url": "/images/menu/main-dishes.webp",
+      "badge_en": null,
+      "badge_ar": null,
+      "tags": [],
+      "sort_order": 6,
+      "is_signature": true,
+      "signature_sort_order": 0,
+      "is_active": true,
+      "is_deleted": false,
+      "category_image_url": "/images/menu/fawzy-roal-dishes.webp",
+      "category_slug": "royal"
+    },
+    {
       "id": "18c22b0f-ac70-4b6d-a89b-e18b02c91207",
       "category_id": "219a9aef-8679-4429-8989-45520b4acb57",
       "name_en": "The King's Crown",
@@ -3875,7 +3896,7 @@
       "description_ar": "",
       "price_en": "710 EGP",
       "price_ar": "710 ج.م",
-      "image_url": "/images/menu/main-dishes.webp",
+      "image_url": "/images/menu/fata-moza-dany.webp",
       "badge_en": null,
       "badge_ar": null,
       "tags": [],

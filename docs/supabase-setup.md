@@ -1,6 +1,18 @@
 # Supabase setup log
 
-Chronological record of what was applied for project **fawzyElkababgy**.
+## Current project (2026-08)
+
+- Name: **fawzy-elkabagy-live**
+- Ref: `mrcmlorpbveilbeaeqvu`
+- URL: `https://mrcmlorpbveilbeaeqvu.supabase.co`
+- Data seeded from previous site snapshot (categories, 193 products,
+  5 signatures, locations, reach_out, menu_pdf with local `/images/menu/…` paths)
+- Public site stays static; Publish exports DB → `public/data` → Vercel
+- See [static-publish-setup.md](./static-publish-setup.md) for secrets + admin user
+
+---
+
+Chronological record for the original project **fawzyElkababgy** (`zveiywuiiyvokicmptxg`, now retired / egress-locked).
 
 ## 1. Account / organization
 

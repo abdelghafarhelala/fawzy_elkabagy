@@ -54,3 +54,5 @@ Never commit service role keys or `.env`.
 
 - Max 2 active free projects per org quota rules
 - Free projects may pause after ~1 week of inactivity
+- Public site reads static `/data/site-data.json` — visitor traffic does **not** count as Supabase activity
+- Keep-alive: [`.github/workflows/supabase-keepalive.yml`](../.github/workflows/supabase-keepalive.yml) runs daily (and via **Actions → Supabase keep-alive → Run workflow**). It requests `categories?select=id&limit=1` using the same `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` secrets as publish. Do **not** load the full menu from Supabase on each visit (egress risk).

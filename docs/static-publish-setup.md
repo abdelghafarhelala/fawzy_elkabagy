@@ -22,6 +22,7 @@ Copy **service_role** into:
 
 - local `.env` → `SUPABASE_SERVICE_ROLE_KEY`
 - GitHub Actions secrets: `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`
+  (also used by the daily **Supabase keep-alive** workflow)
 - Vercel env (same) → redeploy
 
 `SUPABASE_URL` must be `https://hviscqhamtdmjorhuoum.supabase.co`

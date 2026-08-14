@@ -1,0 +1,45 @@
+# Tiny daily API hit so the free-tier project is not paused for inactivity.
+# Does not load menu data — one row id only (~minimal egress).
+name: Supabase keep-alive
+
+on:
+  schedule:
+    # Once per day (UTC). Free projects pause after ~7 days idle.
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase (select id limit 1)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+            echo "Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY secrets."
+            exit 1
+          fi
+          url="${SUPABASE_URL%/}/rest/v1/categories?select=id&limit=1"
+          code=$(curl -sS -o /tmp/keepalive-body.txt -w "%{http_code}" \
+            -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
+            -H "Accept: application/json" \
+            "$url")
+          echo "HTTP ${code}"
+          head -c 200 /tmp/keepalive-body.txt || true
+          echo
+          if [ "$code" != "200" ]; then
+            echo "Keep-alive failed."
+            exit 1
+          fi
+          echo "Keep-alive OK."

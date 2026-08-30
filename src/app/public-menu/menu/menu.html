@@ -13,7 +13,9 @@
             src="images/loading_logo.gif"
             alt="Loading menu"
             width="120"
-            height="120" />
+            height="120"
+            loading="lazy"
+            decoding="async" />
         </picture>
       </div>
     } @else if (errorMessage()) {
@@ -70,8 +72,10 @@
                 <img
                   [src]="category.image_url || 'images/menu-kofta.jpg'"
                   [alt]="categoryName(category)"
-                  width="800"
-                  height="200"
+                  width="840"
+                  height="1120"
+                  loading="lazy"
+                  decoding="async"
                   (error)="$any($event.target).src = 'images/menu-kofta.jpg'" />
               </div>
               <div class="menu-card-body">
@@ -187,7 +191,9 @@
                 [src]="imageUrl"
                 [alt]="productName(sig)"
                 width="716"
-                height="400" />
+                height="400"
+                loading="lazy"
+                decoding="async" />
             }
             <div class="signature-card-overlay">
               <h3>{{ productName(sig) }}</h3>

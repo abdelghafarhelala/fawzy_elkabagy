@@ -37,6 +37,9 @@ yarn-error.log
 # Local menu import tooling
 .venv-pdf/
 .menu-pdf-preview/
+.image-opt-preview/
+.image-opt-backup/
+.image-opt-encode/
 .tessdata/
 scripts/_tmp_products.sql
 

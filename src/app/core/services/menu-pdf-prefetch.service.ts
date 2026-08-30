@@ -3,8 +3,8 @@ import { MenuPdf } from '../models/menu.models';
 import { MenuService } from './menu.service';
 
 /**
- * Prefetches the latest menu PDF in the background so /menu opens faster.
- * Keeps file metadata + a Blob copy in memory (and fills the HTTP cache).
+ * Loads the latest menu PDF on demand (/menu viewer or Download).
+ * Caches file metadata + a Blob in memory for the current session.
  */
 @Injectable({
   providedIn: 'root',

@@ -21,12 +21,14 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "ignore": ["**/.DS_Store"]
               },
               {
                 "glob": "**/*",
                 "input": "src/assets",
-                "output": "assets"
+                "output": "assets",
+                "ignore": ["**/.DS_Store"]
               }
             ],
             "styles": [
